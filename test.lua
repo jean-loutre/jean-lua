@@ -3,12 +3,13 @@ package.path = package.path .. ";lua/?.lua;./third-party/?.lua;./tests/?.lua"
 
 local suites = {
 	"collection-tests",
+	"context-tests",
 	"iterator-tests",
+	"list-tests",
 	"map-tests",
 	"object-tests",
 	"path-tests",
 	"value-tests",
-	"list-tests",
 }
 
 -- To make assert functions globally accessible
