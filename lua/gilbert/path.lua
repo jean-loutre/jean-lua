@@ -3,9 +3,9 @@
 local Iterator = require("gilbert.iterator")
 local List = require("gilbert.list")
 local Object = require("gilbert.object")
-local value = require("gilbert.value")
+local is_string = require("gilbert.type").is_string
 
-local Path = Object:extend()
+local Path = Object:extend("gilbert.path")
 
 local separator = "/"
 
@@ -58,7 +58,7 @@ end
 --
 -- @return A new instance of Path representing the concatenated path.
 function Path:__div(right)
-	if value.is_string(right) then
+	if is_string(right) then
 		right = Path(right)
 	end
 	assert(Path:is_class_of(right), "Bad argument")
@@ -84,7 +84,7 @@ end
 --
 -- @return A new instance of Path
 function Path:relative_to(right)
-	if value.is_string(right) then
+	if is_string(right) then
 		right = Path(right)
 	end
 	assert(Path:is_class_of(right))

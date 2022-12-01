@@ -24,9 +24,9 @@ local meta_methods = {
 
 -- Proxy forbidding definition of key different of get or set, and
 -- checking for redefinitions
-local PropertyProxy = {}
+local PropertyGuard = {}
 
-function PropertyProxy:__newindex(key, value)
+function PropertyGuard:__newindex(key, value)
 	if key == "get" then
 		assert(self._property.get == nil, "getter already defined on property.")
 		self._property.get = value
@@ -43,36 +43,44 @@ end
 -- to allow to directly declare a property like :
 -- function Otter:properties:last_name:get()
 -- end
-local PropertiesProxy = {}
+local PropertiesGuard = {}
 
-function PropertiesProxy:__index(key)
+function PropertiesGuard:__index(key)
 	if self._properties[key] == nil then
 		self._properties[key] = {}
 	end
-	return setmetatable({ _property = self._properties[key] }, PropertyProxy)
+	return setmetatable({ _property = self._properties[key] }, PropertyGuard)
 end
 
-function PropertiesProxy:__newindex(key, value)
+function PropertiesGuard:__newindex(key, value)
 	self._properties[key] = value
 end
 
 function Class:__index(key)
+	local definition = self._definition
+
 	if key == "properties" then
-		return self.__gb_properties
+		return setmetatable({
+			_properties = definition._properties,
+		}, PropertiesGuard)
 	end
 
-	return Class[key] or self.__gb_metatable[key]
+	return definition._metatable[key] or definition._parent and definition._parent._metatable[key] or Class[key]
 end
 
 function Class:__newindex(key, value)
-	if key == "__index" then
-		key = "__gb_index"
-	end
+	local definition = self._definition
 
-	if rawget(self.__gb_metatable, key) ~= nil then
-		error('member "' .. key .. '" is already defined.')
+	if key == "__index" then
+		definition._index = value
+	elseif key == "__newindex" then
+		definition._newindex = value
+	else
+		if rawget(definition._metatable, key) ~= nil then
+			error('member "' .. key .. '" is already defined.')
+		end
+		definition._metatable[key] = value
 	end
-	self.__gb_metatable[key] = value
 end
 
 --- Class "constructor", creating a new object.
@@ -82,44 +90,25 @@ end
 --
 -- @return A new instance of the class
 function Class:__call(...)
-	local instance = setmetatable({}, self.__gb_metatable)
+	local instance = setmetatable({}, self._definition._metatable)
 	instance:init(...)
 
 	return instance
 end
 
---- Create a new child class of this class.
---
--- To create a base class, use Object:extend()
---
--- @param metatable The metatable that will be set on instances of this class.
--- @param properties A table of { property_name = { get = getter(),
---                   set = setter() } entries.
---
--- @return The newly created class
-function Class:extend(metatable, properties)
-	metatable = metatable or {}
-	properties = properties or {}
-
-	for _, method in ipairs(meta_methods) do
-		metatable[method] = metatable[method] or self.__gb_metatable[method]
-	end
-
-	function metatable.parent(instance, method_name, ...)
-		self.__gb_metatable[method_name](instance, ...)
-	end
-
-	local function __gb_get_property(name)
-		local prop = properties[name]
-		if prop ~= nil then
-			return prop
+-- Override the "inheritance model" of lua to resolve in the correct order :
+-- while the field is not found, for each class of the hierarchy
+--   search raw fields of current class
+--   search properties of current class
+--   call __index override of current class
+local function class_index(class_definition, instance, key)
+	while class_definition ~= nil do
+		local raw_value = rawget(class_definition._metatable, key)
+		if raw_value then
+			return raw_value
 		end
 
-		return self.__gb_get_property(name)
-	end
-
-	function metatable.__index(instance, key)
-		local property = __gb_get_property(key)
+		local property = rawget(class_definition, "_properties")[key]
 		if property then
 			if not property.get then
 				error("Getting write-only property " .. key)
@@ -127,13 +116,19 @@ function Class:extend(metatable, properties)
 			return property.get(instance)
 		end
 
-		return rawget(metatable, key)
-			or (metatable.__gb_index and metatable.__gb_index(instance, key))
-			or metatable[key]
-	end
+		local index_override = rawget(class_definition, "_index")
+		if index_override then
+			return index_override(instance, key)
+		end
 
-	function metatable.__newindex(instance, key, value)
-		local property = __gb_get_property(key)
+		class_definition = class_definition._parent
+	end
+end
+
+local function class_newindex(class_definition, instance, key, value)
+	while class_definition ~= nil do
+		local property = class_definition._properties[key]
+
 		if property then
 			if not property.set then
 				error("Setting read-only property " .. key)
@@ -142,17 +137,70 @@ function Class:extend(metatable, properties)
 			return
 		end
 
-		rawset(instance, key, value)
+		local newindex_override = rawget(class_definition, "_newindex")
+		if newindex_override then
+			newindex_override(instance, key, value)
+			return
+		end
+
+		class_definition = class_definition._parent
 	end
 
-	setmetatable(metatable, self.__gb_metatable)
+	rawset(instance, key, value)
+end
+
+--- Create a new child class of this class.
+--
+-- To create a base class, use Object:extend()
+--
+-- @param name       A unique name of the class. It will be returned when
+--                   calling getmetatable, because of the use of __metatable
+--                   field to lock metatable on created instance. If nil,
+--                   tostring(metatable) will be used instead.
+-- @param metatable  The metatable that will be set on instances of this class.
+-- @param properties A table of { property_name = { get = getter(),
+--                   set = setter() } entries.
+--
+-- @return The newly created class
+function Class:extend(name)
+	local parent_definition = self._definition
+	local parent_metatable = parent_definition._metatable
+	local metatable = {}
+
+	local definition = {
+		_inheritors = {},
+		_metatable = metatable,
+		_parent = parent_definition,
+		_properties = {},
+	}
+
+	for _, method in ipairs(meta_methods) do
+		metatable[method] = metatable[method] or parent_metatable[method]
+	end
+
+	function metatable.__index(instance, key)
+		return class_index(definition, instance, key)
+	end
+
+	function metatable.__newindex(instance, key, value)
+		return class_newindex(definition, instance, key, value)
+	end
+
+	function metatable.parent(instance, method_name, ...)
+		return class_index(parent_definition, instance, method_name)(instance, ...)
+	end
+
+	name = name or tostring(metatable)
+	metatable.__metatable = name
+
+	local it = definition
+	while it ~= nil do
+		it._inheritors[metatable.__metatable] = true
+		it = it._parent
+	end
 
 	return setmetatable({
-		__gb_get_property = __gb_get_property,
-		__gb_metatable = metatable,
-		__gb_properties = setmetatable({
-			_properties = properties,
-		}, PropertiesProxy),
+		_definition = definition,
 	}, Class)
 end
 
@@ -167,14 +215,7 @@ function Class:is_class_of(object)
 	end
 
 	local metatable = getmetatable(object)
-	while metatable ~= nil do
-		if self.__gb_metatable == metatable then
-			return true
-		end
-		metatable = getmetatable(metatable)
-	end
-
-	return false
+	return self._definition._inheritors[metatable]
 end
 
 --- Create an instance of this class by setting it's metatable.
@@ -187,16 +228,15 @@ end
 --
 -- @return true if object is an instance of self or a parent of self
 function Class:wrap(object)
-	return setmetatable(object, self.__gb_metatable)
+	return setmetatable(object, self._definition._metatable)
 end
 
-local object__gb_metatable = {
-	init = function() end,
-	__gb_get_property = function() end,
-}
-object__gb_metatable.__index = object__gb_metatable
-
 return setmetatable({
-	__gb_metatable = object__gb_metatable,
-	__gb_properties = {},
+	_definition = {
+		_inheritors = {},
+		_metatable = {
+			init = function() end,
+		},
+		_properties = {},
+	},
 }, Class)

@@ -2,25 +2,24 @@
 -- @module gilbert.iterator
 local Collection = require("gilbert.collection")
 local Iterator = require("gilbert.iterator")
-local is_iterable = require("gilbert.value").is_iterable
-local is_table = require("gilbert.value").is_table
+local is_iterable = require("gilbert.type").is_iterable
+local is_table = require("gilbert.type").is_table
 
-local List = Collection:extend()
+local List = Collection:extend("gilbert.list")
 
 --- Initialize a list from a table
--- @param source Table from which to copy items in this list
-function List:init(source)
+-- @param ... A table, or anything that can be passed to Iterator.from(...)
+function List:init(...)
+	local source = select(1, ...)
 	if source ~= nil then
-		if is_iterable(source) then
-			for item in source:__iter() do
-				table.insert(self, item)
-			end
-		elseif is_table(source) then
+		if is_table(source) and not is_iterable(source) and not Iterator:is_class_of(source) then
 			for _, item in ipairs(source) do
 				table.insert(self, item)
 			end
 		else
-			error("Bad argument :" .. source .. ". Expected a table or an iterable.")
+			for item in Iterator.from(...) do
+				table.insert(self, item)
+			end
 		end
 	end
 end

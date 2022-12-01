@@ -2,9 +2,9 @@
 -- @module gilbert.collection
 local Collection = require("gilbert.collection")
 local Iterator = require("gilbert.iterator")
-local is_table = require("gilbert.value").is_table
+local is_table = require("gilbert.type").is_table
 
-local Map = Collection:extend()
+local Map = Collection:extend("gilbert.map")
 
 --- Initialize a map from lua table
 --

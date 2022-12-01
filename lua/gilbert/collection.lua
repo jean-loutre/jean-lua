@@ -2,7 +2,7 @@
 -- @module gilbert.collection
 local Object = require("gilbert.object")
 
-local Collection = Object:extend()
+local Collection = Object:extend("gilbert.collection")
 
 --- Get an iterator over collection items
 -- @return A gilbert.iterator over elements of the collection

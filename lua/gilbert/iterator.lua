@@ -1,13 +1,13 @@
 --- Iterator, with map / filter functions and the like
 -- @module gilbert.iterator
 local Object = require("gilbert.object")
-local is_callable = require("gilbert.value").is_callable
-local is_iterable = require("gilbert.value").is_iterable
-local is_number = require("gilbert.value").is_number
-local is_table = require("gilbert.value").is_table
+local is_callable = require("gilbert.type").is_callable
+local is_iterable = require("gilbert.type").is_iterable
+local is_number = require("gilbert.type").is_number
+local is_table = require("gilbert.type").is_table
 local unpack = unpack or table.unpack
 
-local Iterator = Object:extend()
+local Iterator = Object:extend("gilbert.iterator")
 
 --- Initialize an iterator.
 --
