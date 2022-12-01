@@ -158,6 +158,10 @@ function Suite.call_base_class_metamethods()
 				assert_equals(b, steven)
 			end
 			called = true
+
+			 -- because tostring needs to be returned a string, other
+			 -- metamethods don't give a s**t
+			return ""
 		end
 
 		local SpaceOtter = Otter:extend()
@@ -185,6 +189,10 @@ function Suite.call_overriden_metamethod()
 				assert(b == steven)
 			end
 			called = true
+
+			 -- because tostring needs to be returned a string, other
+			 -- metamethods don't give a s**t
+			return ""
 		end
 
 		peter = SpaceOtter()
