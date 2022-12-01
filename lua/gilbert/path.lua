@@ -1,0 +1,110 @@
+--- Iterator, with map / filter functions and the like
+-- @module gilbert.iterator
+local Iterator = require("gilbert.iterator")
+local List = require("gilbert.list")
+local Object = require("gilbert.object")
+local value = require("gilbert.value")
+
+local Path = Object:extend()
+
+local separator = "/"
+
+--- Initialize a path
+-- @param source Path as a string
+function Path:init(source)
+	self._parts = List()
+	self._is_absolute = false
+	if source ~= nil then
+		self._is_absolute = source:sub(1, 1) == "/"
+		for part in string.gmatch(source, "([^" .. separator .. "]+)") do
+			self._parts:push(part)
+		end
+	end
+end
+
+--- Return the basename of this path
+function Path.properties.basename:get()
+	return self._parts[#self._parts]
+end
+
+--- True if the path is absolute
+function Path.properties.is_absolute:get()
+	return self._is_absolute
+end
+
+--- Return parents of this path
+function Path.properties.parents:get()
+	local count = #self._parts
+
+	return Iterator(function()
+		count = count - 1
+
+		if count <= 0 then
+			return nil
+		end
+
+		return Path:wrap({
+			_is_absolute = self._is_absolute,
+			_parts = self._parts:take(count):to_list(),
+		})
+	end)
+end
+
+--- Concatenate two paths.
+--
+-- An error will be raised if the right path is absolute.
+--
+-- @param right Path to concatenate, as a string or a Path instance.
+--
+-- @return A new instance of Path representing the concatenated path.
+function Path:__div(right)
+	if value.is_string(right) then
+		right = Path(right)
+	end
+	assert(Path:is_class_of(right), "Bad argument")
+	assert(not right.is_absolute, "Trying to concatenate an absolute path to another")
+	return Path:wrap({
+		_is_absolute = self._is_absolute,
+		_parts = self._parts:iter():chain(right._parts):to_list(),
+	})
+end
+
+--- Returns the string representation of this path
+function Path:__tostring()
+	if not self._is_absolute then
+		return self._parts:concat(separator)
+	end
+
+	return separator .. self._parts:concat(separator)
+end
+
+--- Get the current path relative to given path.
+--
+-- @param right The path to which make this path relative.
+--
+-- @return A new instance of Path
+function Path:relative_to(right)
+	if value.is_string(right) then
+		right = Path(right)
+	end
+	assert(Path:is_class_of(right))
+	assert(self._is_absolute == right._is_absolute)
+
+	local idx = 1
+	while self._parts[idx] == right._parts[idx] do
+		idx = idx + 1
+	end
+
+	return Path:wrap({
+		_is_absolute = false,
+		_parts = right._parts
+			:skip(idx - 1)
+			:map(function()
+				return ".."
+			end)
+			:chain(self._parts:skip(idx - 1))
+			:to_list(),
+	})
+end
+
+return Path

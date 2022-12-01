@@ -1,0 +1,2 @@
+ * handle __index and __newindex metamethods
+ * 

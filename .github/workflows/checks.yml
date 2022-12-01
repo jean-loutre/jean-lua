@@ -1,0 +1,70 @@
+name: Checks
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+
+jobs:
+  luacheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Luacheck
+        uses: lunarmodules/luacheck@v0
+
+  stylua:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Stylua
+      uses: JohnnyMorganz/stylua-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        version: latest
+        args: --check .
+
+  unit-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - lua: "lua5.1"
+            packages: "lua5.1"
+            interpreter: "lua5.1 -lluacov"
+          - lua: "lua5.2"
+            packages: "lua5.2 liblua5.2-dev"
+            interpreter: "lua5.2"
+          - lua: "lua5.3"
+            packages: "lua5.3 liblua5.3-dev"
+            interpreter: "lua5.3"
+          - lua: "luajit"
+            packages: "luajit libluajit-5.1-dev"
+            interpreter: "luajit"
+    name: unit-tests - ${{ matrix.lua }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Lua
+        run: sudo apt-get install -y ${{ matrix.packages }}
+
+      - name: Install Coverage Tools
+        if: matrix.lua == 'lua5.1'
+        run: |
+          sudo apt-get install -y luarocks
+          sudo luarocks install luacov-coveralls
+
+      - name: Run Tests
+        run: ${{ matrix.interpreter }} test.lua
+
+      - name: Upload Coverage
+        if: matrix.lua == 'lua5.1' && success()
+        run: luacov-coveralls -i "lua/.*$"
+        env:
+          COVERALLS_REPO_TOKEN: ${{ github.token }}

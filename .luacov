@@ -1,0 +1,6 @@
+modules = {
+   ["gilbert"] = "lua/gilbert/init.lua",
+   ["gilbert.*"] = "lua"
+}
+
+includeuntestedfiles = { "lua" }
