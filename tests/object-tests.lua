@@ -4,19 +4,19 @@ local Suite = {}
 
 function Suite.init()
 	local called
-	local Otter = Object:extend({
-		init = function(_, name)
-			assert_equals(name, "peter")
-			called = true
-		end,
-	})
+	local Otter = Object:extend()
+
+	function Otter.init(_, name)
+		assert_equals(name, "peter")
+		called = true
+	end
 
 	Otter("peter")
 	assert(called)
 end
 
 function Suite.no_init()
-	local Otter = Object:extend({})
+	local Otter = Object:extend()
 	local peter = Otter()
 	assert_not_nil(peter)
 end
@@ -24,25 +24,10 @@ end
 function Suite.init_metatable()
 	local peter
 
-	local Otter = Object:extend({
-		throw_at = function(self, target)
-			assert(self == peter)
-			assert_equals(target, "caiman")
-			return "bretzel"
-		end,
-	})
-
-	peter = Otter()
-	assert_equals(peter:throw_at("caiman"), "bretzel")
-end
-
-function Suite.define_method_after_class_declaration()
-	local peter
-
 	local Otter = Object:extend()
 
 	function Otter:throw_at(target)
-		assert(self == peter)
+		assert_equals(self, peter)
 		assert_equals(target, "caiman")
 		return "bretzel"
 	end
@@ -53,10 +38,8 @@ end
 
 function Suite.method_indexing()
 	local function destroy() end
-
-	local Otter = Object:extend({
-		destroy = destroy,
-	})
+	local Otter = Object:extend()
+	Otter.destroy = destroy
 
 	assert(Otter.destroy == destroy)
 end
@@ -64,9 +47,8 @@ end
 function Suite.error_on_method_redefinition()
 	local function destroy() end
 
-	local Otter = Object:extend({
-		destroy = destroy,
-	})
+	local Otter = Object:extend()
+	Otter.destroy = destroy
 
 	assert_error_msg_contains('member "destroy" is already defined.', function()
 		function Otter.destroy() end
@@ -91,12 +73,12 @@ end
 function Suite.call_base_class_method()
 	local peter
 
-	local Otter = Object:extend({
-		launch = function(self)
-			assert(self == peter)
-			return "bretzel"
-		end,
-	})
+	local Otter = Object:extend()
+
+	function Otter:launch()
+		assert(self == peter)
+		return "bretzel"
+	end
 
 	local SpaceOtter = Otter:extend()
 
@@ -107,18 +89,16 @@ end
 function Suite.call_overriden_method()
 	local peter
 
-	local Otter = Object:extend({
-		launch = function()
-			assert(false)
-		end,
-	})
+	local Otter = Object:extend()
+	function Otter:launch()
+		assert(false)
+	end
 
-	local SpaceOtter = Otter:extend({
-		launch = function(self)
-			assert(self == peter)
-			return "bretzel"
-		end,
-	})
+	local SpaceOtter = Otter:extend()
+	function SpaceOtter:launch()
+		assert(self == peter)
+		return "bretzel"
+	end
 
 	peter = SpaceOtter()
 	assert_equals(peter:launch(), "bretzel")
@@ -127,23 +107,21 @@ end
 function Suite.call_parent_method_from_override()
 	local parent_called, child_called, peter
 
-	local Otter = Object:extend({
-		launch = function(self)
-			assert(self == peter)
-			assert(not parent_called)
-			parent_called = true
-		end,
-	})
+	local Otter = Object:extend()
+	function Otter:launch()
+		assert(self == peter)
+		assert(not parent_called)
+		parent_called = true
+	end
 
-	local SpaceOtter = Otter:extend({
-		launch = function(self)
-			assert(self == peter)
-			assert(not parent_called)
-			assert(not child_called)
-			self:parent("launch")
-			child_called = true
-		end,
-	})
+	local SpaceOtter = Otter:extend()
+	function SpaceOtter:launch()
+		assert(self == peter)
+		assert(not parent_called)
+		assert(not child_called)
+		self:parent("launch")
+		child_called = true
+	end
 
 	peter = SpaceOtter()
 	peter:launch()
@@ -173,15 +151,14 @@ function Suite.call_base_class_metamethods()
 	for method, test_method in pairs(meta_methods) do
 		local called, peter, steven
 
-		local Otter = Object:extend({
-			[method] = function(a, b)
-				assert(a == peter)
-				if method ~= "__tostring" and method ~= "__unm" then
-					assert(b == steven)
-				end
-				called = true
-			end,
-		})
+		local Otter = Object:extend()
+		Otter[method] = function(a, b)
+			assert(a == peter)
+			if method ~= "__tostring" and method ~= "__unm" then
+				assert_equals(b, steven)
+			end
+			called = true
+		end
 
 		local SpaceOtter = Otter:extend()
 
@@ -196,42 +173,25 @@ function Suite.call_overriden_metamethod()
 	for method, test_method in pairs(meta_methods) do
 		local called, peter, steven
 
-		local Otter = Object:extend({
-			[method] = function()
-				assert(false)
-			end,
-		})
+		local Otter = Object:extend()
+		Otter[method] = function()
+			assert(false)
+		end
 
-		local SpaceOtter = Otter:extend({
-			[method] = function(a, b)
-				assert(a == peter)
-				if method ~= "__tostring" and method ~= "__unm" then
-					assert(b == steven)
-				end
-				called = true
-			end,
-		})
+		local SpaceOtter = Otter:extend()
+		SpaceOtter[method] = function()
+			assert(a == peter)
+			if method ~= "__tostring" and method ~= "__unm" then
+				assert(b == steven)
+			end
+			called = true
+		end
 
 		peter = SpaceOtter()
 		steven = SpaceOtter()
 		test_method(peter, steven)
 		assert(called)
 	end
-end
-
-function Suite.define_metamethods_after_class_declaration()
-	local peter
-
-	local Otter = Object:extend()
-
-	function Otter:__call(target)
-		assert(self == peter)
-		assert_equals(target, "caiman")
-		return "bretzel"
-	end
-
-	peter = Otter()
-	assert_equals(peter("caiman"), "bretzel")
 end
 
 function Suite.index()
@@ -275,16 +235,14 @@ function Suite.index_called_first_in_child_class()
 end
 
 function Suite.properties()
-	local Otter = Object:extend({}, {
-		last_name = {
-			get = function(self)
-				return self._last_name or "Otterson"
-			end,
-			set = function(self, value)
-				self._last_name = value
-			end,
-		},
-	})
+	local Otter = Object:extend()
+	function Otter.properties.last_name:get()
+		return self._last_name or "Otterson"
+	end
+
+	function Otter.properties.last_name:set(value)
+		self._last_name = value
+	end
 
 	local peter = Otter()
 	assert_equals(peter.last_name, "Otterson")
@@ -294,16 +252,13 @@ function Suite.properties()
 end
 
 function Suite.set_readonly_property_error()
-	local Otter = Object:extend({}, {
-		last_name = {
-			get = function()
-				return "Otterson"
-			end,
-		},
-		age = {
-			set = function() end,
-		},
-	})
+	local Otter = Object:extend()
+	function Otter.properties.last_name.get()
+		return "Otterson"
+	end
+
+	function Otter.properties.age.set()
+	end
 
 	local peter = Otter()
 	assert_error_msg_contains("Setting read-only property last_name", function()
@@ -315,9 +270,8 @@ function Suite.set_readonly_property_error()
 	end)
 end
 
-function Suite.define_properties_after_class_declaration()
+function Suite.base_class_property_get_set()
 	local Otter = Object:extend()
-
 	function Otter.properties.last_name:get()
 		return self._last_name or "Otterson"
 	end
@@ -325,39 +279,6 @@ function Suite.define_properties_after_class_declaration()
 	function Otter.properties.last_name:set(value)
 		self._last_name = value
 	end
-
-	Otter.properties.age = {
-		get = function(self)
-			return self._age or 33
-		end,
-		set = function(self, value)
-			self._age = value
-		end,
-	}
-
-	local peter = Otter()
-
-	assert_equals(peter.last_name, "Otterson")
-	peter.last_name = "McOtter"
-	assert_equals(peter.last_name, "McOtter")
-	assert_is_nil(rawget(peter, "last_name"))
-
-	assert_equals(peter.age, 33)
-	peter.age = 42
-	assert_equals(peter.age, 42)
-end
-
-function Suite.base_class_property_get_set()
-	local Otter = Object:extend({}, {
-		last_name = {
-			get = function(self)
-				return self._last_name or "Otterson"
-			end,
-			set = function(self, value)
-				self._last_name = value
-			end,
-		},
-	})
 
 	local SpaceOtter = Otter:extend()
 
@@ -369,29 +290,26 @@ function Suite.base_class_property_get_set()
 end
 
 function Suite.overriden_property_get_set()
-	local Otter = Object:extend({}, {
-		last_name = {
-			get = function()
-				return "Otterson"
-			end,
-			set = function()
-				assert(false)
-			end,
-		},
-	})
+	local Otter = Object:extend()
+	function Otter.properties.last_name.get()
+		return "Otterson"
+	end
+
+	function Otter.properties.last_name.set()
+		assert(false)
+	end
+
 
 	local setter_called
-	local SpaceOtter = Otter:extend({}, {
-		last_name = {
-			get = function()
-				return "Ottersonson"
-			end,
-			set = function(_, value)
-				assert_equals(value, "McOtterson")
-				setter_called = true
-			end,
-		},
-	})
+	local SpaceOtter = Otter:extend()
+	function SpaceOtter.properties.last_name.get()
+		return "Ottersonson"
+	end
+
+	function SpaceOtter.properties.last_name.set(_, value)
+		assert_equals(value, "McOtterson")
+		setter_called = true
+	end
 
 	local peter = SpaceOtter()
 	assert_equals(peter.last_name, "Ottersonson")
@@ -408,12 +326,14 @@ function Suite.error_on_bad_property_key_definition()
 end
 
 function Suite.error_on_property_redefinition()
-	local Otter = Object:extend({}, {
-		last_name = {
-			get = function() end,
-			set = function() end,
-		},
-	})
+	local Otter = Object:extend()
+	function Otter.properties.last_name.get()
+	end
+
+	function Otter.properties.last_name.set()
+	end
+
+
 
 	assert_error_msg_contains("getter already defined on property.", function()
 		function Otter.properties.last_name.get() end
