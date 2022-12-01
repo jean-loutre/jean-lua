@@ -90,7 +90,7 @@ function Suite.call_overriden_method()
 	local peter
 
 	local Otter = Object:extend()
-	function Otter:launch()
+	function Otter.launch()
 		assert(false)
 	end
 
@@ -159,8 +159,8 @@ function Suite.call_base_class_metamethods()
 			end
 			called = true
 
-			 -- because tostring needs to be returned a string, other
-			 -- metamethods don't give a s**t
+			-- because tostring needs to be returned a string, other
+			-- metamethods don't give a s**t
 			return ""
 		end
 
@@ -190,8 +190,8 @@ function Suite.call_overriden_metamethod()
 			end
 			called = true
 
-			 -- because tostring needs to be returned a string, other
-			 -- metamethods don't give a s**t
+			-- because tostring needs to be returned a string, other
+			-- metamethods don't give a s**t
 			return ""
 		end
 
@@ -265,8 +265,7 @@ function Suite.set_readonly_property_error()
 		return "Otterson"
 	end
 
-	function Otter.properties.age.set()
-	end
+	function Otter.properties.age.set() end
 
 	local peter = Otter()
 	assert_error_msg_contains("Setting read-only property last_name", function()
@@ -307,7 +306,6 @@ function Suite.overriden_property_get_set()
 		assert(false)
 	end
 
-
 	local setter_called
 	local SpaceOtter = Otter:extend()
 	function SpaceOtter.properties.last_name.get()
@@ -335,13 +333,9 @@ end
 
 function Suite.error_on_property_redefinition()
 	local Otter = Object:extend()
-	function Otter.properties.last_name.get()
-	end
+	function Otter.properties.last_name.get() end
 
-	function Otter.properties.last_name.set()
-	end
-
-
+	function Otter.properties.last_name.set() end
 
 	assert_error_msg_contains("getter already defined on property.", function()
 		function Otter.properties.last_name.get() end
