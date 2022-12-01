@@ -179,7 +179,7 @@ function Suite.call_overriden_metamethod()
 		end
 
 		local SpaceOtter = Otter:extend()
-		SpaceOtter[method] = function()
+		SpaceOtter[method] = function(a, b)
 			assert(a == peter)
 			if method ~= "__tostring" and method ~= "__unm" then
 				assert(b == steven)

@@ -22,6 +22,11 @@ local meta_methods = {
 	"__unm",
 }
 
+local meta_methods_set = {}
+for _, name in ipairs(meta_methods) do
+	meta_methods_set[name] = true
+end
+
 -- Proxy forbidding definition of key different of get or set, and
 -- checking for redefinitions
 local PropertyGuard = {}
@@ -72,9 +77,21 @@ function Class:__newindex(key, value)
 	local definition = self._definition
 
 	if key == "__index" then
+		if definition._index then
+			error('metamethod "' .. key .. '" is already defined.')
+		end
 		definition._index = value
 	elseif key == "__newindex" then
+		if definition._newindex then
+			error('metamethod "' .. key .. '" is already defined.')
+		end
 		definition._newindex = value
+	elseif meta_methods_set[key] then
+		if definition._defined_metamethods[key] then
+			error('metamethod "' .. key .. '" is already defined.')
+		end
+		definition._metatable[key] = value
+		definition._defined_metamethods[key] = true
 	else
 		if rawget(definition._metatable, key) ~= nil then
 			error('member "' .. key .. '" is already defined.')
@@ -168,6 +185,7 @@ function Class:extend(name)
 	local metatable = {}
 
 	local definition = {
+		_defined_metamethods = {},
 		_inheritors = {},
 		_metatable = metatable,
 		_parent = parent_definition,
@@ -233,6 +251,7 @@ end
 
 return setmetatable({
 	_definition = {
+		_defined_metamethods = {},
 		_inheritors = {},
 		_metatable = {
 			init = function() end,
