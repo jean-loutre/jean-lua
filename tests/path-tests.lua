@@ -1,4 +1,5 @@
 local Path = require("gilbert.path")
+local with = require("gilbert.context").with
 
 local Suite = {}
 
@@ -52,6 +53,20 @@ function Suite.__tostring()
 
 	otter = Path("/world/europe/france/dumb_ones/peter")
 	assert_equals(tostring(otter), "/world/europe/france/dumb_ones/peter")
+end
+
+function Suite.open()
+	local squeak = Path(os.tmpname())
+
+	with(squeak:open("w"), function(file)
+		file:write("Kweek kweek")
+	end)
+
+	with(squeak:open("r"), function(file)
+		assert_equals(file:read(), "Kweek kweek")
+	end)
+
+	os.remove(tostring(squeak))
 end
 
 function Suite.relative_to()

@@ -78,6 +78,29 @@ function Path:__tostring()
 	return separator .. self._parts:concat(separator)
 end
 
+--- Open the file this path points to.
+--
+-- @param The mode to pass to io.open
+--
+-- @return A context manager, that will call the inner function with the
+-- 		   opened file handle.
+function Path:open(mode)
+	-- TODO: Do something with coroutines for context managers
+	return {
+		__enter = function(context_manager)
+			local handle, err_message, err_code = io.open(tostring(self), mode)
+			if handle == nil then
+				error("Error while opening file " .. tostring(self) .. " : " .. err_message .. "(" .. err_code .. ")")
+			end
+			context_manager._handle = handle
+			return handle
+		end,
+		__exit = function(context_manager)
+			context_manager._handle:close()
+		end,
+	}
+end
+
 --- Get the current path relative to given path.
 --
 -- @param right The path to which make this path relative.
