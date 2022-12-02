@@ -48,6 +48,7 @@ end
 -- @return The created iterator, or iterable itself if it's already an
 --         Iterator.
 function Iterator.from(iterable, invariant, control)
+	assert(table ~= Iterator, "You're calling Iterator:from, use Iterator.from.")
 	if Iterator:is_class_of(iterable) then
 		return iterable
 	elseif is_iterable(iterable) then
@@ -68,6 +69,7 @@ end
 -- @return An iterator upon elements in the table.
 function Iterator.from_values(table)
 	assert(is_table(table), "Bad argument")
+	assert(table ~= Iterator, "You're calling Iterator:from_values, use Iterator.from_values.")
 	local id = 0
 	return Iterator(function()
 		id = id + 1
@@ -186,6 +188,22 @@ function Iterator:map(mapper)
 			return nil
 		end
 		return mapper(unpack(item))
+	end)
+end
+
+--- Returns elements of the nested iterator of an iterator of iterators.
+--
+-- @return An iterator of the elements of the iterators in this iterator.
+function Iterator:flatten()
+	local current_iterator = self()
+	return Iterator(function()
+		while current_iterator ~= nil do
+			local item = { current_iterator() }
+			if item[1] ~= nil then
+				return unpack(item)
+			end
+			current_iterator = self()
+		end
 	end)
 end
 

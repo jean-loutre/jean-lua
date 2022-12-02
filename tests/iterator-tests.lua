@@ -156,6 +156,19 @@ function Suite.map()
 	assert_equals(it(), "SLEEP")
 end
 
+function Suite.flatten()
+	local it = Iterator.from_values({
+		Iterator.from_values({ "swim", "sleep" }),
+		Iterator.from_values({ "eat", "kill baby seal" }),
+	}):flatten()
+
+	assert_equals(it(), "swim")
+	assert_equals(it(), "sleep")
+	assert_equals(it(), "eat")
+	assert_equals(it(), "kill baby seal")
+	assert_equals(it(), nil)
+end
+
 function Suite.skip()
 	local it
 
