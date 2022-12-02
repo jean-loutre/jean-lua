@@ -116,6 +116,16 @@ function Suite.merge()
 	})
 end
 
+function Suite.pop()
+	local otter_hobbies = Map({ ["didoo"] = "bathing" })
+
+	assert_equals(otter_hobbies:pop("didoo"), "bathing")
+	assert_is_nil(otter_hobbies["didoo"])
+
+	assert_is_nil(otter_hobbies:pop("biloo"))
+	assert_equals(otter_hobbies:pop("biloo", "nothing"), "nothing")
+end
+
 function Suite.update()
 	local otter_hobbies = Map({
 		["didoo"] = "bathing",

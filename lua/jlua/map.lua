@@ -76,6 +76,23 @@ function Map:merge(...)
 	return result
 end
 
+--- Get a value and removes it from the map.
+--
+-- @param key           The key to get from the map.
+-- @param default_value Value to return if key was abent from the map.
+--
+-- @return The get value, or none if it was not found.
+function Map:pop(key, default_value)
+	local result = self[key]
+	self[key] = nil
+
+	if result == nil then
+		return default_value
+	end
+
+	return result
+end
+
 --- Update values in this map with given values.
 --
 -- @param ... Anything that can be converted to a key / value iterator through
