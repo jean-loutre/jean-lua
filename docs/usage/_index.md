@@ -1,3 +1,3 @@
 # Usage
 
-Here is the documentation of the gilbert API.
+Here is the documentation of the jean-lua API.

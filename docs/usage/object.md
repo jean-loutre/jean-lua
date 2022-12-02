@@ -1,6 +1,6 @@
 # Object
 
-The gilbert.object module contains definition of an Object class, that can
+The jlua.object module contains definition of an Object class, that can
 be extended to create new classes. It supports single inheritance, method and
 metamethod overriding, and properties getter and setters.
 
@@ -11,7 +11,7 @@ inherit the methods, metamethods and properties of it's parent. If your class
 has no base class, extend the Object class.
 
 ```lua
-local Object = require("gilbert.object")
+local Object = require("jlua.object")
 
 local Otter = Object:extend()
 local SpaceOtter = Otter:extend()
@@ -25,7 +25,7 @@ constructor, they will be forwarded to the `init` method of the class, if it's
 defined.
 
 ```lua
-local Object = require("gilbert.object")
+local Object = require("jlua.object")
 
 local Otter = Object:extend()
 
@@ -52,7 +52,7 @@ calling the extend() method, or afterwards, by defining them on the class,
 like you do on regular lua tables :
 
 ```lua
-local Object = require("gilbert.object")
+local Object = require("jlua.object")
 
 local Otter = Object:extend({
 	name = function()
@@ -71,7 +71,7 @@ To call a parent method in a child class, use the super() method defined on
 classes instances :
 
 ```lua
-local Object = require("gilbert.object")
+local Object = require("jlua.object")
 
 local Otter = Object:extend()
 

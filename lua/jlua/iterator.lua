@@ -1,13 +1,13 @@
 --- Iterator, with map / filter functions and the like
--- @module gilbert.iterator
-local Object = require("gilbert.object")
-local is_callable = require("gilbert.type").is_callable
-local is_iterable = require("gilbert.type").is_iterable
-local is_number = require("gilbert.type").is_number
-local is_table = require("gilbert.type").is_table
+-- @module jlua.iterator
+local Object = require("jlua.object")
+local is_callable = require("jlua.type").is_callable
+local is_iterable = require("jlua.type").is_iterable
+local is_number = require("jlua.type").is_number
+local is_table = require("jlua.type").is_table
 local unpack = unpack or table.unpack
 
-local Iterator = Object:extend("gilbert.iterator")
+local Iterator = Object:extend("jlua.iterator")
 
 --- Initialize an iterator.
 --

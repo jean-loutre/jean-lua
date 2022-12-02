@@ -1,4 +1,4 @@
-local Object = require("gilbert.object")
+local Object = require("jlua.object")
 
 local Suite = {}
 

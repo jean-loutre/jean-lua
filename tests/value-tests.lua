@@ -1,4 +1,4 @@
-local value = require("gilbert.value")
+local value = require("jlua.value")
 
 local Suite = {}
 

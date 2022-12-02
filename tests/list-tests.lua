@@ -1,4 +1,4 @@
-local List = require("gilbert.list")
+local List = require("jlua.list")
 local unpack = unpack or table.unpack
 
 local Suite = {}

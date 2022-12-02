@@ -1,5 +1,5 @@
-local Object = require("gilbert.object")
-local with = require("gilbert.context").with
+local Object = require("jlua.object")
+local with = require("jlua.context").with
 
 local Suite = {}
 

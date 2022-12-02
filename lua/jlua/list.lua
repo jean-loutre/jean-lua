@@ -1,11 +1,11 @@
 --- A list of items, with random access
--- @module gilbert.iterator
-local Collection = require("gilbert.collection")
-local Iterator = require("gilbert.iterator")
-local is_iterable = require("gilbert.type").is_iterable
-local is_table = require("gilbert.type").is_table
+-- @module jlua.iterator
+local Collection = require("jlua.collection")
+local Iterator = require("jlua.iterator")
+local is_iterable = require("jlua.type").is_iterable
+local is_table = require("jlua.type").is_table
 
-local List = Collection:extend("gilbert.list")
+local List = Collection:extend("jlua.list")
 
 --- Initialize a list from a table
 -- @param ... A table, or anything that can be passed to Iterator.from(...)
@@ -56,11 +56,11 @@ function List:sort(predicate)
 	table.sort(self, predicate)
 end
 
---- Return a gilbert.iterator over a slice of this list
+--- Return a jlua.iterator over a slice of this list
 -- @param start Starting index of the slice
 -- @param end_ End index of the slice. If nil, will return the elements until
 --             the
--- @return a gilbert.iterator over the elements of the slice
+-- @return a jlua.iterator over the elements of the slice
 function List:slice(start, end_)
 	assert(type(start) == "number", "Bad argument")
 
@@ -82,8 +82,8 @@ function List:slice(start, end_)
 	end)
 end
 
---- Return a gilbert.iterator on element of the list, in the reverse order
--- @return The created gilbert.iterator
+--- Return a jlua.iterator on element of the list, in the reverse order
+-- @return The created jlua.iterator
 function List:reverse()
 	local current = #self + 1
 	return Iterator(function()

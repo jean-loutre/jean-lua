@@ -1,5 +1,5 @@
-local Map = require("gilbert.map")
-local Iterator = require("gilbert.iterator")
+local Map = require("jlua.map")
+local Iterator = require("jlua.iterator")
 
 local Suite = {}
 

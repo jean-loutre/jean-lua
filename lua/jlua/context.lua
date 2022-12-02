@@ -1,5 +1,5 @@
 --- Sort of Python-like context manager
--- @module gilbert.context
+-- @module jlua.context
 local unpack = rawget(_G, "unpack") or table.unpack
 
 local context = {}

@@ -1,5 +1,5 @@
-local Path = require("gilbert.path")
-local with = require("gilbert.context").with
+local Path = require("jlua.path")
+local with = require("jlua.context").with
 
 local Suite = {}
 

@@ -1,4 +1,4 @@
-# Welcome to Gilbert
+# Welcome to Jean Lua
 
 An object-oriented lua toolkit library.
 

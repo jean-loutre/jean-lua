@@ -1,6 +1,6 @@
 --- Utilities for type checking and conversion
 
--- @module gilbert.types
+-- @module jlua.types
 
 local value = {}
 

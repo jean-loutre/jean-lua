@@ -1,4 +1,4 @@
-local Iterator = require("gilbert.iterator")
+local Iterator = require("jlua.iterator")
 
 local function check_bad_arguments(method, ...)
 	for _, argument in ipairs({ ... }) do

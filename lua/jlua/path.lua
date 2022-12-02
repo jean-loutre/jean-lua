@@ -1,11 +1,11 @@
 --- Iterator, with map / filter functions and the like
--- @module gilbert.iterator
-local Iterator = require("gilbert.iterator")
-local List = require("gilbert.list")
-local Object = require("gilbert.object")
-local is_string = require("gilbert.type").is_string
+-- @module jlua.iterator
+local Iterator = require("jlua.iterator")
+local List = require("jlua.list")
+local Object = require("jlua.object")
+local is_string = require("jlua.type").is_string
 
-local Path = Object:extend("gilbert.path")
+local Path = Object:extend("jlua.path")
 
 local separator = "/"
 

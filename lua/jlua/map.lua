@@ -1,10 +1,10 @@
 --- Base class for collections of key, value pairs (dict, orderedmap)
--- @module gilbert.collection
-local Collection = require("gilbert.collection")
-local Iterator = require("gilbert.iterator")
-local is_table = require("gilbert.type").is_table
+-- @module jlua.collection
+local Collection = require("jlua.collection")
+local Iterator = require("jlua.iterator")
+local is_table = require("jlua.type").is_table
 
-local Map = Collection:extend("gilbert.map")
+local Map = Collection:extend("jlua.map")
 
 --- Initialize a map from lua table
 --
@@ -19,7 +19,7 @@ function Map:init(...)
 	end
 end
 
---- Get a gilbert.iterator of the values of the map.
+--- Get a jlua.iterator of the values of the map.
 function Map.properties.keys:get()
 	local key = nil
 	return Iterator(function()
@@ -28,7 +28,7 @@ function Map.properties.keys:get()
 	end)
 end
 
---- Get a gilbert.iterator of the values of the map.
+--- Get a jlua.iterator of the values of the map.
 function Map.properties.values:get()
 	local key = nil
 	return Iterator(function()
@@ -41,10 +41,10 @@ function Map.properties.values:get()
 	end)
 end
 
---- Return a gilbert.pair_iterator over the element of the collection
+--- Return a jlua.pair_iterator over the element of the collection
 -- This method shoud be implemented in child classes
 --
--- @return A gilbert.pair_iterator over elements of the collection
+-- @return A jlua.pair_iterator over elements of the collection
 function Map:__iter()
 	return Iterator(pairs(self))
 end
@@ -93,7 +93,7 @@ end
 --                   if not provided, assumes that the iterator
 --                   returns tuples of key, value elements
 --
--- @return A gilbert.map containing elements of the iterator
+-- @return A jlua.map containing elements of the iterator
 function Iterator:to_map(key_getter)
 	local result = Map()
 	if key_getter ~= nil then

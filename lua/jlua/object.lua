@@ -1,7 +1,7 @@
 --- Base class for class model
 -- Allow to create very simple classes that only support single inheritance.
 
--- @module gilbert.object
+-- @module jlua.object
 -- Metatable for classes
 local Class = {}
 Class.__index = Class

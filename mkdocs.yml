@@ -1,11 +1,11 @@
-site_name: Gilbert Lua Library
+site_name: Jean-Lua Library
 site_url: https://example.com/
 nav:
     - Home: index.md
     - Usage:
         - usage/_index.md
         - Object: usage/object.md
-repo_url: https://github.com/jean-loutre/gilbert.git
+repo_url: https://github.com/jean-loutre/jean-lua.git
 edit_uri: ""
 markdown_extensions:
   - admonition
@@ -45,5 +45,5 @@ plugins:
   - git-revision-date-localized:
       enable_creation_date: true
   - git-committers:
-      repository: jean-loutre/gilbert
+      repository: jean-loutre/jean-lua
       branch: main

@@ -1,11 +1,11 @@
 --- Base class for collections of single items (set, list)
--- @module gilbert.collection
-local Object = require("gilbert.object")
+-- @module jlua.collection
+local Object = require("jlua.object")
 
-local Collection = Object:extend("gilbert.collection")
+local Collection = Object:extend("jlua.collection")
 
 --- Get an iterator over collection items
--- @return A gilbert.iterator over elements of the collection
+-- @return A jlua.iterator over elements of the collection
 function Collection:iter()
 	return self:__iter()
 end
@@ -26,7 +26,7 @@ end
 --- Maps elements of this collection
 -- Shortcut for collection:iter():map(...)
 -- @param func The map function
--- @return Mapped gilbert.iterator
+-- @return Mapped jlua.iterator
 function Collection:map(func)
 	return self:iter():map(func)
 end
@@ -34,7 +34,7 @@ end
 --- Filters element of this collection
 -- Shortcut for collection:iter():filter(...)
 -- @param predicate The filter predicate
--- @return Filtered gilbert.iterator
+-- @return Filtered jlua.iterator
 function Collection:filter(predicate)
 	return self:iter():filter(predicate)
 end
@@ -43,7 +43,7 @@ end
 --
 -- @param count Number of items to skip.
 --
--- @return A gilbert.iterator starting after count elements.
+-- @return A jlua.iterator starting after count elements.
 function Collection:skip(count)
 	return self:iter():skip(count)
 end
@@ -52,7 +52,7 @@ end
 --
 -- @param count Number of items to take.
 --
--- @return A gilbert.iterator of the first count elements.
+-- @return A jlua.iterator of the first count elements.
 function Collection:take(count)
 	return self:iter():take(count)
 end
@@ -88,9 +88,9 @@ function Collection:chain(other)
 	return self:iter():chain(other)
 end
 
---- Return a gilbert.iterator over the element of the collection
+--- Return a jlua.iterator over the element of the collection
 -- This method shoud be implemented in child classes
--- @return A gilbert.iterator over elements of the collection
+-- @return A jlua.iterator over elements of the collection
 function Collection.__iter()
 	-- luacov: disable
 	assert(false)

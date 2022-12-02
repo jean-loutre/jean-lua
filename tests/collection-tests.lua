@@ -1,5 +1,5 @@
-local Collection = require("gilbert.collection")
-local Iterator = require("gilbert.iterator")
+local Collection = require("jlua.collection")
+local Iterator = require("jlua.iterator")
 
 local OtterList = Collection:extend()
 
