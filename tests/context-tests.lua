@@ -1,4 +1,5 @@
 local Object = require("jlua.object")
+local context_manager = require("jlua.context").context_manager
 local with = require("jlua.context").with
 
 local Suite = {}
@@ -60,6 +61,25 @@ function Suite.skip_error()
 	assert_is_nil(result)
 	assert_is_true(afternoon.exit_called)
 	assert_str_contains(afternoon.err, "I'm asleep")
+end
+
+function Suite.context_manager()
+	local weapon_returned = false
+
+	local armory = context_manager(function(name, task)
+		assert_equals(name, "didoo")
+		assert_equals(task, "smash caiman")
+		coroutine.yield("base-ball bat")
+		weapon_returned = true
+	end)
+
+	local result = with(armory("didoo", "smash caiman"), function(weapon)
+		assert_equals(weapon, "base-ball bat")
+		return "done"
+	end)
+
+	assert_is_true(weapon_returned)
+	assert_equals(result, "done")
 end
 
 return Suite
