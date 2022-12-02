@@ -37,7 +37,9 @@ function context.with(context_manager, inner)
 end
 
 local function handle_coro_result(result, ...)
-	assert(result)
+	if not result then
+		error(...)
+	end
 	return ...
 end
 
