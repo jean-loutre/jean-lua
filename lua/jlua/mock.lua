@@ -3,6 +3,7 @@
 local List = require("jlua.list")
 local Map = require("jlua.map")
 local Object = require("jlua.object")
+local context_manager = require("jlua.context").context_manager
 
 local Mock = Object:extend()
 
@@ -15,6 +16,26 @@ function Mock:init(args)
 	self._calls = List()
 	self._return_value = args:pop("return_value")
 end
+
+--- Patch an object field
+--
+-- A context manager in which the given field of the given object is patched
+-- with the given mock value, or a new mock if not provided. When the context
+-- manager exits, the original value is restored.
+--
+-- @param table: The table to patch.
+-- @param field: Name of the field of the table to patch.
+-- @param mock: An optional mock value. If not provided, a new mock will be
+--              created
+--
+-- @return The mock .
+Mock.patch = context_manager(function(table, field, mock)
+	mock = mock or Mock()
+	local old_field = table[field]
+	table[field] = mock
+	coroutine.yield(mock)
+	table[field] = old_field
+end)
 
 --- Get th call list for this mock
 --
