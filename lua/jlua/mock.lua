@@ -64,4 +64,18 @@ function Mock:__index(key)
 	return new_mock
 end
 
+--- Get a closure calling that mock.
+--
+-- Usefull to pass mock to method checking if the given value is a lua function.
+--
+-- Returns
+-- -------
+-- function(...) -> *
+--     A function that will forward calls to this mock.
+function Mock:as_function()
+	return function(...)
+		return self(...)
+	end
+end
+
 return Mock
