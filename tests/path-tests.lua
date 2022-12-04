@@ -7,6 +7,10 @@ function Suite.init()
 	local otter = Path("europe/france/dumb_ones/peter")
 	assert_not_nil(otter)
 
+	local otter_copy = Path(otter)
+	assert(not otter.is_absolute)
+	assert_equals(tostring(otter_copy), "europe/france/dumb_ones/peter")
+
 	otter = Path()
 	assert_not_nil(otter)
 	assert(not otter.is_absolute)

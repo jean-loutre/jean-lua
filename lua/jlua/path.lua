@@ -15,9 +15,15 @@ function Path:init(source)
 	self._parts = List()
 	self._is_absolute = false
 	if source ~= nil then
-		self._is_absolute = source:sub(1, 1) == "/"
-		for part in string.gmatch(source, "([^" .. separator .. "]+)") do
-			self._parts:push(part)
+		if Path:is_class_of(source) then
+			self._parts = List(source._parts)
+			self._is_absolute = source._is_absolute
+		else
+			assert(is_string(source), "Bad argument")
+			self._is_absolute = source:sub(1, 1) == "/"
+			for part in string.gmatch(source, "([^" .. separator .. "]+)") do
+				self._parts:push(part)
+			end
 		end
 	end
 end
