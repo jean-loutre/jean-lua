@@ -136,4 +136,20 @@ function Path:relative_to(right)
 	})
 end
 
+--- Return true if this path is a child of the given path
+--
+-- Parameters
+-- ----------
+-- parent : Path
+--     Parent path to check
+--
+-- Returns
+-- -------
+-- bool
+--     True if self is child of parent, false otherwise
+function Path:is_child_of(parent)
+	local parent_as_string = tostring(parent)
+	return string.sub(tostring(self), 1, string.len(parent_as_string)) == parent_as_string
+end
+
 return Path
