@@ -19,7 +19,7 @@ end
 
 local Suite = {}
 
-function Suite.any()
+function Suite.iterator_methods()
 	local otters = OtterList({ "didoo", "biloo", "baboo", "pierre-emmanuel" })
 	assert(otters:any())
 	assert(not OtterList({}):any())
