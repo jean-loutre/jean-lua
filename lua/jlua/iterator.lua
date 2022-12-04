@@ -82,6 +82,25 @@ function Iterator:__call()
 	return self._next()
 end
 
+--- Return true if all elements in the iterator matches the given predicate.
+--
+-- @param predicate The predicate function taking iterator elements as
+--                  parameter and returning a boolean, or nil.
+--
+-- @return True if an element matches predicate, false otherwise.
+function Iterator:all(predicate)
+	assert(predicate == nil or is_callable(predicate), "Bad argument")
+	local item
+	repeat
+		item = { self() }
+		if unpack(item) == nil then
+			return true
+		end
+	until not predicate(unpack(item))
+
+	return false
+end
+
 --- Return true if any element in the iterator matches the given predicate.
 --
 -- If no predicate is given, return true if the iterator contains at least

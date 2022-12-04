@@ -73,6 +73,18 @@ function Suite.from_values()
 	assert_equals(it(), nil)
 end
 
+function Suite.all()
+	local it = Iterator.from_values({ "swim", "eat", "sleep" })
+	assert(false == it:all(function(item)
+		return item == "swim" or item == "sleep"
+	end))
+
+	it = Iterator.from_values({ "swim", "sleep" })
+	assert(true == it:all(function(item)
+		return item == "swim" or item == "sleep"
+	end))
+end
+
 function Suite.any()
 	local it = Iterator(ipairs({ "swim", "eat", "sleep" }))
 	assert(true == it:any(function(idx, item)
