@@ -50,6 +50,10 @@ end
 -- Will save the calls that are made to this mock. If return_value was passed
 -- to the init method, it is returned.
 function Mock:__call(...)
+	local side_effect = rawget(self, "side_effect")
+	if side_effect then
+		side_effect(...)
+	end
 	self._calls:push(List({ ... }))
 	return self._return_value
 end
