@@ -37,6 +37,14 @@ Mock.patch = context_manager(function(table, field, mock)
 	table[field] = old_field
 end)
 
+--- Get an unique call for this mack
+--
+-- Will assert if more than one call was made
+function Mock.properties.call:get()
+	assert(#self._calls == 1)
+	return unpack(self._calls[1])
+end
+
 --- Get th call list for this mock
 --
 -- Will return a list of list of arguments for every call that was made on
@@ -80,6 +88,12 @@ function Mock:as_function()
 	return function(...)
 		return self(...)
 	end
+end
+
+--- Reset the call list for that mock
+--
+function Mock:reset()
+	self._calls = List()
 end
 
 return Mock
