@@ -50,7 +50,7 @@ end)
 --
 -- Will assert if more than one call was made
 function Mock.properties.call:get()
-	assert(#self._calls == 1)
+	assert(#self._calls == 1, "Expected a single call, got " .. #self._calls)
 	return unpack(self._calls[1])
 end
 
