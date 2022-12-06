@@ -158,11 +158,21 @@ end
 --- Return an iterator yielding elements matching the given predicate.
 --
 -- @param predicate The predicate function taking iterator elements as
---                  parameter and returning a boolean.
+--                  parameter and returning a boolean. If not provided
+--                  will be set to :
+--                  ```
+--                  function (item) return not not item end
+--                  ```
 --
 -- @return The filtered iterator
 function Iterator:filter(predicate)
-	assert(is_callable(predicate), "Bad argument")
+	assert(predicate == nil or is_callable(predicate), "Bad argument")
+	if predicate == nil then
+		predicate = function(item)
+			return not not item
+		end
+	end
+
 	return Iterator(function()
 		return self:first(predicate)
 	end)

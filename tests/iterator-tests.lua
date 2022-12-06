@@ -131,10 +131,16 @@ function Suite.count()
 end
 
 function Suite.filter()
+	local it = iter({ "swim", false, "eat", "sleep", false }):filter()
+	assert_equals(it(), "swim")
+	assert_equals(it(), "eat")
+	assert_equals(it(), "sleep")
+	assert_is_nil(it())
+
 	local function predicate(item)
 		return item == "eat" or item == "sleep"
 	end
-	local it = iter({ "swim", "eat", "sleep" }):filter(predicate)
+	it = iter({ "swim", "eat", "sleep" }):filter(predicate)
 	assert_equals(it(), "eat")
 	assert_equals(it(), "sleep")
 	assert_is_nil(it())
