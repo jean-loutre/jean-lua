@@ -32,6 +32,14 @@ function Suite.basename()
 	assert_equals(otter.basename, "peter")
 end
 
+function Suite.extension()
+	local otter = Path("europe/france/dumb_ones/peter.ott")
+	assert_equals(otter.extension, "ott")
+
+	otter = Path("europe/france/dumb_ones/peter")
+	assert_equals(otter.extension, "")
+end
+
 function Suite.parents()
 	local otter = Path("europe/france/dumb_ones/peter")
 	assert_equals(otter.parents:map(tostring):to_list(), { "europe/france/dumb_ones", "europe/france", "europe" })

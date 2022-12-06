@@ -33,6 +33,11 @@ function Path.properties.basename:get()
 	return self._parts[#self._parts]
 end
 
+--- Return the extension of the file
+function Path.properties.extension:get()
+	return self.basename:match("%.(%w+)$") or ""
+end
+
 --- True if the path is absolute
 function Path.properties.is_absolute:get()
 	return self._is_absolute
