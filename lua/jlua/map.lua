@@ -8,12 +8,12 @@ local Map = Collection:extend("jlua.map")
 
 --- Initialize a map from lua table
 --
--- @param ... : Anything that can be passed to Iterator.from to create a
+-- @param ... : Anything that can be passed to Iterator.iter to create a
 --              key / value pair iterator.
 function Map:init(...)
 	self:parent("init")
 	if select(1, ...) ~= nil then
-		for key, value in Iterator.from(...) do
+		for key, value in Iterator.iter(...) do
 			self[key] = value
 		end
 	end
@@ -52,10 +52,10 @@ end
 --- Update values in this map with given values, recursively.
 --
 -- @param ... Anything that can be converted to a key / value iterator through
---            the Iterator.from methods (Iterator, lua iterator function,
+--            the Iterator.iter methods (Iterator, lua iterator function,
 --            table with an __iter method or metamethod)
 function Map:deep_update(...)
-	for key, value in Iterator.from(...) do
+	for key, value in Iterator.iter(...) do
 		if is_table(value) and is_table(self[key] or false) then
 			self[key] = self[key] or {}
 			Map.deep_update(self[key], value)
@@ -68,7 +68,7 @@ end
 --- Create a new map with values of self updated with values of given map.
 --
 -- @param ... Anything that can be converted to a key / value iterator through
---            the Iterator.from methods (Iterator, lua iterator function,
+--            the Iterator.iterator methods (Iterator, lua iterator function,
 --            table with an __iter method or metamethod)
 function Map:merge(...)
 	local result = Map(self)
@@ -96,10 +96,10 @@ end
 --- Update values in this map with given values.
 --
 -- @param ... Anything that can be converted to a key / value iterator through
---            the Iterator.from methods (Iterator, lua iterator function,
+--            the Iterator.iter methods (Iterator, lua iterator function,
 --            table with an __iter method or metamethod)
 function Map:update(...)
-	for key, value in Iterator.from(...) do
+	for key, value in Iterator.iter(...) do
 		self[key] = value
 	end
 end

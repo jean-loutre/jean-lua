@@ -23,65 +23,40 @@ function Suite.init()
 	assert_equals(it(), nil)
 end
 
-function Suite.from_bad_arguments()
-	check_bad_arguments(Iterator.from, nil, 10, {}, "")
+function Suite.iter_bad_arguments()
+	check_bad_arguments(iter, nil, 10, {}, "")
 end
 
-function Suite.from_iterator()
-	local it = Iterator.from_values({})
-	assert(Iterator.from(it) == it)
+function Suite.iter_iterator()
+	local it = iter({})
+	assert(iter(it) == it)
 end
 
-function Suite.from_iterable()
+function Suite.iter_iterable()
 	local iterable = {
 		__iter = function()
 			return ipairs({ "swim", "eat", "sleep" })
 		end,
 	}
 
-	local it = Iterator.from(iterable)
+	local it = iter(iterable)
 	assert_equals({ it() }, { 1, "swim" })
 	assert_equals({ it() }, { 2, "eat" })
 	assert_equals({ it() }, { 3, "sleep" })
 	assert_equals(it(), nil)
 end
 
-function Suite.from_table()
-	local it = Iterator.from({ morning = "swim", noon = "eat", afternoon = "sleep" })
-	local result = {}
-	-- must store in a table then test that as table iteration order is not deterministic
-	for key, value in it do
-		result[key] = value
-	end
-
-	assert_equals(result, { morning = "swim", noon = "eat", afternoon = "sleep" })
-end
-
-function Suite.from_iterator_function()
-	local it = Iterator.from(ipairs({ "swim", "eat", "sleep" }))
-	assert_equals({ it() }, { 1, "swim" })
-	assert_equals({ it() }, { 2, "eat" })
-	assert_equals({ it() }, { 3, "sleep" })
-	assert_equals(it(), nil)
-end
-
-function Suite.from_values()
-	check_bad_arguments(Iterator.from_values, nil, 10, function() end, "")
-	local it = Iterator.from_values({ "swim", "eat", "sleep" })
-	assert_equals(it(), "swim")
-	assert_equals(it(), "eat")
-	assert_equals(it(), "sleep")
-	assert_equals(it(), nil)
-end
-
-function Suite.iter()
+function Suite.iter_values()
+	check_bad_arguments(iter, nil, 10, function() end, "")
 	local it = iter({ "swim", "eat", "sleep" })
 	assert_equals(it(), "swim")
 	assert_equals(it(), "eat")
 	assert_equals(it(), "sleep")
 	assert_equals(it(), nil)
+end
 
-	it = iter({ morning = "swim", noon = "eat", afternoon = "sleep" })
+function Suite.iter_table()
+	local it = iter({ morning = "swim", noon = "eat", afternoon = "sleep" })
 	local result = {}
 	-- must store in a table then test that as table iteration order is not deterministic
 	for key, value in it do
@@ -91,36 +66,44 @@ function Suite.iter()
 	assert_equals(result, { morning = "swim", noon = "eat", afternoon = "sleep" })
 end
 
+function Suite.iter_iterator_function()
+	local it = iter(ipairs({ "swim", "eat", "sleep" }))
+	assert_equals({ it() }, { 1, "swim" })
+	assert_equals({ it() }, { 2, "eat" })
+	assert_equals({ it() }, { 3, "sleep" })
+	assert_equals(it(), nil)
+end
+
 function Suite.all()
-	local it = Iterator.from_values({ "swim", "eat", "sleep" })
+	local it = iter({ "swim", "eat", "sleep" })
 	assert(false == it:all(function(item)
 		return item == "swim" or item == "sleep"
 	end))
 
-	it = Iterator.from_values({ "swim", "sleep" })
+	it = iter({ "swim", "sleep" })
 	assert(true == it:all(function(item)
 		return item == "swim" or item == "sleep"
 	end))
 end
 
 function Suite.any()
-	local it = Iterator(ipairs({ "swim", "eat", "sleep" }))
-	assert(true == it:any(function(idx, item)
-		return idx == 2 and item == "eat"
+	local it = iter({ "swim", "eat", "sleep" })
+	assert(true == it:any(function(item)
+		return item == "eat"
 	end))
 
-	it = Iterator.from_values({ "swim", "eat", "sleep" })
+	it = iter({ "swim", "eat", "sleep" })
 	assert(false == it:any(function(item)
 		return item == "take drugs"
 	end))
 
-	assert(true == Iterator.from_values({ "swim" }):any())
-	assert(false == Iterator.from_values({}):any())
+	assert(true == iter({ "swim" }):any())
+	assert(false == iter({}):any())
 end
 
 function Suite.chain()
-	local first = Iterator.from_values({ "swim", "eat", "sleep" })
-	local second = Iterator.from_values({ "party", "kill baby seal" })
+	local first = iter({ "swim", "eat", "sleep" })
+	local second = iter({ "party", "kill baby seal" })
 	local it = first:chain(second)
 	assert_equals(it(), "swim")
 	assert_equals(it(), "eat")
@@ -133,15 +116,14 @@ end
 function Suite.count()
 	local it
 
-	it = Iterator(ipairs({}))
+	it = iter({})
 	assert_equals(it:count(), 0)
 
-	it = Iterator(ipairs({ "swim", "eat", "sleep" }))
+	it = iter({ "swim", "eat", "sleep" })
 	assert_equals(it:count(), 3)
 
-	it = Iterator(ipairs({ "swim", "eat", "sleep" }))
-	local function predicate(idx, item)
-		assert(idx ~= nil)
+	it = iter({ "swim", "eat", "sleep" })
+	local function predicate(item)
 		return item == "swim" or item == "sleep"
 	end
 
@@ -152,7 +134,7 @@ function Suite.filter()
 	local function predicate(item)
 		return item == "eat" or item == "sleep"
 	end
-	local it = Iterator.from_values({ "swim", "eat", "sleep" }):filter(predicate)
+	local it = iter({ "swim", "eat", "sleep" }):filter(predicate)
 	assert_equals(it(), "eat")
 	assert_equals(it(), "sleep")
 	assert_is_nil(it())
@@ -161,35 +143,35 @@ end
 function Suite.first()
 	local it
 
-	it = Iterator.from_values({ "swim", "eat", "sleep" })
+	it = iter({ "swim", "eat", "sleep" })
 	assert_equals(it:first(), "swim")
 
-	it = Iterator.from_values({ "swim", "eat", "sleep" })
+	it = iter({ "swim", "eat", "sleep" })
 	local function predicate(item)
 		return item == "sleep"
 	end
 
 	assert_equals(it:first(predicate), "sleep")
 
-	it = Iterator.from_values({ "swim", "eat", "sleep" })
+	it = iter({ "swim", "eat", "sleep" })
 	local function drugs(item)
 		return item == "take drugs"
 	end
 	assert_is_nil(it:first(drugs))
-	assert_is_nil(Iterator.from_values({}):first())
+	assert_is_nil(iter({}):first())
 end
 
 function Suite.map()
-	local it = Iterator.from_values({ "swim", "eat", "sleep" }):map(string.upper)
+	local it = iter({ "swim", "eat", "sleep" }):map(string.upper)
 	assert_equals(it(), "SWIM")
 	assert_equals(it(), "EAT")
 	assert_equals(it(), "SLEEP")
 end
 
 function Suite.flatten()
-	local it = Iterator.from_values({
-		Iterator.from_values({ "swim", "sleep" }),
-		Iterator.from_values({ "eat", "kill baby seal" }),
+	local it = iter({
+		iter({ "swim", "sleep" }),
+		iter({ "eat", "kill baby seal" }),
 	}):flatten()
 
 	assert_equals(it(), "swim")
@@ -202,35 +184,35 @@ end
 function Suite.skip()
 	local it
 
-	it = Iterator.from_values({ "swim", "sleep", "eat" }):skip(2)
+	it = iter({ "swim", "sleep", "eat" }):skip(2)
 	assert_equals(it(), "eat")
 	assert_equals(it(), nil)
 
-	it = Iterator.from_values({ "swim", "sleep", "eat" }):skip(0)
+	it = iter({ "swim", "sleep", "eat" }):skip(0)
 	assert_equals(it(), "swim")
 	assert_equals(it(), "sleep")
 	assert_equals(it(), "eat")
 	assert_equals(it(), nil)
 
-	it = Iterator.from_values({ "swim", "sleep", "eat" }):skip(4)
+	it = iter({ "swim", "sleep", "eat" }):skip(4)
 	assert_equals(it(), nil)
 end
 
 function Suite.take()
 	local it
 
-	it = Iterator.from_values({ "swim", "sleep", "eat" }):take(2)
+	it = iter({ "swim", "sleep", "eat" }):take(2)
 	assert_equals(it(), "swim")
 	assert_equals(it(), "sleep")
 	assert_equals(it(), nil)
 
-	it = Iterator.from_values({ "swim", "sleep", "eat" }):take(4)
+	it = iter({ "swim", "sleep", "eat" }):take(4)
 	assert_equals(it(), "swim")
 	assert_equals(it(), "sleep")
 	assert_equals(it(), "eat")
 	assert_equals(it(), nil)
 
-	it = Iterator.from_values({ "swim", "sleep", "eat" }):take(0)
+	it = iter({ "swim", "sleep", "eat" }):take(0)
 	assert_equals(it(), nil)
 end
 

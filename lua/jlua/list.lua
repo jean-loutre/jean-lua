@@ -8,7 +8,7 @@ local is_table = require("jlua.type").is_table
 local List = Collection:extend("jlua.list")
 
 --- Initialize a list from a table
--- @param ... A table, or anything that can be passed to Iterator.from(...)
+-- @param ... A table, or anything that can be passed to Iterator.iter(...)
 function List:init(...)
 	local source = select(1, ...)
 	if source ~= nil then
@@ -17,7 +17,7 @@ function List:init(...)
 				table.insert(self, item)
 			end
 		else
-			for item in Iterator.from(...) do
+			for item in Iterator.iter(...) do
 				table.insert(self, item)
 			end
 		end

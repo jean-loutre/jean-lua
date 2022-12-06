@@ -1,5 +1,5 @@
 local Map = require("jlua.map")
-local Iterator = require("jlua.iterator")
+local iter = require("jlua.iterator").iter
 
 local Suite = {}
 
@@ -21,24 +21,24 @@ function Suite.init_from_table()
 end
 
 function Suite.init_from_lua_iterator()
-	local map = Map(pairs({ didoo = "bathing", biloo = "eating" }))
+	local map = Map({ didoo = "bathing", biloo = "eating" })
 	assert_equals(map, { didoo = "bathing", biloo = "eating" })
 end
 
 function Suite.init_from_iterator()
-	local map = Map(Iterator.from(pairs({ didoo = "bathing", biloo = "eating" })))
+	local map = Map({ didoo = "bathing", biloo = "eating" })
 	assert_equals(map, { didoo = "bathing", biloo = "eating" })
 end
 
 function Suite.keys()
-	local map = Map(Iterator.from(pairs({ didoo = "bathing", biloo = "eating" })))
+	local map = Map({ didoo = "bathing", biloo = "eating" })
 	local keys = map.keys:to_list()
 	keys:sort()
 	assert_equals(keys, { "biloo", "didoo" })
 end
 
 function Suite.values()
-	local map = Map(Iterator.from(pairs({ didoo = "bathing", biloo = "eating" })))
+	local map = Map({ didoo = "bathing", biloo = "eating" })
 	local values = map.values:to_list()
 	values:sort()
 	assert_equals(values, { "bathing", "eating" })
@@ -147,10 +147,10 @@ function Suite.update()
 end
 
 function Suite.to_map()
-	local map = Iterator(pairs(hobbies)):to_map()
+	local map = iter(hobbies):to_map()
 	assert_equals(map, hobbies)
 
-	map = Iterator.from_values({ "bathing", "eating", "playing", "working class exploitation" }):to_map(function(hobby)
+	map = iter({ "bathing", "eating", "playing", "working class exploitation" }):to_map(function(hobby)
 		return ({
 			bathing = "didoo",
 			eating = "biloo",

@@ -35,11 +35,12 @@ end
 --- Return an iterator object from a value.
 -- If the value is an iterator, return the iterator itself. If the value is a
 -- table with an __iter method, return an iterator over the function returned
--- by this __iter method, if it's a table, return an iterator over the
--- key / values of the given table, else try to construct an iterator with the
--- given iter method and states (see Iterator:init).
+-- by this __iter method, if it's a table, and #iterable ~= 0, return an
+-- iterator over the table elements. If it's a table and #iterable == 0, return
+-- an iterator over the key / values of the given table, else try to construct
+-- an iterator with the given iter method and states (see Iterator:init).
 --
--- @param iterable  The iterator, iterable or iterator function.
+-- @param iterable  The iterator, iterable, table or iterator function.
 -- @param invariant Invariant state passed to the iterator function, or nil
 --                  if not applicable.
 -- @param control   Initial control variable passed to the iterator function
@@ -47,51 +48,24 @@ end
 --
 -- @return The created iterator, or iterable itself if it's already an
 --         Iterator.
-function Iterator.from(iterable, invariant, control)
-	assert(table ~= Iterator, "You're calling Iterator:from, use Iterator.from.")
+function Iterator.iter(iterable, invariant, control)
 	if Iterator:is_class_of(iterable) then
 		return iterable
 	elseif is_iterable(iterable) then
 		return Iterator(iterable:__iter())
 	elseif is_table(iterable) then
-		return Iterator(pairs(iterable))
+		if #iterable ~= 0 then
+			local id = 0
+			return Iterator(function()
+				id = id + 1
+				return iterable[id]
+			end)
+		else
+			return Iterator(pairs(iterable))
+		end
 	end
 
 	return Iterator(iterable, invariant, control)
-end
-
---- Return an iterator yielding all values of a lua table.
---
--- Equivalent to ipairs, but without returning the indices.
---
--- @param table The table to iterate.
---
--- @return An iterator upon elements in the table.
-function Iterator.from_values(table)
-	assert(is_table(table), "Bad argument")
-	assert(table ~= Iterator, "You're calling Iterator:from_values, use Iterator.from_values.")
-	local id = 0
-	return Iterator(function()
-		id = id + 1
-		return table[id]
-	end)
-end
-
---- Return an iterator yielding all values or key / pairs of a lua table.
---
--- If #table is not 0, then will iterate on the table values, without the index.
--- Else it will iterate on key / value pairs.
---
--- @param table The table to iterate.
---
--- @return An iterator upon elements in the table.
-function Iterator.iter(table)
-	assert(is_table(table), "Bad argument")
-	if #table ~= 0 then
-		return Iterator.from_values(table)
-	end
-
-	return Iterator.from(pairs(table))
 end
 
 --- Return the next element of the iterator.
@@ -135,14 +109,14 @@ end
 --- Chain this iterator with elements of given iterable.
 --
 -- @param iterable An iterator, object with an __iter method or lua iterator.
---                 Will be passed to Iterator.from method and the result will
+--                 Will be passed to Iterator.iter method and the result will
 --                 be chained to current iterator.
 --
 -- @return An iterator yielding element of self Iterator with element of given
 --         iterable.
 function Iterator:chain(iterable, ...)
 	local iterate_next = false
-	local next_iterator = Iterator.from(iterable, ...)
+	local next_iterator = Iterator.iter(iterable, ...)
 	assert(next_iterator ~= self)
 	return Iterator(function()
 		if not iterate_next then
