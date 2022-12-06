@@ -32,9 +32,21 @@ end
 Mock.patch = context_manager(function(table, field, mock)
 	mock = mock or Mock()
 	local old_field = table[field]
-	table[field] = mock
+	-- bypass double definition checks on classes
+	if getmetatable(table) == getmetatable(Object) then
+		for key, value in pairs(table) do
+			print(key, value)
+		end
+		rawset(table._definition._metatable, field, mock)
+	else
+		table[field] = mock
+	end
 	coroutine.yield(mock)
-	table[field] = old_field
+	if getmetatable(table) == getmetatable(Object) then
+		rawset(table._definition._metatable, field, old_field)
+	else
+		table[field] = old_field
+	end
 end)
 
 --- Get an unique call for this mack

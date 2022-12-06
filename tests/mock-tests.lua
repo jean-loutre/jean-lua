@@ -1,4 +1,5 @@
 local Mock = require("jlua.mock")
+local Object = require("jlua.object")
 local with = require("jlua.context").with
 
 local Suite = {}
@@ -38,6 +39,27 @@ function Suite.patch()
 		assert_equals(mock, "shkeek")
 	end)
 	assert_equals(otter.cry, "kweek kweek")
+end
+
+function Suite.patch_class()
+	local Otter = Object:extend()
+
+	function Otter.cry()
+		return "kweek kweek"
+	end
+
+	local otter = Otter()
+
+	assert_equals(otter.cry(), "kweek kweek")
+	with(
+		Mock.patch(otter, "cry", function()
+			return "shkeek"
+		end),
+		function()
+			assert_equals(otter.cry(), "shkeek")
+		end
+	)
+	assert_equals(otter.cry(), "kweek kweek")
 end
 
 function Suite.as_callable()
