@@ -1,4 +1,5 @@
 local Iterator = require("jlua.iterator")
+local iter = require("jlua.iterator").iter
 
 local function check_bad_arguments(method, ...)
 	for _, argument in ipairs({ ... }) do
@@ -71,6 +72,23 @@ function Suite.from_values()
 	assert_equals(it(), "eat")
 	assert_equals(it(), "sleep")
 	assert_equals(it(), nil)
+end
+
+function Suite.iter()
+	local it = iter({ "swim", "eat", "sleep" })
+	assert_equals(it(), "swim")
+	assert_equals(it(), "eat")
+	assert_equals(it(), "sleep")
+	assert_equals(it(), nil)
+
+	it = iter({ morning = "swim", noon = "eat", afternoon = "sleep" })
+	local result = {}
+	-- must store in a table then test that as table iteration order is not deterministic
+	for key, value in it do
+		result[key] = value
+	end
+
+	assert_equals(result, { morning = "swim", noon = "eat", afternoon = "sleep" })
 end
 
 function Suite.all()

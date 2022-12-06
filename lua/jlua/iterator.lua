@@ -77,6 +77,23 @@ function Iterator.from_values(table)
 	end)
 end
 
+--- Return an iterator yielding all values or key / pairs of a lua table.
+--
+-- If #table is not 0, then will iterate on the table values, without the index.
+-- Else it will iterate on key / value pairs.
+--
+-- @param table The table to iterate.
+--
+-- @return An iterator upon elements in the table.
+function Iterator.iter(table)
+	assert(is_table(table), "Bad argument")
+	if #table ~= 0 then
+		return Iterator.from_values(table)
+	end
+
+	return Iterator.from(pairs(table))
+end
+
 --- Return the next element of the iterator.
 function Iterator:__call()
 	return self._next()
