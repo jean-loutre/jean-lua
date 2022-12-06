@@ -34,9 +34,6 @@ Mock.patch = context_manager(function(table, field, mock)
 	local old_field = table[field]
 	-- bypass double definition checks on classes
 	if getmetatable(table) == getmetatable(Object) then
-		for key, value in pairs(table) do
-			print(key, value)
-		end
 		rawset(table._definition._metatable, field, mock)
 	else
 		table[field] = mock
