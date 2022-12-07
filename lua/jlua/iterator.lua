@@ -227,6 +227,34 @@ function Iterator:flatten()
 	end)
 end
 
+--- Reduce the iterator.
+--
+-- Parameters
+-- ----------
+-- func : function(*, *) -> *
+--     The function to call for each element.
+-- init : *
+--     Initial value
+--
+-- Returns
+-- -------
+-- *
+--     The result of reducing the iterator.
+function Iterator:reduce(func, init)
+	assert(is_callable(func), "Bad argument")
+	local result = init
+	while true do
+		local item = { self() }
+		if item[1] == nil then
+			break
+		end
+
+		result = func(result, unpack(item))
+	end
+
+	return result
+end
+
 --- Skip the first count elements of an iterator.
 --
 -- @param count Number of elements to skip.

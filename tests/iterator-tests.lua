@@ -187,6 +187,13 @@ function Suite.flatten()
 	assert_equals(it(), nil)
 end
 
+function Suite.reduce()
+	local all_tasks = iter({ "swim", "sleep", "eat" }):reduce(function(result, item)
+		return result .. " <3 " .. item
+	end, "")
+	assert_equals(all_tasks, " <3 swim <3 sleep <3 eat")
+end
+
 function Suite.skip()
 	local it
 
