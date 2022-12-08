@@ -2,15 +2,15 @@
 package.path = package.path .. ";lua/?.lua;./third-party/?.lua;./tests/?.lua"
 
 local suites = {
+	"test.mock-tests",
 	"collection-tests",
 	"context-tests",
 	"iterator-tests",
 	"list-tests",
 	"map-tests",
-	"test.mock-tests",
 	"object-tests",
 	"path-tests",
-	"value-tests",
+	"type-tests",
 }
 
 local function get_suite_id(suite_module)
