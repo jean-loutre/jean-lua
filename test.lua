@@ -7,11 +7,15 @@ local suites = {
 	"iterator-tests",
 	"list-tests",
 	"map-tests",
-	"test-mock-tests",
+	"test.mock-tests",
 	"object-tests",
 	"path-tests",
 	"value-tests",
 }
+
+local function get_suite_id(suite_module)
+	return suite_module:gsub("%.", "/")
+end
 
 -- To make assert functions globally accessible
 for key, value in pairs(require("luaunit")) do
@@ -19,7 +23,7 @@ for key, value in pairs(require("luaunit")) do
 end
 
 for _, suite in ipairs(suites) do
-	_G[suite] = require(suite)
+	_G[get_suite_id(suite)] = require(suite)
 end
 
 function LuaUnit.isMethodTestName()
@@ -28,7 +32,7 @@ end
 
 function LuaUnit.isTestName(name)
 	for _, suite in ipairs(suites) do
-		if suite == name then
+		if get_suite_id(suite) == name then
 			return true
 		end
 	end
