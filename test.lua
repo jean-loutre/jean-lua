@@ -7,7 +7,7 @@ local suites = {
 	"iterator-tests",
 	"list-tests",
 	"map-tests",
-	"mock-tests",
+	"test-mock-tests",
 	"object-tests",
 	"path-tests",
 	"value-tests",

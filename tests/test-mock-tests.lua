@@ -1,4 +1,4 @@
-local Mock = require("jlua.mock")
+local Mock = require("jlua.test.mock")
 local Object = require("jlua.object")
 local with = require("jlua.context").with
 

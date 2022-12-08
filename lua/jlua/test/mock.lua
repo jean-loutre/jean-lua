@@ -1,5 +1,5 @@
 --- Mock object similar to python unittest.mock, usable in tests.
--- @module jlua.mock
+-- @module jlua.test.mock
 local List = require("jlua.list")
 local Map = require("jlua.map")
 local Object = require("jlua.object")
@@ -51,7 +51,7 @@ end)
 -- Will assert if more than one call was made
 function Mock.properties.call:get()
 	assert(#self._calls == 1, "Expected a single call, got " .. #self._calls)
-	return unpack(self._calls[1])
+	return self._calls[1]
 end
 
 --- Get th call list for this mock
