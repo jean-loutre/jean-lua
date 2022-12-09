@@ -133,11 +133,12 @@ function Suite.update()
 		["baboo"] = "baby seal killing",
 	})
 
-	otter_hobbies:update(pairs({
+	local result = otter_hobbies:update(pairs({
 		["baboo"] = "playing",
 		["pierre-emmanuel"] = "working class exploitation",
 	}))
 
+	assert(result == otter_hobbies)
 	assert_equals(otter_hobbies, {
 		["didoo"] = "bathing",
 		["biloo"] = "eating",

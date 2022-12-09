@@ -102,6 +102,8 @@ function Map:update(...)
 	for key, value in Iterator.iter(...) do
 		self[key] = value
 	end
+
+	return self
 end
 
 --- Return a map containing elements of this iterator
