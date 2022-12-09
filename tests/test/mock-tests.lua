@@ -62,7 +62,7 @@ function Suite.patch_class()
 	assert_equals(otter.cry(), "kweek kweek")
 end
 
-function Suite.as_callable()
+function Suite.as_function()
 	local otter = Mock()
 	otter:as_function()("kweek kweek")
 	assert_equals(otter.calls, { { "kweek kweek" } })
