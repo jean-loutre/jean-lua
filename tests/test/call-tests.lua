@@ -4,6 +4,7 @@ local Suite = {}
 
 function Suite.raw_equal()
 	assert_is_true(Call("eat", "fish") == Call("eat", "fish"))
+	assert_is_false(Call("eat", "fish") == Call("eat"))
 end
 
 function Suite.function_arg()

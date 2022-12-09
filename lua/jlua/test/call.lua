@@ -53,7 +53,7 @@ function Call:__eq(right)
 		end
 	end
 
-	return true
+	return left_iterator() == nil
 end
 
 return Call
