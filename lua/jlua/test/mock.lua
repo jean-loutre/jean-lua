@@ -5,6 +5,8 @@ local Map = require("jlua.map")
 local Object = require("jlua.object")
 local context_manager = require("jlua.context").context_manager
 
+local Call = require("jlua.test.call")
+
 local Mock = Object:extend()
 
 --- Initialize the mock
@@ -71,7 +73,7 @@ function Mock:__call(...)
 	if side_effect then
 		side_effect(...)
 	end
-	self._calls:push(List({ ... }))
+	self._calls:push(Call(...))
 	return self._return_value
 end
 

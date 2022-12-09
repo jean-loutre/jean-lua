@@ -7,7 +7,7 @@ local Suite = {}
 function Suite.call()
 	local weasel = Mock()
 	weasel("eat", "fish")
-	assert_equals(weasel.calls, { { "eat", "fish" } })
+	assert_equals(weasel.call, { "eat", "fish" })
 end
 
 function Suite.return_value()
@@ -19,7 +19,7 @@ function Suite.index()
 	local weasel = Mock()
 	weasel.eat("fish")
 	assert(Mock:is_class_of(weasel.eat))
-	assert_equals(weasel.eat.calls, { { "fish" } })
+	assert_equals(weasel.eat.call, { "fish" })
 end
 
 function Suite.patch()
@@ -65,7 +65,23 @@ end
 function Suite.as_function()
 	local otter = Mock()
 	otter:as_function()("kweek kweek")
-	assert_equals(otter.calls, { { "kweek kweek" } })
+	assert_equals(otter.call, { "kweek kweek" })
+end
+
+function Suite.call()
+	local weasel = Mock()
+	weasel("eat", "fish")
+	assert_equals(weasel.call, { "eat", "fish" })
+end
+
+function Suite.calls()
+	local weasel = Mock()
+	weasel("eat", "fish")
+	weasel("fight", "badger")
+	assert_equals(weasel.calls, {
+		{ "eat", "fish" },
+		{ "fight", "badger" },
+	})
 end
 
 return Suite

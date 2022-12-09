@@ -3,6 +3,7 @@ package.path = package.path .. ";lua/?.lua;./third-party/?.lua;./tests/?.lua"
 
 local suites = {
 	"test.mock-tests",
+	"test.call-tests",
 	"collection-tests",
 	"context-tests",
 	"iterator-tests",
