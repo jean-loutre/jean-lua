@@ -93,6 +93,16 @@ function Map:pop(key, default_value)
 	return result
 end
 
+--- Return a raw table containing the content of the map.
+function Map:to_raw()
+	local result = {}
+	for key, value in self:iter() do
+		result[key] = value
+	end
+
+	return result
+end
+
 --- Update values in this map with given values.
 --
 -- @param ... Anything that can be converted to a key / value iterator through

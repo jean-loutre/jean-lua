@@ -126,6 +126,14 @@ function Suite.pop()
 	assert_equals(otter_hobbies:pop("biloo", "nothing"), "nothing")
 end
 
+function Suite.to_raw()
+	local otter_hobbies = Map({ ["didoo"] = "bathing" })
+	local raw_hobbies = otter_hobbies:to_raw()
+
+	assert_equals(raw_hobbies["didoo"], "bathing")
+	assert_is_nil(getmetatable(raw_hobbies))
+end
+
 function Suite.update()
 	local otter_hobbies = Map({
 		["didoo"] = "bathing",
