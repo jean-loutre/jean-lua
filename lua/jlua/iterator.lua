@@ -130,6 +130,16 @@ function Iterator:chain(iterable, ...)
 	end)
 end
 
+--- Return true if any element in the iterator equals the given element
+--
+--- @param item any The item to check in the iterator
+--- @return boolean True if an element equals the given item, false otherwise.
+function Iterator:contains(item)
+	return self:any(function (item_it)
+		return item_it == item
+	end)
+end
+
 --- Count number of element matching the given predicate.
 --
 -- If no predicate is given, count all elements in the iterator.
