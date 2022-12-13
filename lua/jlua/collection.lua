@@ -25,6 +25,11 @@ function Collection:concat(delimiter)
 	return result
 end
 
+--- @param count string
+local function test_function(count)
+end
+
+test_function(12)
 --- Return a jlua.iterator over the element of the collection
 -- This method shoud be implemented in child classes
 -- @return A jlua.iterator over elements of the collection

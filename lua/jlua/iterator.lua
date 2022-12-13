@@ -1,5 +1,5 @@
---- Iterator, with map / filter functions and the like
--- @module jlua.iterator
+--- Iterator, with map / filter functions and the like.
+--- @classmod jlua.iterator
 local Object = require("jlua.object")
 local is_callable = require("jlua.type").is_callable
 local is_iterable = require("jlua.type").is_iterable
@@ -10,15 +10,20 @@ local unpack = unpack or table.unpack
 local Iterator = Object:extend("jlua.iterator")
 
 --- Initialize an iterator.
---
--- Can be initialized with a statefull iterator closure, or a stateless iterator
--- iterator. In the later case, invariant and control are the states needed by
--- the stateless iterator. For example, you can call :
---     Iterator(ipairs({"some", "list"}))
---
--- @param iterator  The iterator function.
--- @param invariant Invariant state passed to the iterator function.
--- @param control   Initial control variable passed to the iterator function.
+---
+--- Can be initialized with a statefull iterator closure, or a stateless
+--- iterator iterator. In the later case, invariant and control are the
+--- states needed by the stateless iterator. For example, you can call :
+---
+--- ```lua
+---     Iterator(ipairs({"some", "list"}))
+--- ```
+---
+--- @function contstructor()
+--- @tparam fn(any,any?):any? iterator  The iterator function. 
+--- @tparam any?              invariant Invariant state passed to the iterator.
+--- @tparam any?              control   Initial control variable passed to the
+--                                      iterator function.
 function Iterator:init(iterator, invariant, control)
 	assert(is_callable(iterator), "Bad argument")
 	if invariant ~= nil then

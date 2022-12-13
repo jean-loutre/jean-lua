@@ -5,8 +5,12 @@ nav:
     - Usage:
         - usage/_index.md
         - Object: usage/object.md
-repo_url: https://github.com/jean-loutre/jean-lua.git
+        - Functional: usage/functional.md
+    - ...
+docs_dir: doc
 edit_uri: ""
+repo_url: https://github.com/jean-loutre/jean-lua.git
+site_dir: .build/doc
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -22,6 +26,7 @@ theme:
     - content.tabs.link
     - header.autohide
     - navigation.instant
+    - navigation.indexes
     - navigation.tracking
     - search.highlight
     - search.share
@@ -41,9 +46,5 @@ theme:
         name: Switch to light mode
 plugins:
   - search
+  - awesome-pages
   - section-index
-  - git-revision-date-localized:
-      enable_creation_date: true
-  - git-committers:
-      repository: jean-loutre/jean-lua
-      branch: main

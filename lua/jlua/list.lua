@@ -1,5 +1,5 @@
---- A list of items, with random access
--- @module jlua.iterator
+--- A list of items, with random access.
+--- @module jlua.List
 local Collection = require("jlua.collection")
 local Iterator = require("jlua.iterator")
 local is_iterable = require("jlua.type").is_iterable
@@ -8,7 +8,7 @@ local is_table = require("jlua.type").is_table
 local List = Collection:extend("jlua.list")
 
 --- Initialize a list from a table
--- @param ... A table, or anything that can be passed to Iterator.iter(...)
+--- @param ... A table, or anything that can be passed to Iterator.iter(...)
 function List:init(...)
 	local source = select(1, ...)
 	if source ~= nil then
