@@ -20,7 +20,7 @@ local Iterator = Object:extend("jlua.iterator")
 --- ```
 ---
 --- @function contstructor()
---- @tparam fn(any,any?):any? iterator  The iterator function. 
+--- @tparam fn(any,any?):any? iterator  The iterator function.
 --- @tparam any?              invariant Invariant state passed to the iterator.
 --- @tparam any?              control   Initial control variable passed to the
 --                                      iterator function.
@@ -140,7 +140,7 @@ end
 --- @param item any The item to check in the iterator
 --- @return boolean True if an element equals the given item, false otherwise.
 function Iterator:contains(item)
-	return self:any(function (item_it)
+	return self:any(function(item_it)
 		return item_it == item
 	end)
 end
