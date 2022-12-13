@@ -370,6 +370,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    Properties
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -679,6 +686,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    Properties
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -696,8 +710,9 @@
 
 <h1 id="object">Object</h1>
 <p>The jlua.object module contains definition of an Object class, that can
-be extended to create new classes. It supports single inheritance, method and
-metamethod overriding, and properties getter and setters.</p>
+be extended to create new classes. It supports single inheritance, methods,
+properties with getters and setters and metamethod overriding, including
+__index and __newindex.</p>
 <h2 id="defining-a-new-class">Defining a new class</h2>
 <p>A new class can be created by extending from another one. Derived class will
 inherit the methods, metamethods and properties of it's parent. If your class
@@ -744,25 +759,73 @@ like you do on regular lua tables :</p>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="kr">return</span> <span class="s2">&quot;Otterson&quot;</span>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="kr">end</span>
 </code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Defining twice the same method will assert. This is done to prevent unwanted
+method overwrites. If you really need to overwrite a method, you can do it
+by using <code>rawset</code> like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>rawset(Otter._definition._metatable, &quot;last_name&quot;, function() [...] end)
+</code></pre></div>
+</div>
 <h3 id="calling-parent-methods">Calling Parent Methods</h3>
 <p>To call a parent method in a child class, use the super() method defined on
-classes instances :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">throw</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="kr">return</span> <span class="s2">&quot;throwing otter at &quot;</span> <span class="o">..</span> <span class="n">distance</span> <span class="o">..</span> <span class="s2">&quot;m&quot;</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kr">end</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kd">local</span> <span class="n">SpaceOtter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="kd">local</span> <span class="n">SpaceOtter</span><span class="p">:</span><span class="n">throw</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">self</span><span class="p">:</span><span class="n">super</span><span class="p">(</span><span class="s2">&quot;throw&quot;</span><span class="p">,</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="kr">end</span>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">SpaceOtter</span><span class="p">()</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="n">peter</span><span class="p">:</span><span class="n">throw_at</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="c1">-- -&gt; Throwing otter at 133m</span>
+classes instances, with the method name as the first argument, arguments to
+forward to the parent method next :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">throw</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="kr">return</span> <span class="s2">&quot;throwing otter at &quot;</span> <span class="o">..</span> <span class="n">distance</span> <span class="o">..</span> <span class="s2">&quot;m&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kr">end</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="kd">local</span> <span class="n">SpaceOtter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="kd">local</span> <span class="n">SpaceOtter</span><span class="p">:</span><span class="n">throw</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">self</span><span class="p">:</span><span class="n">super</span><span class="p">(</span><span class="s2">&quot;throw&quot;</span><span class="p">,</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="kr">end</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">SpaceOtter</span><span class="p">()</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">peter</span><span class="p">:</span><span class="n">throw_at</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="c1">-- -&gt; Throwing otter at 133m</span>
 </code></pre></div>
+<h2 id="properties">Properties</h2>
+<p>Properties are defined using the "properties" field of classes, accessing
+the wanted property on it and defining a get or a set method :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">init</span><span class="p">()</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">self</span><span class="p">.</span><span class="n">_age</span> <span class="o">=</span> <span class="mi">10</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="kr">end</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">.</span><span class="nc">properties</span><span class="p">.</span><span class="nc">age</span><span class="p">:</span><span class="nf">get</span><span class="p">()</span> <span class="c1">-- Notice the colon before get()</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="kr">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_age</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="kr">end</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">.</span><span class="nc">properties</span><span class="p">.</span><span class="nc">age</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1">-- Notice the colon before set()</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">self</span><span class="p">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="kr">end</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">()</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">peter</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">-- 10</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="n">peter</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">40</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">peter</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">-- 40</span>
+</code></pre></div>
+<p>You can define properties with only a getter, or only a setter. You can define
+a property with no getter nor setter, but in this case it will only be defined
+in your head and will have no effect on the running program.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting a property with no setter defined, or getting a property with no
+getter will raise an error at runtime. There is no default behavior for
+getters / setters once one of them is defined.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Redefining a getter or a setter that was already defined on a property will
+raise an error. Same as for methods, this was made to prevent erroneous
+method overwriting.</p>
+</div>
 
 
 
