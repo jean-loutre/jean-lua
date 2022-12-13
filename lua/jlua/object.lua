@@ -1,8 +1,9 @@
 --- Base class for class model
 -- Allow to create very simple classes that only support single inheritance.
 
--- @module jlua.object
--- Metatable for classes
+--- @class jlua.Class
+--- @field properties any
+--- Metatable for classes
 local Class = {}
 Class.__index = Class
 
@@ -178,7 +179,7 @@ end
 -- @param properties A table of { property_name = { get = getter(),
 --                   set = setter() } entries.
 --
--- @return The newly created class
+-- @return jlua.Class The newly created class
 function Class:extend(name)
 	local parent_definition = self._definition
 	local parent_metatable = parent_definition._metatable
@@ -249,6 +250,7 @@ function Class:wrap(object)
 	return setmetatable(object, self._definition._metatable)
 end
 
+--- @class jlua.Object:jlua.Class
 return setmetatable({
 	_definition = {
 		_defined_metamethods = {},

@@ -4,6 +4,7 @@ local Collection = require("jlua.collection")
 local Iterator = require("jlua.iterator")
 local is_table = require("jlua.type").is_table
 
+--- @class jlua.Map
 local Map = Collection:extend("jlua.map")
 
 --- Initialize a map from lua table
