@@ -2,72 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://example.com/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/collection/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/context/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/iterator/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/list/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/map/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/object/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/path/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://example.com/api/string/</loc>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/type/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/test/call/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/api/test/mock/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/usage/_index/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/usage/functional/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://example.com/usage/object/</loc>
-         <lastmod>2022-12-13</lastmod>
+         <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
