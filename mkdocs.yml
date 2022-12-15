@@ -20,6 +20,8 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed: {alternate_style: true }
   - tables
+  - toc:
+      permalink: true
 theme:
   name: material
   features:
@@ -33,6 +35,7 @@ theme:
     - search.suggest
     - toc.follow
     - navigation.top
+    - navigation.tabs
   palette: 
     - scheme: default
       primary: white

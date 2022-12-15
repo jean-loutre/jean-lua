@@ -9,9 +9,12 @@ from luadoc.model import (
     LuaType,
     LuaTypeAny,
     LuaTypeCustom,
-    LuaTypeFunction
+    LuaTypeFunction,
+    LuaTypeString,
+    LuaTypeBoolean,
+    LuaReturn,
 )
-from snakemd import Document, InlineText, Header, Element, Table
+from snakemd import Document, InlineText, Header, Element, Table, Paragraph
 
 source_root = Path.cwd() / "lua/jlua"
 doc_root = Path.cwd() / "doc/api"
@@ -41,26 +44,31 @@ def get_type_string(type_: LuaType):
         return type_.name
     if isinstance(type_, LuaTypeFunction):
         return type_.id
+    if isinstance(type_, LuaTypeString):
+        return "string"
+    if isinstance(type_, LuaTypeBoolean):
+        return "string"
 
-    assert(False)
+    print(type_)
+    assert False
 
 
 def write_function(markdown: Document, method: LuaFunction, header_level: int):
-    signature = "{name}({arguments})".format(
-        name=method.name,
-        arguments=", ".join([it.name for it in method.params]),
-        returns=method.returns,
-    )
-    markdown.add_element(Header(InlineText(signature, code=True), level=header_level))
 
+    arguments = ", ".join([f"{it.name}: {get_type_string(it.type)}" for it in method.params])
+    returns = ", ".join([get_type_string(it.type) for it in method.returns])
+    signature = f"function {method.name}({arguments}) -> {returns}"
+    markdown.add_element(RawElement(f"## {method.name}()"))
     markdown.add_paragraph(method.short_desc)
-    test: LuaParam
+
+    markdown.add_element(RawElement(f"**Signature** "))
+    markdown.add_code(signature, lang="lua")
 
     markdown.add_table(
         ["Parameter", "Type", "Description", "Default"],
         [
             [
-                f"```{param.name}```" if param.is_opt else f"```{param.name}```*" ,
+                f"```{param.name}```" if param.is_opt else f"```{param.name}```*",
                 f"```{get_type_string(param.type)}```",
                 param.desc,
                 param.default_value,
@@ -75,7 +83,31 @@ def write_function(markdown: Document, method: LuaFunction, header_level: int):
         ],
     )
 
-    markdown.add_element(RawElement(method.desc))
+    if method.returns:
+        markdown.add_table(
+            ["Returns", "Description"],
+            [
+                [
+                    f"```{get_type_string(it.type)}```",
+                    it.desc,
+                ]
+                for it in method.returns
+            ],
+            align=[
+                Table.Align.LEFT,
+                Table.Align.LEFT,
+            ],
+        )
+
+    if method.desc:
+        markdown.add_element(Paragraph([InlineText("Description").bold()]))
+        markdown.add_element(RawElement(method.desc))
+
+    if method.usage:
+        markdown.add_element(Paragraph([InlineText("Usage").bold()]))
+        markdown.add_code(method.usage, lang="lua")
+
+    markdown.add_horizontal_rule()
 
 
 def write_class(
@@ -104,6 +136,7 @@ def write_class(
         for method in class_.methods:
             write_function(markdown, method, header_level + 2)
 
+
 def write_module(markdown: Document, module: LuaModule):
     if module.is_class_mod:
         write_class(
@@ -114,6 +147,15 @@ def write_module(markdown: Document, module: LuaModule):
             short_desc=module.short_desc,
             desc=module.desc,
         )
+    else:
+        markdown.add_header(f"{module.name}", 1)
+        markdown.add_paragraph(module.short_desc)
+        markdown.add_paragraph(module.desc)
+        markdown.add_horizontal_rule()
+        if module.functions:
+            markdown.add_header("Methods", 2)
+        for function in module.functions:
+            write_function(markdown, function, 3)
 
 
 for source_path in source_root.glob("**/*.lua"):
