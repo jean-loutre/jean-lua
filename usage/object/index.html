@@ -195,6 +195,53 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../_index/" class="md-tabs__link md-tabs__link--active">
+      Usage
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../api/collection/" class="md-tabs__link">
+      Api Reference
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -207,8 +254,10 @@
                   <div class="md-sidebar__inner">
                     
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Jean-Lua Library" class="md-nav__button md-logo" aria-label="Jean-Lua Library" data-md-component="logo">
       
@@ -467,7 +516,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/context/" class="md-nav__link">
-        Context
+        unknown
       </a>
     </li>
   
@@ -495,7 +544,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/list/" class="md-nav__link">
-        List
+        jlua.List
       </a>
     </li>
   
@@ -509,7 +558,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/map/" class="md-nav__link">
-        Map
+        unknown
       </a>
     </li>
   
@@ -523,7 +572,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/object/" class="md-nav__link">
-        Object
+        unknown
       </a>
     </li>
   
@@ -537,7 +586,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/path/" class="md-nav__link">
-        Path
+        unknown
       </a>
     </li>
   
@@ -551,7 +600,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/string/" class="md-nav__link">
-        String
+        jlua.string
       </a>
     </li>
   
@@ -565,7 +614,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/type/" class="md-nav__link">
-        Type
+        unknown
       </a>
     </li>
   
@@ -615,7 +664,7 @@
   
     <li class="md-nav__item">
       <a href="../../api/test/mock/" class="md-nav__link">
-        Mock
+        unknown
       </a>
     </li>
   
@@ -724,12 +773,12 @@
                   
 
 
-<h1 id="object">Object</h1>
+<h1 id="object">Object<a class="headerlink" href="#object" title="Permanent link">&para;</a></h1>
 <p>The jlua.object module contains definition of an Object class, that can
 be extended to create new classes. It supports single inheritance, methods,
 properties with getters and setters and metamethod overriding, including
 __index and __newindex.</p>
-<h2 id="defining-a-new-class">Defining a new class</h2>
+<h2 id="defining-a-new-class">Defining a new class<a class="headerlink" href="#defining-a-new-class" title="Permanent link">&para;</a></h2>
 <p>A new class can be created by extending from another one. Derived class will
 inherit the methods, metamethods and properties of it's parent. If your class
 has no base class, extend the Object class.</p>
@@ -738,7 +787,7 @@ has no base class, extend the Object class.</p>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">local</span> <span class="n">SpaceOtter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
 </code></pre></div>
-<h2 id="constructors">Constructors</h2>
+<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permanent link">&para;</a></h2>
 <p>Objects are constructed by calling the class. You can give arguments to the
 constructor, they will be forwarded to the <code>init</code> method of the class, if it's
 defined.</p>
@@ -758,8 +807,8 @@ defined.</p>
 <a href="#calling-parent-methods">call the parent init method</a> by calling
 <code>self:super("init", ...)</code>.</p>
 </div>
-<h2 id="methods">Methods</h2>
-<h3 id="method-definition">Method Definition</h3>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h3 id="method-definition">Method Definition<a class="headerlink" href="#method-definition" title="Permanent link">&para;</a></h3>
 <p>Methods can be defined either by adding them on the class metatable before
 calling the extend() method, or afterwards, by defining them on the class,
 like you do on regular lua tables :</p>
@@ -783,7 +832,7 @@ by using <code>rawset</code> like this:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>rawset(Otter._definition._metatable, &quot;last_name&quot;, function() [...] end)
 </code></pre></div>
 </div>
-<h3 id="calling-parent-methods">Calling Parent Methods</h3>
+<h3 id="calling-parent-methods">Calling Parent Methods<a class="headerlink" href="#calling-parent-methods" title="Permanent link">&para;</a></h3>
 <p>To call a parent method in a child class, use the super() method defined on
 classes instances, with the method name as the first argument, arguments to
 forward to the parent method next :</p>
@@ -803,7 +852,7 @@ forward to the parent method next :</p>
 <a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">SpaceOtter</span><span class="p">()</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">peter</span><span class="p">:</span><span class="n">throw_at</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="c1">-- -&gt; Throwing otter at 133m</span>
 </code></pre></div>
-<h2 id="properties">Properties</h2>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
 <p>Properties are defined using the "properties" field of classes, accessing
 the wanted property on it and defining a get or a set method :</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
@@ -922,7 +971,7 @@ method overwriting.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "header.autohide", "navigation.instant", "navigation.indexes", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "navigation.top"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "header.autohide", "navigation.instant", "navigation.indexes", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "navigation.top", "navigation.tabs"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
