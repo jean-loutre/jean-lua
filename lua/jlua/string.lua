@@ -16,7 +16,7 @@ if setfenv ~= nil then
 			error("Malformed expression :" .. expression)
 		end
 		setfenv(expression_code, environment)
-		return expression()
+		return expression_code()
 	end
 else
 	get_expression_value = function(expression, environment)
