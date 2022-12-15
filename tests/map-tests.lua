@@ -159,14 +159,16 @@ function Suite.to_map()
 	local map = iter(hobbies):to_map()
 	assert_equals(map, hobbies)
 
-	map = iter({ "bathing", "eating", "playing", "working class exploitation" }):to_map(function(hobby)
-		return ({
-			bathing = "didoo",
-			eating = "biloo",
-			playing = "baboo",
-			["working class exploitation"] = "pierre-emmanuel",
-		})[hobby]
-	end)
+	map = iter({ "bathing", "eating", "playing", "working class exploitation" }):to_map(
+		function(hobby)
+			return ({
+				bathing = "didoo",
+				eating = "biloo",
+				playing = "baboo",
+				["working class exploitation"] = "pierre-emmanuel",
+			})[hobby]
+		end
+	)
 	assert_equals(map, hobbies)
 end
 

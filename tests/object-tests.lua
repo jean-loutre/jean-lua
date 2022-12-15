@@ -216,7 +216,10 @@ function Suite.index()
 	end
 
 	local otter = Otter()
-	assert_equals(otter.speak_esperanto("Hej, samideano"), "I can't do that, moron.")
+	assert_equals(
+		otter.speak_esperanto("Hej, samideano"),
+		"I can't do that, moron."
+	)
 end
 
 function Suite.index_called_first_in_child_class()
@@ -239,7 +242,10 @@ function Suite.index_called_first_in_child_class()
 	end
 
 	local otter = SpaceOtter()
-	assert_equals(otter.speak_esperanto("Hej, samideano"), "I can't do that, moron.")
+	assert_equals(
+		otter.speak_esperanto("Hej, samideano"),
+		"I can't do that, moron."
+	)
 end
 
 function Suite.properties()
@@ -326,9 +332,12 @@ end
 function Suite.error_on_bad_property_key_definition()
 	local Otter = Object:extend()
 
-	assert_error_msg_contains("can only define get or set method on properties.", function()
-		function Otter.properties.last_name.gut_fuck_i_made_a_typo() end
-	end)
+	assert_error_msg_contains(
+		"can only define get or set method on properties.",
+		function()
+			function Otter.properties.last_name.gut_fuck_i_made_a_typo() end
+		end
+	)
 end
 
 function Suite.error_on_property_redefinition()

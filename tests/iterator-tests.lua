@@ -63,7 +63,10 @@ function Suite.iter_table()
 		result[key] = value
 	end
 
-	assert_equals(result, { morning = "swim", noon = "eat", afternoon = "sleep" })
+	assert_equals(
+		result,
+		{ morning = "swim", noon = "eat", afternoon = "sleep" }
+	)
 end
 
 function Suite.iter_iterator_function()
@@ -188,9 +191,12 @@ function Suite.flatten()
 end
 
 function Suite.reduce()
-	local all_tasks = iter({ "swim", "sleep", "eat" }):reduce(function(result, item)
-		return result .. " <3 " .. item
-	end, "")
+	local all_tasks = iter({ "swim", "sleep", "eat" }):reduce(
+		function(result, item)
+			return result .. " <3 " .. item
+		end,
+		""
+	)
 	assert_equals(all_tasks, " <3 swim <3 sleep <3 eat")
 end
 

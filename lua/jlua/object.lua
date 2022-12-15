@@ -71,7 +71,9 @@ function Class:__index(key)
 		}, PropertiesGuard)
 	end
 
-	return definition._metatable[key] or definition._parent and definition._parent._metatable[key] or Class[key]
+	return definition._metatable[key]
+		or definition._parent and definition._parent._metatable[key]
+		or Class[key]
 end
 
 function Class:__newindex(key, value)
@@ -206,7 +208,10 @@ function Class:extend(name)
 	end
 
 	function metatable.parent(instance, method_name, ...)
-		return class_index(parent_definition, instance, method_name)(instance, ...)
+		return class_index(parent_definition, instance, method_name)(
+			instance,
+			...
+		)
 	end
 
 	name = name or tostring(metatable)

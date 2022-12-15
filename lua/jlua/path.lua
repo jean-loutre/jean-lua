@@ -73,7 +73,10 @@ function Path:__div(right)
 		right = Path(right)
 	end
 	assert(Path:is_class_of(right), "Bad argument")
-	assert(not right.is_absolute, "Trying to concatenate an absolute path to another")
+	assert(
+		not right.is_absolute,
+		"Trying to concatenate an absolute path to another"
+	)
 	return Path:wrap({
 		_is_absolute = self._is_absolute,
 		_parts = self._parts:iter():chain(right._parts):to_list(),
@@ -101,7 +104,15 @@ function Path:open(mode)
 		__enter = function(context_manager)
 			local handle, err_message, err_code = io.open(tostring(self), mode)
 			if handle == nil then
-				error("Error while opening file " .. tostring(self) .. " : " .. err_message .. "(" .. err_code .. ")")
+				error(
+					"Error while opening file "
+						.. tostring(self)
+						.. " : "
+						.. err_message
+						.. "("
+						.. err_code
+						.. ")"
+				)
 			end
 			context_manager._handle = handle
 			return handle
@@ -154,7 +165,8 @@ end
 --     True if self is child of parent, false otherwise
 function Path:is_child_of(parent)
 	local parent_as_string = tostring(parent)
-	return string.sub(tostring(self), 1, string.len(parent_as_string)) == parent_as_string
+	return string.sub(tostring(self), 1, string.len(parent_as_string))
+		== parent_as_string
 end
 
 return Path

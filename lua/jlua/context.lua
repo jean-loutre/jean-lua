@@ -18,9 +18,10 @@ local context = {}
 function context.with(context_manager, inner)
 	local context_variable = { context_manager:__enter() }
 
-	local result = { pcall(function()
-		return inner(unpack(context_variable))
-	end) }
+	local result =
+		{ pcall(function()
+			return inner(unpack(context_variable))
+		end) }
 	local status = result[1]
 	if not status then
 		local err = result[2]
@@ -57,10 +58,14 @@ function context.context_manager(func)
 		return {
 			coroutine = coroutine.create(func),
 			__enter = function(context_manager)
-				return handle_coro_result(coroutine.resume(context_manager.coroutine, unpack(args)))
+				return handle_coro_result(
+					coroutine.resume(context_manager.coroutine, unpack(args))
+				)
 			end,
 			__exit = function(context_manager)
-				return handle_coro_result(coroutine.resume(context_manager.coroutine))
+				return handle_coro_result(
+					coroutine.resume(context_manager.coroutine)
+				)
 			end,
 		}
 	end

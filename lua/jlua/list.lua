@@ -12,7 +12,11 @@ local List = Collection:extend("jlua.list")
 function List:init(...)
 	local source = select(1, ...)
 	if source ~= nil then
-		if is_table(source) and not is_iterable(source) and not Iterator:is_class_of(source) then
+		if
+			is_table(source)
+			and not is_iterable(source)
+			and not Iterator:is_class_of(source)
+		then
 			for _, item in ipairs(source) do
 				table.insert(self, item)
 			end

@@ -98,7 +98,10 @@ end
 function Suite.slice()
 	local otters = List({ "didoo", "biloo", "baboo", "pierre-emmanuel" })
 
-	assert_equals(otters:slice(1, 4):to_list(), { "didoo", "biloo", "baboo", "pierre-emmanuel" })
+	assert_equals(
+		otters:slice(1, 4):to_list(),
+		{ "didoo", "biloo", "baboo", "pierre-emmanuel" }
+	)
 	assert_equals(otters:slice(1, 1):to_list(), { "didoo" })
 	assert_equals(otters:slice(4, 3):to_list(), {})
 	assert_equals(otters:slice(2, 3):to_list(), { "biloo", "baboo" })
@@ -114,7 +117,10 @@ end
 function Suite.reverse()
 	local otters = List({ "didoo", "biloo", "baboo", "pierre-emmanuel" })
 
-	assert_equals(otters:reverse():to_list(), { "pierre-emmanuel", "baboo", "biloo", "didoo" })
+	assert_equals(
+		otters:reverse():to_list(),
+		{ "pierre-emmanuel", "baboo", "biloo", "didoo" }
+	)
 end
 
 function Suite.iterator_to_list()
