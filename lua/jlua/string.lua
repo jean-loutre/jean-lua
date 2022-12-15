@@ -1,5 +1,10 @@
---- String function utilities
--- @module jlua.iterator
+--- String utilities.
+--- This module contains various helpers related to string.
+---
+--- The metatable of string isn't replaced, meaning all methods declared here
+--- have to be called explicitely.
+---
+--- @module jlua.string
 local string = {}
 
 local get_expression_value
@@ -26,6 +31,32 @@ end
 
 local unpack = unpack or table.unpack
 
+--- Extended string format.
+---
+--- Replacement fields in the format string are delimited with braces {}. Each
+--- replacement field can contains either a name of a a keyword argument,  the
+--- index of a positionnal arguments or nothing. Each time a replacement field
+--- with no name or index is provided, the next format argument is taken.
+---
+--- Field format can be sepcified after a colon : in a replacement field. This
+--- format is passed to the lua format function, thus the format for C function
+--- ``printf`` applies.
+---
+--- To escape braces, simply double them.
+---
+--- @usage
+--- format("{} is an {species} called {0}", "Jean-Paul", { species = "otter"})
+--- -- Jean-Paul is an otter called Jean-Paul
+---
+--- format("{} is {:.2f} years old", "Jean-Paul", 24.2342)
+--- -- Jean-Paul is 24.23 years old
+---
+--- format("{name} is {age:.2f} years old", { name = "Jean-Paul", age = 24.2342})
+--- -- Jean-Paul is 24.23 years old
+---
+--- @tparam string fmt String format.
+--- @vararg any        Format arguments.
+--- @return string    Formatted string.
 function string.format(fmt, ...)
 	local arguments = { ... }
 
