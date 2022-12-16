@@ -317,6 +317,8 @@
         
           
         
+          
+        
       
       
         
@@ -344,7 +346,7 @@
   
     <li class="md-nav__item">
       <a href="../../usage/object/" class="md-nav__link">
-        Object
+        Object Model
       </a>
     </li>
   
@@ -359,6 +361,20 @@
     <li class="md-nav__item">
       <a href="../../usage/functional/" class="md-nav__link">
         Functional
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/logging/" class="md-nav__link">
+        Logging
       </a>
     </li>
   
@@ -514,6 +530,13 @@
           <li class="md-nav__item">
   <a href="#any" class="md-nav__link">
     any()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call" class="md-nav__link">
+    call()
   </a>
   
 </li>
@@ -826,6 +849,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#call" class="md-nav__link">
+    call()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#chain" class="md-nav__link">
     chain()
   </a>
@@ -1031,10 +1061,53 @@ states needed by the stateless iterator. For example, you can call :</p>
 </tbody>
 </table>
 <hr />
+<h3 id="call">call()<a class="headerlink" href="#call" title="Permanent link">&para;</a></h3>
+<p><a href='/api/test/call/#call'>Call</a> all element in the iterator with the given arguments.</p>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">call</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">An</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>...</code>*</td>
+<td align="left"><code>any</code></td>
+<td align="left">Arguments to call iterator elements with.</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Returns</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>An</code></td>
+<td align="left">iterator of the result of the calls.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">local</span> <span class="n">methods</span> <span class="o">=</span> <span class="n">iter</span><span class="p">({</span><span class="n">add</span><span class="p">,</span> <span class="n">multiply</span><span class="p">,</span> <span class="n">divide</span><span class="p">})</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">local</span> <span class="n">operations</span> <span class="o">=</span> <span class="n">methods</span><span class="p">:</span><span class="n">call</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span><span class="n">to_list</span><span class="p">()</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1">-- { 6, 8, 2 }</span>
+</code></pre></div>
+<hr />
 <h3 id="chain">chain()<a class="headerlink" href="#chain" title="Permanent link">&para;</a></h3>
 <p>Chain this iterator with elements of given iterable.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">chain</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="p">...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">chain</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="p">...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1064,7 +1137,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="contains">contains()<a class="headerlink" href="#contains" title="Permanent link">&para;</a></h3>
 <p>Return true if any element in the iterator equals the given element</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">contains</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">contains</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1102,7 +1175,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="count">count()<a class="headerlink" href="#count" title="Permanent link">&para;</a></h3>
 <p>Count number of element matching the given predicate.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">count</span><span class="p">(</span><span class="n">predicate</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">count</span><span class="p">(</span><span class="n">predicate</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1126,7 +1199,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="filter">filter()<a class="headerlink" href="#filter" title="Permanent link">&para;</a></h3>
 <p>Return an iterator yielding elements matching the given predicate.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">filter</span><span class="p">(</span><span class="n">predicate</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">filter</span><span class="p">(</span><span class="n">predicate</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1150,7 +1223,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="first">first()<a class="headerlink" href="#first" title="Permanent link">&para;</a></h3>
 <p>Return the first element in the iterator matching the given predicate.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">first</span><span class="p">(</span><span class="n">predicate</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">first</span><span class="p">(</span><span class="n">predicate</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1174,7 +1247,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="map">map()<a class="headerlink" href="#map" title="Permanent link">&para;</a></h3>
 <p>Return a new iterator yielding results of applying a function to all items.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">map</span><span class="p">(</span><span class="n">mapper</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">map</span><span class="p">(</span><span class="n">mapper</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1198,7 +1271,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="flatten">flatten()<a class="headerlink" href="#flatten" title="Permanent link">&para;</a></h3>
 <p>Returns elements of the nested iterator of an iterator of iterators.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">flatten</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">flatten</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1222,7 +1295,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="reduce">reduce()<a class="headerlink" href="#reduce" title="Permanent link">&para;</a></h3>
 <p>Reduce the iterator.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">reduce</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">init</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">reduce</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">init</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1252,7 +1325,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="skip">skip()<a class="headerlink" href="#skip" title="Permanent link">&para;</a></h3>
 <p>Skip the first count elements of an iterator.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">skip</span><span class="p">(</span><span class="n">count</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">skip</span><span class="p">(</span><span class="n">count</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1276,7 +1349,7 @@ states needed by the stateless iterator. For example, you can call :</p>
 <h3 id="take">take()<a class="headerlink" href="#take" title="Permanent link">&para;</a></h3>
 <p>Return the first elements of an iterator.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">take</span><span class="p">(</span><span class="n">count</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kr">function</span> <span class="nc">iterator</span><span class="p">:</span><span class="nf">take</span><span class="p">(</span><span class="n">count</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>

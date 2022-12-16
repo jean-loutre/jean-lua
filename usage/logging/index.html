@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://example.com/usage/object/">
+        <link rel="canonical" href="https://example.com/usage/logging/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
-        <title>Object Model - Jean-Lua Library</title>
+        <title>Logging - Jean-Lua Library</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#object" class="md-skip">
+        <a href="#logging" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Object Model
+              Logging
             
           </span>
         </div>
@@ -345,93 +345,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Object Model
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../object/" class="md-nav__link">
         Object Model
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#defining-a-new-class" class="md-nav__link">
-    Defining a new class
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#constructors" class="md-nav__link">
-    Constructors
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#method-definition" class="md-nav__link">
-    Method Definition
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#calling-parent-methods" class="md-nav__link">
-    Calling Parent Methods
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
-    Properties
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -455,11 +373,52 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../logging/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Logging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Logging
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#log-messages" class="md-nav__link">
+    Log messages
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -743,49 +702,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#defining-a-new-class" class="md-nav__link">
-    Defining a new class
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#constructors" class="md-nav__link">
-    Constructors
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    Methods
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#method-definition" class="md-nav__link">
-    Method Definition
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#calling-parent-methods" class="md-nav__link">
-    Calling Parent Methods
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
-    Properties
+  <a href="#log-messages" class="md-nav__link">
+    Log messages
   </a>
   
 </li>
@@ -805,124 +723,18 @@
                   
 
 
-<h1 id="object">Object<a class="headerlink" href="#object" title="Permanent link">&para;</a></h1>
-<p>The jlua.object module contains definition of an Object class, that can
-be extended to create new classes. It supports single inheritance, methods,
-properties with getters and setters and metamethod overriding, including
-__index and __newindex.</p>
-<h2 id="defining-a-new-class">Defining a new class<a class="headerlink" href="#defining-a-new-class" title="Permanent link">&para;</a></h2>
-<p>A new class can be created by extending from another one. Derived class will
-inherit the methods, metamethods and properties of it's parent. If your class
-has no base class, extend the Object class.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
+<h1 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h1>
+<p>The jlua.logging module implements a hierarchical logger. For those used to
+python it should look familiar.</p>
+<h2 id="log-messages">Log messages<a class="headerlink" href="#log-messages" title="Permanent link">&para;</a></h2>
+<p>To log message, get a logger. Then log messages. Easy :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">local</span> <span class="n">logging</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.logging&quot;</span><span class="p">)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">local</span> <span class="n">SpaceOtter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">local</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIREDNAME</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">logger</span><span class="p">:</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;I want to break {}&quot;</span><span class="p">,</span> <span class="s2">&quot;free&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permanent link">&para;</a></h2>
-<p>Objects are constructed by calling the class. You can give arguments to the
-constructor, they will be forwarded to the <code>init</code> method of the class, if it's
-defined.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">init</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My name is &quot;</span> <span class="o">..</span> <span class="n">name</span><span class="p">)</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kr">end</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">(</span><span class="s2">&quot;Peter&quot;</span><span class="p">)</span> <span class="c1">-- -&gt; &quot;My name is Peter&quot;</span>
-</code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>If you override a base class init method, don't forget to
-<a href="#calling-parent-methods">call the parent init method</a> by calling
-<code>self:super("init", ...)</code>.</p>
-</div>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<h3 id="method-definition">Method Definition<a class="headerlink" href="#method-definition" title="Permanent link">&para;</a></h3>
-<p>Methods can be defined either by adding them on the class metatable before
-calling the extend() method, or afterwards, by defining them on the class,
-like you do on regular lua tables :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">({</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">name</span> <span class="o">=</span> <span class="kr">function</span><span class="p">()</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="kr">return</span> <span class="s2">&quot;Peter&quot;</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="kr">end</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">})</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">last_name</span><span class="p">()</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="kr">return</span> <span class="s2">&quot;Otterson&quot;</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="kr">end</span>
-</code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Defining twice the same method will assert. This is done to prevent unwanted
-method overwrites. If you really need to overwrite a method, you can do it
-by using <code>rawset</code> like this:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>rawset(Otter._definition._metatable, &quot;last_name&quot;, function() [...] end)
-</code></pre></div>
-</div>
-<h3 id="calling-parent-methods">Calling Parent Methods<a class="headerlink" href="#calling-parent-methods" title="Permanent link">&para;</a></h3>
-<p>To call a parent method in a child class, use the super() method defined on
-classes instances, with the method name as the first argument, arguments to
-forward to the parent method next :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">throw</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="kr">return</span> <span class="s2">&quot;throwing otter at &quot;</span> <span class="o">..</span> <span class="n">distance</span> <span class="o">..</span> <span class="s2">&quot;m&quot;</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kr">end</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="kd">local</span> <span class="n">SpaceOtter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="kd">local</span> <span class="n">SpaceOtter</span><span class="p">:</span><span class="n">throw</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">self</span><span class="p">:</span><span class="n">super</span><span class="p">(</span><span class="s2">&quot;throw&quot;</span><span class="p">,</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="kr">end</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">SpaceOtter</span><span class="p">()</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">peter</span><span class="p">:</span><span class="n">throw_at</span><span class="p">(</span><span class="mi">33</span><span class="p">)</span> <span class="c1">-- -&gt; Throwing otter at 133m</span>
-</code></pre></div>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
-<p>Properties are defined using the "properties" field of classes, accessing
-the wanted property on it and defining a get or a set method :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">local</span> <span class="n">Object</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;jlua.object&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">local</span> <span class="n">Otter</span> <span class="o">=</span> <span class="n">Object</span><span class="p">:</span><span class="n">extend</span><span class="p">()</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">:</span><span class="nf">init</span><span class="p">()</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">self</span><span class="p">.</span><span class="n">_age</span> <span class="o">=</span> <span class="mi">10</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="kr">end</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">.</span><span class="nc">properties</span><span class="p">.</span><span class="nc">age</span><span class="p">:</span><span class="nf">get</span><span class="p">()</span> <span class="c1">-- Notice the colon before get()</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="kr">return</span> <span class="n">self</span><span class="p">.</span><span class="n">_age</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="kr">end</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="kr">function</span> <span class="nc">Otter</span><span class="p">.</span><span class="nc">properties</span><span class="p">.</span><span class="nc">age</span><span class="p">:</span><span class="nf">set</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="c1">-- Notice the colon before set()</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">self</span><span class="p">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">value</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="kr">end</span>
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="kd">local</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">Otter</span><span class="p">()</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">peter</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">-- 10</span>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="n">peter</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">40</span>
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">peter</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">-- 40</span>
-</code></pre></div>
-<p>You can define properties with only a getter, or only a setter. You can define
-a property with no getter nor setter, but in this case it will only be defined
-in your head and will have no effect on the running program.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Setting a property with no setter defined, or getting a property with no
-getter will raise an error at runtime. There is no default behavior for
-getters / setters once one of them is defined.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Redefining a getter or a setter that was already defined on a property will
-raise an error. Same as for methods, this was made to prevent erroneous
-method overwriting.</p>
-</div>
+<p>For more details on this method, check the
+<a href="/api/logging/#get_/log">api reference</a>.</p>
 
 
 
@@ -950,7 +762,7 @@ method overwriting.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../_index/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Usage" rel="prev">
+        <a href="../functional/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Functional" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -959,20 +771,20 @@ method overwriting.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Usage
+              Functional
             </div>
           </div>
         </a>
       
       
         
-        <a href="../functional/" class="md-footer__link md-footer__link--next" aria-label="Next: Functional" rel="next">
+        <a href="../../api/collection/" class="md-footer__link md-footer__link--next" aria-label="Next: Api Reference" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Functional
+              Api Reference
             </div>
           </div>
           <div class="md-footer__button md-icon">

@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-jean-lua" class="md-skip">
+        <a href="#jean-lua" class="md-skip">
           Skip to content
         </a>
       
@@ -299,9 +299,47 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -322,6 +360,8 @@
       
       
       
+        
+          
         
           
         
@@ -354,7 +394,7 @@
   
     <li class="md-nav__item">
       <a href="usage/object/" class="md-nav__link">
-        Object
+        Object Model
       </a>
     </li>
   
@@ -369,6 +409,20 @@
     <li class="md-nav__item">
       <a href="usage/functional/" class="md-nav__link">
         Functional
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage/logging/" class="md-nav__link">
+        Logging
       </a>
     </li>
   
@@ -646,6 +700,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -659,10 +735,51 @@
                   
 
 
-<h1 id="welcome-to-jean-lua">Welcome to Jean Lua<a class="headerlink" href="#welcome-to-jean-lua" title="Permanent link">&para;</a></h1>
-<p>An object-oriented lua toolkit library.</p>
-<p>For a complete reference of classes included in this library, check
-<a href="usage/_index/">usage section</a></p>
+<h1 id="jean-lua">Jean-Lua<a class="headerlink" href="#jean-lua" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Jean-Lua is a generic, dependency free lua library providing usefull common
+constructs, algorithm implementations and tools to program in Lua.</p>
+<p>The goals seeked here are :</p>
+<ul>
+<li>No dependency, except the lua standard library.</li>
+<li>Compatibility with Lua 5.1 to 5.4 and LuaJIT.</li>
+<li>Genericity : I put in here everything that I expect to be of some utility in
+  83.2% of softwares. So no sockets, and no image manipulation.</li>
+</ul>
+<p>Performance isn't the main concern : it's written in pure lua. If your
+application is performance-critical, you should use C. However, any
+optimisation idea or patch is much welcome, as the goal isn't either to have
+the slowest library possible.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<p>For now, Jean-Lua provides the following features :</p>
+<ul>
+<li>
+<p>A <strong><a href="/usage/object">class model</a></strong>, supporting single inheritance, properties,
+  and implementing various checks, like method redefinition, or read-only
+  property access.</p>
+</li>
+<li>
+<p>A <strong><a href="/usage/iterators">functional-ish iterator</a></strong>, allowing to map, reduce,
+  filter elements and all that kind of funky stuff. Allows to collect items
+  in one of the provided <a href="/usage/containers">containers</a> when you're done
+  iterating around.</p>
+</li>
+<li>
+<p>The said <strong><a href="/usage/containers">containers</a></strong>, namely a
+  <a href="/usage/containers#list">list</a>, a <a href="/usage/containers/#map">map</a>. One day
+  I'll get some motivation and implement an ordered map, a multimap, a set
+  a queue, and an ordered set.</p>
+</li>
+<li>
+<p>A <strong><a href="/usage/unit-tests">unit test framework</a></strong>, allowing you to run tests, with
+  mocks, fixtures.</p>
+</li>
+<li>
+<p>A <strong><a href="/usage/logging">hierarchical logger</a></strong>, to log all the errors that occurs
+  in your broken tests.</p>
+</li>
+<li></li>
+</ul>
 
 
 

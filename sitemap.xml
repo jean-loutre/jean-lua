@@ -76,6 +76,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://example.com/usage/logging/</loc>
+         <lastmod>2022-12-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://example.com/usage/object/</loc>
          <lastmod>2022-12-16</lastmod>
          <changefreq>daily</changefreq>
