@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://example.com/api/map/">
+        <link rel="canonical" href="https://example.com/api/logging/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
-        <title>unknown - Jean-Lua Library</title>
+        <title>jlua.logging - Jean-Lua Library</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#unknown" class="md-skip">
+        <a href="#jlualogging" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              unknown
+              jlua.logging
             
           </span>
         </div>
@@ -475,20 +475,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../logging/" class="md-nav__link">
-        jlua.logging
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -501,12 +487,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          unknown
+          jlua.logging
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        unknown
+        jlua.logging
       </a>
       
         
@@ -525,22 +511,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes" class="md-nav__link">
-    Classes
-  </a>
-  
-    <nav class="md-nav" aria-label="Classes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#jluamap" class="md-nav__link">
-    jlua.Map
-  </a>
-  
-    <nav class="md-nav" aria-label="jlua.Map">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     Methods
   </a>
@@ -549,50 +519,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#init" class="md-nav__link">
-    init()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#__iter" class="md-nav__link">
-    __iter()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deep_update" class="md-nav__link">
-    deep_update()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#merge" class="md-nav__link">
-    merge()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pop" class="md-nav__link">
-    pop()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#to_raw" class="md-nav__link">
-    to_raw()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update" class="md-nav__link">
-    update()
+  <a href="#get_logger" class="md-nav__link">
+    get_logger()
   </a>
   
 </li>
@@ -601,18 +529,21 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iterator" class="md-nav__link">
-    Iterator
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
   </a>
   
-    <nav class="md-nav" aria-label="Iterator">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jlualogger" class="md-nav__link">
+    jlua.Logger
+  </a>
+  
+    <nav class="md-nav" aria-label="jlua.Logger">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -624,8 +555,57 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#to_map" class="md-nav__link">
-    to_map()
+  <a href="#add_handler" class="md-nav__link">
+    add_handler()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove_handler" class="md-nav__link">
+    remove_handler()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    log()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    debug()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#info" class="md-nav__link">
+    info()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning" class="md-nav__link">
+    warning()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    error()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critical" class="md-nav__link">
+    critical()
   </a>
   
 </li>
@@ -649,6 +629,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../map/" class="md-nav__link">
+        unknown
+      </a>
     </li>
   
 
@@ -800,22 +794,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes" class="md-nav__link">
-    Classes
-  </a>
-  
-    <nav class="md-nav" aria-label="Classes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#jluamap" class="md-nav__link">
-    jlua.Map
-  </a>
-  
-    <nav class="md-nav" aria-label="jlua.Map">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     Methods
   </a>
@@ -824,50 +802,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#init" class="md-nav__link">
-    init()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#__iter" class="md-nav__link">
-    __iter()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deep_update" class="md-nav__link">
-    deep_update()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#merge" class="md-nav__link">
-    merge()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pop" class="md-nav__link">
-    pop()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#to_raw" class="md-nav__link">
-    to_raw()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#update" class="md-nav__link">
-    update()
+  <a href="#get_logger" class="md-nav__link">
+    get_logger()
   </a>
   
 </li>
@@ -876,18 +812,21 @@
     </nav>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iterator" class="md-nav__link">
-    Iterator
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
   </a>
   
-    <nav class="md-nav" aria-label="Iterator">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jlualogger" class="md-nav__link">
+    jlua.Logger
+  </a>
+  
+    <nav class="md-nav" aria-label="jlua.Logger">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -899,8 +838,57 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#to_map" class="md-nav__link">
-    to_map()
+  <a href="#add_handler" class="md-nav__link">
+    add_handler()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove_handler" class="md-nav__link">
+    remove_handler()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    log()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    debug()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#info" class="md-nav__link">
+    info()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning" class="md-nav__link">
+    warning()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    error()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critical" class="md-nav__link">
+    critical()
   </a>
   
 </li>
@@ -935,191 +923,62 @@
                   
 
 
-<h1 id="unknown">unknown<a class="headerlink" href="#unknown" title="Permanent link">&para;</a></h1>
+<h1 id="jlualogging">jlua.logging<a class="headerlink" href="#jlualogging" title="Permanent link">&para;</a></h1>
+<p>Hierarchical logging facility.</p>
+<p>This module is heavily inspired from Python's logging facility.</p>
+<hr />
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h3 id="get_logger">get_logger()<a class="headerlink" href="#get_logger" title="Permanent link">&para;</a></h3>
+<p>Get a logger instance.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Logger</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>name</code>*</td>
+<td align="left"><code>string</code></td>
+<td align="left">The name of the logger.</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Returns</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>Logger</code></td>
+<td align="left">Logger instance.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>If a logger with the given name already exists, will return the same
+instance. Separate the level of hierarchy with dots. i.e if you create a
+logger named "jean.jacques", all messages logged to it will be forwarded
+to the logger named "jean".</p>
 <hr />
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
-<h3 id="jluamap">jlua.Map<a class="headerlink" href="#jluamap" title="Permanent link">&para;</a></h3>
-<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
-<h5 id="init">init()<a class="headerlink" href="#init" title="Permanent link">&para;</a></h5>
-<p>Initialize a map from lua table</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">init</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>...</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h5 id="__iter">__iter()<a class="headerlink" href="#__iter" title="Permanent link">&para;</a></h5>
-<p>Return a jlua.pair_iterator over the element of the collection</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">__iter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h5 id="deep_update">deep_update()<a class="headerlink" href="#deep_update" title="Permanent link">&para;</a></h5>
-<p>Update values in this map with given values, recursively.</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">deep_update</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>...</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h5 id="merge">merge()<a class="headerlink" href="#merge" title="Permanent link">&para;</a></h5>
-<p>Create a new map with values of self updated with values of given map.</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">merge</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>...</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h5 id="pop">pop()<a class="headerlink" href="#pop" title="Permanent link">&para;</a></h5>
-<p>Get a value and removes it from the map.</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">pop</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">default_value</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>key</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="left"><code>default_value</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h5 id="to_raw">to_raw()<a class="headerlink" href="#to_raw" title="Permanent link">&para;</a></h5>
-<p>Return a raw table containing the content of the map.</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">to_raw</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h5 id="update">update()<a class="headerlink" href="#update" title="Permanent link">&para;</a></h5>
-<p>Update values in this map with given values.</p>
-<p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">update</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
-<tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>...</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="iterator">Iterator<a class="headerlink" href="#iterator" title="Permanent link">&para;</a></h3>
+<h3 id="jlualogger">jlua.Logger<a class="headerlink" href="#jlualogger" title="Permanent link">&para;</a></h3>
+<p>To create a new logger, use logging.get_logger, this class isn't meant to be contsructed directly.</p>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
-<h5 id="to_map">to_map()<a class="headerlink" href="#to_map" title="Permanent link">&para;</a></h5>
-<p>Return a map containing elements of this iterator</p>
+<h5 id="add_handler">add_handler()<a class="headerlink" href="#add_handler" title="Permanent link">&para;</a></h5>
+<p>Add a log handler to this logger.</p>
 <p><strong>Signature</strong> </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">Iterator</span><span class="p">:</span><span class="nf">to_map</span><span class="p">(</span><span class="n">key_getter</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">add_handler</span><span class="p">(</span><span class="o">-&gt;</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1132,13 +991,221 @@
 </thead>
 <tbody>
 <tr>
-<td align="left"><code>key_getter</code>*</td>
-<td align="left"><code>any</code></td>
-<td align="left"></td>
+<td align="left"><code>-&gt;</code>*</td>
+<td align="left"><code>function(LogRecord)</code></td>
+<td align="left">nil The handler to add.</td>
 <td align="center"></td>
 </tr>
 </tbody>
 </table>
+<p><strong>Notes</strong></p>
+<p>Add an handler to this logger. It will be called for every log record that
+is emitted by this logger or one of it's child, and that passes the log
+filters.</p>
+<p>If a handler is added multiple times, it will be called multiple times when
+a LogRecord is emitted.</p>
+<p><strong>Usage</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">print_log</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">format</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">args</span><span class="p">))</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kr">end</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">logger</span><span class="p">:</span><span class="n">add_handler</span><span class="p">(</span><span class="n">print_log</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h5 id="remove_handler">remove_handler()<a class="headerlink" href="#remove_handler" title="Permanent link">&para;</a></h5>
+<p>Remove a previously added handle of this logger.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_handler</span><span class="p">(</span><span class="o">-&gt;</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>-&gt;</code>*</td>
+<td align="left"><code>function(LogRecord)</code></td>
+<td align="left">nil The handler to remove.</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>If the hanlder was added multiple times, remove only the first occurence.</p>
+<hr />
+<h5 id="log">log()<a class="headerlink" href="#log" title="Permanent link">&para;</a></h5>
+<p>Emmit a log message on this handler.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">log</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="n">LOG_LEVEL</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>log_level</code>*</td>
+<td align="left"><code>LOG_LEVEL</code></td>
+<td align="left">The log level of the log entry.</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left"><code>string</code>*</td>
+<td align="left"><code>fmt</code></td>
+<td align="left">The format string for the message of the log</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>Create a LogRecord from the given arguments, emit the LogRecord on parents
+of this logger, and call the handlers registered on this logger if the
+record passes the filter.</p>
+<p><strong>Usage</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">...</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">logger</span><span class="p">:</span><span class="n">log</span><span class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s2">&quot;An error occured&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h5 id="debug">debug()<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h5>
+<p>Emmit a debug log message on this logger.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">debug</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code>*</td>
+<td align="left"><code>fmt</code></td>
+<td align="left">The format string for the message of the log</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>Will forward call to Logger:log with level set to LOG_LEVEL.DEBUG.</p>
+<hr />
+<h5 id="info">info()<a class="headerlink" href="#info" title="Permanent link">&para;</a></h5>
+<p>Emmit an info log message on this logger.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">info</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code>*</td>
+<td align="left"><code>fmt</code></td>
+<td align="left">The format string for the message of the log</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>Will forward call to Logger:log with level set to LOG_LEVEL.INFO.</p>
+<hr />
+<h5 id="warning">warning()<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h5>
+<p>Emmit a warning log message on this logger.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">warning</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code>*</td>
+<td align="left"><code>fmt</code></td>
+<td align="left">The format string for the message of the log</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>Will forward call to Logger:log with level set to LOG_LEVEL.WARNING.</p>
+<hr />
+<h5 id="error">error()<a class="headerlink" href="#error" title="Permanent link">&para;</a></h5>
+<p>Emmit an error log message on this logger.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">error</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code>*</td>
+<td align="left"><code>fmt</code></td>
+<td align="left">The format string for the message of the log</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>Will forward call to Logger:log with level set to LOG_LEVEL.ERROR.</p>
+<hr />
+<h5 id="critical">critical()<a class="headerlink" href="#critical" title="Permanent link">&para;</a></h5>
+<p>Emmit a critical log message on this logger.</p>
+<p><strong>Signature</strong> </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Logger</span><span class="p">:</span><span class="nf">critical</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code>*</td>
+<td align="left"><code>fmt</code></td>
+<td align="left">The format string for the message of the log</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes</strong></p>
+<p>Will forward call to Logger:log with level set to LOG_LEVEL.CRITICAL.</p>
 <hr />
 
 
@@ -1167,7 +1234,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../logging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: jlua.logging" rel="prev">
+        <a href="../list/" class="md-footer__link md-footer__link--prev" aria-label="Previous: jlua.List" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1176,14 +1243,14 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              jlua.logging
+              jlua.List
             </div>
           </div>
         </a>
       
       
         
-        <a href="../object/" class="md-footer__link md-footer__link--next" aria-label="Next: unknown" rel="next">
+        <a href="../map/" class="md-footer__link md-footer__link--next" aria-label="Next: unknown" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
