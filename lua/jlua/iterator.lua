@@ -85,6 +85,9 @@ end
 --
 -- @return True if an element matches predicate, false otherwise.
 function Iterator:all(predicate)
+	predicate = predicate or function(item)
+		return item
+	end
 	assert(predicate == nil or is_callable(predicate), "Bad argument")
 	local item
 	repeat

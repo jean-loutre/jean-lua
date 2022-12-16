@@ -87,6 +87,9 @@ function Suite.all()
 	assert(true == it:all(function(item)
 		return item == "swim" or item == "sleep"
 	end))
+
+	assert_is_false(iter({ true, true, false }):all())
+	assert_is_true(iter({ true, true, "wookie" }):all())
 end
 
 function Suite.any()
