@@ -14,10 +14,5 @@ local logger = logging.get_logger(_REQUIREDNAME)
 logger:log("I want to break {}", "free")
 ```
 
-!!! info
-
-	Every time you call [get_logger](/api/logging/#get_logger) with the same
-	name, the same instance of the logger is returned. It means that if you
-	registered handlers or filters in this logger before, they will be
-	in the instance you get, too.
-
+For more details on this method, check the
+[api reference](/api/logging/#get_/log).

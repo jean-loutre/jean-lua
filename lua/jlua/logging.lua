@@ -78,12 +78,15 @@ local Logger = Object:extend()
 
 --- Add a log handler to this logger.
 ---
---- Add an handler to this logger. It will be called for every log record that
---- is emitted by this logger or one of it's child, and that passes the log
---- filters.
+--- A handler is a function called with the jlua.logging.LogRecord created each
+--- time a log message is emmited on a logger via jlua.logging.Logger.log. The
+--- handlers of all the parents of the source logger will be called, parent
+--- first when a message is logged, meaning that every handler of the logger
+--- jean.jacques will receive message emitted on the logger jean.jacques.dupont.
 ---
---- If a handler is added multiple times, it will be called multiple times when
---- a LogRecord is emitted.
+--- !!! warning
+--- 	If a handler is added multiple times, it will be called multiple times when
+--- 	a LogRecord is emitted.
 ---
 --- @usage
 --- logger = get_logger(_REQUIRED_NAME)
@@ -225,6 +228,11 @@ local ROOT_LOGGER = Logger()
 --- instance. Separate the level of hierarchy with dots. i.e if you create a
 --- logger named "jean.jacques", all messages logged to it will be forwarded
 --- to the logger named "jean".
+--- !!! info
+--- 	Every time you call [get_logger](/api/logging/#get_logger) with the same
+--- 	name, the same instance of the logger is returned. It means that if you
+--- 	registered handlers or filters in this logger before, they will be
+--- 	in the instance you get, too.
 ---
 --- @tparam string name The name of the logger.
 --- @return jlua.logging.Logger Logger instance.
