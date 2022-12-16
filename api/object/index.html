@@ -1005,10 +1005,11 @@
 <hr />
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
 <h3 id="jluaclass">jlua.Class<a class="headerlink" href="#jluaclass" title="Permanent link">&para;</a></h3>
+<p>Base class for class model</p>
 <p>Metatable for classes</p>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <h5 id="__index">__index()<a class="headerlink" href="#__index" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong> </p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Class</span><span class="p">:</span><span class="nf">__index</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1031,7 +1032,7 @@
 </table>
 <hr />
 <h5 id="__newindex">__newindex()<a class="headerlink" href="#__newindex" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong> </p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Class</span><span class="p">:</span><span class="nf">__newindex</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1060,8 +1061,8 @@
 </table>
 <hr />
 <h5 id="__call">__call()<a class="headerlink" href="#__call" title="Permanent link">&para;</a></h5>
+<p><strong>Signature</strong></p>
 <p>Class "constructor", creating a new object.</p>
-<p><strong>Signature</strong> </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Class</span><span class="p">:</span><span class="nf">__call</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1084,8 +1085,8 @@
 </table>
 <hr />
 <h5 id="extend">extend()<a class="headerlink" href="#extend" title="Permanent link">&para;</a></h5>
+<p><strong>Signature</strong></p>
 <p>Create a new child class of this class.</p>
-<p><strong>Signature</strong> </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Class</span><span class="p">:</span><span class="nf">extend</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1108,8 +1109,8 @@
 </table>
 <hr />
 <h5 id="is_class_of">is_class_of()<a class="headerlink" href="#is_class_of" title="Permanent link">&para;</a></h5>
+<p><strong>Signature</strong></p>
 <p>Return true if the given object is an instance of this class.</p>
-<p><strong>Signature</strong> </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Class</span><span class="p">:</span><span class="nf">is_class_of</span><span class="p">(</span><span class="n">object</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1132,8 +1133,8 @@
 </table>
 <hr />
 <h5 id="wrap">wrap()<a class="headerlink" href="#wrap" title="Permanent link">&para;</a></h5>
+<p><strong>Signature</strong></p>
 <p>Create an instance of this class by setting it's metatable.</p>
-<p><strong>Signature</strong> </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Class</span><span class="p">:</span><span class="nf">wrap</span><span class="p">(</span><span class="n">object</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1158,7 +1159,7 @@
 <h3 id="propertyguard">PropertyGuard<a class="headerlink" href="#propertyguard" title="Permanent link">&para;</a></h3>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
 <h5 id="__newindex_1">__newindex()<a class="headerlink" href="#__newindex_1" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong> </p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">PropertyGuard</span><span class="p">:</span><span class="nf">__newindex</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1189,7 +1190,7 @@
 <h3 id="propertiesguard">PropertiesGuard<a class="headerlink" href="#propertiesguard" title="Permanent link">&para;</a></h3>
 <h4 id="methods_2">Methods<a class="headerlink" href="#methods_2" title="Permanent link">&para;</a></h4>
 <h5 id="__index_1">__index()<a class="headerlink" href="#__index_1" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong> </p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">PropertiesGuard</span><span class="p">:</span><span class="nf">__index</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1212,7 +1213,7 @@
 </table>
 <hr />
 <h5 id="__newindex_2">__newindex()<a class="headerlink" href="#__newindex_2" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong> </p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">PropertiesGuard</span><span class="p">:</span><span class="nf">__newindex</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
