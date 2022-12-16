@@ -4,8 +4,9 @@ nav:
     - Home: index.md
     - Usage:
         - usage/_index.md
-        - Object: usage/object.md
+        - Object Model: usage/object.md
         - Functional: usage/functional.md
+        - Logging: usage/logging.md
     - ...
 docs_dir: doc
 edit_uri: ""
