@@ -33,6 +33,7 @@ class RawElement(Element):
     def render(self):
         return self._text
 
+
 class Document(BaseDocument):
     def __init__(self, index, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -56,7 +57,7 @@ class Document(BaseDocument):
         text = self._replace_symbol_links(text)
         self.add_element(Paragraph([InlineText(text).bold()]))
 
-    def _replace_symbol_links(self, text, add_link = True):
+    def _replace_symbol_links(self, text, add_link=True):
         for symbol, name, anchor in self._index:
             replacement = f"<a href='{anchor}'>{name}</a>" if add_link else f"{name}"
             text = sub(r"%s" % escape(symbol), replacement, text)
@@ -75,21 +76,29 @@ class Document(BaseDocument):
             self.add_raw(module.short_desc)
             self.add_raw(module.desc)
             self.add_horizontal_rule()
+            classes = list([it for it in module.classes if not it.is_enum])
+            enums = list([it for it in module.classes if it.is_enum])
 
             with self.increase_header_level():
+                if enums:
+                    self.add_header("Enums")
+                    with self.increase_header_level():
+                        for enum in enums:
+                            self._add_enum(enum)
+
                 if module.functions:
                     self.add_header("Methods")
                     with self.increase_header_level():
                         for function in module.functions:
                             self._add_function(function)
-                if module.classes:
+                if classes:
                     self.add_header("Classes")
                     with self.increase_header_level():
-                        for class_ in module.classes:
+                        for class_ in classes:
                             self._add_class(class_)
 
     def _add_class(
-            self,
+        self,
         class_: LuaClass,
         name: str | None = None,
         short_desc: str | None = None,
@@ -119,6 +128,33 @@ class Document(BaseDocument):
                     for method in class_.methods:
                         self._add_function(method, scope=f"{class_.name}:")
 
+    def _add_enum(
+        self,
+        enum: LuaClass,
+    ):
+        self.add_header(f"{enum.name}")
+
+        if enum.short_desc:
+            self.add_raw(enum.short_desc)
+
+        if enum.desc:
+            self.add_raw(enum.desc)
+
+        self.add_table(
+            ["Member", "Description"],
+            [
+                [
+                    f"```{field.name}```",
+                    field.desc,
+                ]
+                for field in enum.fields
+            ],
+            align=[
+                Table.Align.LEFT,
+                Table.Align.LEFT,
+            ],
+        )
+
     def _add_function(self, function: LuaFunction, scope=""):
         if function.visibility == "private":
             return
@@ -128,7 +164,10 @@ class Document(BaseDocument):
         self.add_raw(function.short_desc)
 
         arguments = ", ".join(
-            [f"{it.name}: {self._get_type_string(it.type, False)}" for it in function.params]
+            [
+                f"{it.name}: {self._get_type_string(it.type, False)}"
+                for it in function.params
+            ]
         )
         if function.returns:
             returns = ", ".join(
@@ -186,7 +225,7 @@ class Document(BaseDocument):
 
         self.add_horizontal_rule()
 
-    def _get_type_string(self, type_: LuaType, link_symbols = True):
+    def _get_type_string(self, type_: LuaType, link_symbols=True):
         if isinstance(type_, LuaTypeAny):
             return "any"
         if isinstance(type_, LuaTypeCallable):
@@ -214,6 +253,7 @@ class Document(BaseDocument):
 
 def get_anchor(symbol_name: str) -> str:
     return symbol_name.lower()
+
 
 class Generator:
     def __init__(self):
@@ -245,8 +285,11 @@ class Generator:
             with open(doc_path, "w") as doc:
                 doc.write(str(markdown))
 
-    def _index_symbol(self, doc_url: str, id: str, symbol: LuaClass | LuaFunction) -> None:
-        self._index.append((id, symbol.name, f"/{doc_url}/#{get_anchor(symbol.name)}"))
+    def _index_symbol(
+            self, doc_url: str, id: str, symbol: LuaClass | LuaFunction, link_text = None
+    ) -> None:
+        link_text = link_text or symbol.name
+        self._index.append((id, link_text, f"/{doc_url}/#{get_anchor(symbol.name)}"))
 
     def _index_symbols(self, module: LuaModule, doc_path: Path) -> dict[str, str]:
         doc_url = str(doc_path.relative_to(Path.cwd() / "doc").with_suffix(""))
@@ -257,6 +300,11 @@ class Generator:
                 self._index_symbol(
                     doc_url, f"{module.name}.{class_.name}.{method.name}", method
                 )
+            if class_.is_enum:
+                for field in class_.fields:
+                    self._index_symbol(
+                        doc_url, f"{module.name}.{class_.name}.{field.name}", class_, f"{class_.name}.{field.name}"
+                    )
 
         for function in module.functions:
             self._index_symbol(doc_url, f"{module.name}.{function.name}", function)

@@ -9,7 +9,7 @@ from nox import session
 def doc(session: Session) -> None:
     """Build documentation."""
     session.install(
-        "luadoc",
+        "git+https://github.com/jean-loutre/py-lua-doc",
         "mkdocs-awesome-pages-plugin",
         "mkdocs-material",
         "mkdocs-section-index",

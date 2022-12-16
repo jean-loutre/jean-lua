@@ -20,7 +20,7 @@ local Iterator = Object:extend("jlua.iterator")
 --- ```
 ---
 --- @function contstructor()
---- @tparam fn(any,any?):any? iterator  The iterator function.
+--- @tparam func(:any,:any?):any? iterator  The iterator function.
 --- @tparam any?              invariant Invariant state passed to the iterator.
 --- @tparam any?              control   Initial control variable passed to the
 --                                      iterator function.

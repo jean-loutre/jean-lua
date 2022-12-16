@@ -9,8 +9,18 @@ local Map = require("jlua.map")
 
 local logging = {}
 
---- Logging Level
---- @field DEBUG int Debug logging level.
+--- Logging level for messages & filters.
+---
+--- Can be used to set the level of a message when calling
+--- jlua.logging.Logger.log. Message emmited can then be filtered by using this
+--- enum.
+---
+--- @enum LOG_LEVEL
+--- @field DEBUG     number Verbose diagnostics.
+--- @field INFO      number Important informations to show to the user.
+--- @field WARNING   number Handled errors.
+--- @field ERROR     number Recoverable errors.
+--- @field CRITICAL  number Failures.
 logging.LOG_LEVEL = {
 	DEBUG = 1,
 	INFO = 2,
@@ -67,10 +77,10 @@ end
 --- ...
 --- logger:log(LOG_LEVEL.ERROR, "An error occured")
 ---
---- @tparam LOG_LEVEL log_level The log level of the log entry.
---- @tparam fmt       string    The format string for the message of the log
---                              entry.
---  @vararg any                 Format arguments.
+--- @tparam jlua.logging.LOG_LEVEL log_level The log level of the log entry.
+--- @tparam string                 fmt       The format string for the message
+---                                          of the log entry.
+--  @vararg any                              Format arguments.
 function Logger:log(log_level, fmt, ...)
 	local record = {
 		logger = self._name,
@@ -132,7 +142,7 @@ end
 --- Emmit a critical log message on this logger.
 ---
 --- Will forward call to jlua.logging.Logger.log with level set to
---- LOG_LEVEL.CRITICAL.
+--- jlua.logging.LOG_LEVEL.CRITICAL.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
