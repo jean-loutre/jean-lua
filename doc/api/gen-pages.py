@@ -53,12 +53,18 @@ def get_type_string(type_: LuaType):
     assert False
 
 
-def write_function(markdown: Document, method: LuaFunction, header_level: int):
-
+def write_function(markdown: Document, method: LuaFunction, header_level: int, scope = ""):
+    if method.visibility == "private":
+        return
     arguments = ", ".join([f"{it.name}: {get_type_string(it.type)}" for it in method.params])
-    returns = ", ".join([get_type_string(it.type) for it in method.returns])
-    signature = f"function {method.name}({arguments}) -> {returns}"
-    markdown.add_element(RawElement(f"## {method.name}()"))
+
+    if method.returns:
+        returns = ", ".join([get_type_string(it.type) for it in method.returns])
+    else:
+        returns = "nil"
+
+    signature = f"function {scope}{method.name}({arguments}) -> {returns}"
+    markdown.add_header(f"{method.name}()", level = header_level)
     markdown.add_paragraph(method.short_desc)
 
     markdown.add_element(RawElement(f"**Signature** "))
@@ -100,7 +106,7 @@ def write_function(markdown: Document, method: LuaFunction, header_level: int):
         )
 
     if method.desc:
-        markdown.add_element(Paragraph([InlineText("Description").bold()]))
+        markdown.add_element(Paragraph([InlineText("Notes").bold()]))
         markdown.add_element(RawElement(method.desc))
 
     if method.usage:
@@ -123,9 +129,12 @@ def write_class(
         short_desc = class_.short_desc
     if desc is None:
         short_desc = class_.desc
-    markdown.add_paragraph(short_desc)
 
-    markdown.add_element(RawElement(desc))
+    if short_desc:
+        markdown.add_paragraph(short_desc)
+
+    if desc:
+        markdown.add_element(RawElement(desc))
 
     if class_.fields:
         markdown.add_header("Fields", header_level + 1)
@@ -134,7 +143,7 @@ def write_class(
         markdown.add_header("Methods", header_level + 1)
 
         for method in class_.methods:
-            write_function(markdown, method, header_level + 2)
+            write_function(markdown, method, header_level + 2, scope = f"{class_.name}:")
 
 
 def write_module(markdown: Document, module: LuaModule):
@@ -154,8 +163,12 @@ def write_module(markdown: Document, module: LuaModule):
         markdown.add_horizontal_rule()
         if module.functions:
             markdown.add_header("Methods", 2)
-        for function in module.functions:
-            write_function(markdown, function, 3)
+            for function in module.functions:
+                write_function(markdown, function, 3)
+        if module.classes:
+            markdown.add_header("Classes", 2)
+            for class_ in module.classes:
+                write_class(markdown, class_.name, class_, 3)
 
 
 for source_path in source_root.glob("**/*.lua"):
