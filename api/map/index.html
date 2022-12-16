@@ -450,7 +450,7 @@
   
     <li class="md-nav__item">
       <a href="../iterator/" class="md-nav__link">
-        jlua.iterator
+        iterator
       </a>
     </li>
   
@@ -533,11 +533,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#jluamap" class="md-nav__link">
-    jlua.Map
+  <a href="#map" class="md-nav__link">
+    Map
   </a>
   
-    <nav class="md-nav" aria-label="jlua.Map">
+    <nav class="md-nav" aria-label="Map">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -808,11 +808,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#jluamap" class="md-nav__link">
-    jlua.Map
+  <a href="#map" class="md-nav__link">
+    Map
   </a>
   
-    <nav class="md-nav" aria-label="jlua.Map">
+    <nav class="md-nav" aria-label="Map">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -938,12 +938,12 @@
 <h1 id="unknown">unknown<a class="headerlink" href="#unknown" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
-<h3 id="jluamap">jlua.Map<a class="headerlink" href="#jluamap" title="Permanent link">&para;</a></h3>
+<h3 id="map">Map<a class="headerlink" href="#map" title="Permanent link">&para;</a></h3>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <h5 id="init">init()<a class="headerlink" href="#init" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Initialize a map from lua table</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">init</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">init</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -965,9 +965,9 @@
 </table>
 <hr />
 <h5 id="__iter">__iter()<a class="headerlink" href="#__iter" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Return a jlua.pair_iterator over the element of the collection</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">__iter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">__iter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -989,9 +989,9 @@
 </table>
 <hr />
 <h5 id="deep_update">deep_update()<a class="headerlink" href="#deep_update" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Update values in this map with given values, recursively.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">deep_update</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">deep_update</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1013,9 +1013,9 @@
 </table>
 <hr />
 <h5 id="merge">merge()<a class="headerlink" href="#merge" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Create a new map with values of self updated with values of given map.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">merge</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">merge</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1037,9 +1037,9 @@
 </table>
 <hr />
 <h5 id="pop">pop()<a class="headerlink" href="#pop" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Get a value and removes it from the map.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">pop</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">default_value</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">pop</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="n">any</span><span class="p">,</span> <span class="n">default_value</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1067,9 +1067,9 @@
 </table>
 <hr />
 <h5 id="to_raw">to_raw()<a class="headerlink" href="#to_raw" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Return a raw table containing the content of the map.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">to_raw</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">to_raw</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1091,9 +1091,9 @@
 </table>
 <hr />
 <h5 id="update">update()<a class="headerlink" href="#update" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Update values in this map with given values.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">jlua</span><span class="p">.</span><span class="nc">Map</span><span class="p">:</span><span class="nf">update</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">Map</span><span class="p">:</span><span class="nf">update</span><span class="p">(...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1117,8 +1117,8 @@
 <h3 id="iterator">Iterator<a class="headerlink" href="#iterator" title="Permanent link">&para;</a></h3>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
 <h5 id="to_map">to_map()<a class="headerlink" href="#to_map" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Return a map containing elements of this iterator</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">Iterator</span><span class="p">:</span><span class="nf">to_map</span><span class="p">(</span><span class="n">key_getter</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>

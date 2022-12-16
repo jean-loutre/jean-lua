@@ -450,7 +450,7 @@
   
     <li class="md-nav__item">
       <a href="../iterator/" class="md-nav__link">
-        jlua.iterator
+        iterator
       </a>
     </li>
   
@@ -557,6 +557,26 @@
   
     <nav class="md-nav" aria-label="Classes">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logrecord" class="md-nav__link">
+    LogRecord
+  </a>
+  
+    <nav class="md-nav" aria-label="LogRecord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    Properties
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#logger" class="md-nav__link">
@@ -862,6 +882,26 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#logrecord" class="md-nav__link">
+    LogRecord
+  </a>
+  
+    <nav class="md-nav" aria-label="LogRecord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    Properties
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#logger" class="md-nav__link">
     Logger
   </a>
@@ -1005,8 +1045,8 @@ enum.</p>
 </table>
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
 <h3 id="get_logger">get_logger()<a class="headerlink" href="#get_logger" title="Permanent link">&para;</a></h3>
-<p><strong>Signature</strong></p>
 <p>Get a <a href='/api/logging/#logger'>Logger</a> instance.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nf">get_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Logger</span>
 </code></pre></div>
 <table>
@@ -1048,15 +1088,54 @@ logger named "jean.jacques", all messages logged to it will be forwarded
 to the logger named "jean".</p>
 <hr />
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
+<h3 id="logrecord">LogRecord<a class="headerlink" href="#logrecord" title="Permanent link">&para;</a></h3>
+<p>A log record, emitted on the <a href='/api/logging/#logger'>Logger</a> hierarchy.</p>
+<h4 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Access</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>logger</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">read-only</td>
+<td align="center">The name of the logger this record is originating from.</td>
+</tr>
+<tr>
+<td align="left"><code>level</code></td>
+<td align="left"><code><a href='/api/logging/#log_level'>LOG_LEVEL</a></code></td>
+<td align="left">read-only</td>
+<td align="center">The level of the record.</td>
+</tr>
+<tr>
+<td align="left"><code>format</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">read-only</td>
+<td align="center">String format passed to the <a href='/api/logging/#log'>log</a> method.</td>
+</tr>
+<tr>
+<td align="left"><code>args</code></td>
+<td align="left"><code>table</code></td>
+<td align="left">read-only</td>
+<td align="center">Format arguments passed to the <a href='/api/logging/#log'>log</a> method.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="logger">Logger<a class="headerlink" href="#logger" title="Permanent link">&para;</a></h3>
 <p>A logger, allowing to emit log message.</p>
 <p>To create a new logger, use <a href='/api/logging/#get_logger'>get_logger</a>, this class isn't meant
 to be contsructed directly.</p>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
 <h5 id="add_handler">add_handler()<a class="headerlink" href="#add_handler" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Add a log handler to this logger.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">add_handler</span><span class="p">(</span><span class="o">-&gt;</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">add_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1069,9 +1148,9 @@ to be contsructed directly.</p>
 </thead>
 <tbody>
 <tr>
-<td align="left"><code>-&gt;</code>*</td>
-<td align="left"><code>function(LogRecord)</code></td>
-<td align="left">nil The handler to add.</td>
+<td align="left"><code>handler</code>*</td>
+<td align="left"><code>function(<a href='/api/logging/#logrecord'>LogRecord</a>)</code></td>
+<td align="left">The handler to add.</td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -1091,9 +1170,9 @@ a LogRecord is emitted.</p>
 </code></pre></div>
 <hr />
 <h5 id="remove_handler">remove_handler()<a class="headerlink" href="#remove_handler" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Remove a previously added handle of this logger.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_handler</span><span class="p">(</span><span class="o">-&gt;</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1106,9 +1185,9 @@ a LogRecord is emitted.</p>
 </thead>
 <tbody>
 <tr>
-<td align="left"><code>-&gt;</code>*</td>
-<td align="left"><code>function(LogRecord)</code></td>
-<td align="left">nil The handler to remove.</td>
+<td align="left"><code>handler</code>*</td>
+<td align="left"><code>function(<a href='/api/logging/#logrecord'>LogRecord</a>):nil</code></td>
+<td align="left">The handler to remove.</td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -1117,8 +1196,8 @@ a LogRecord is emitted.</p>
 <p>If the hanlder was added multiple times, remove only the first occurence.</p>
 <hr />
 <h5 id="log">log()<a class="headerlink" href="#log" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Emmit a log message on this handler.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">log</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="n">LOG_LEVEL</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1140,7 +1219,7 @@ a LogRecord is emitted.</p>
 <tr>
 <td align="left"><code>fmt</code>*</td>
 <td align="left"><code>string</code></td>
-<td align="left">The format string for the message</td>
+<td align="left">The format string for the message of the log entry.</td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -1153,13 +1232,11 @@ record passes the filter.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">...</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">logger</span><span class="p">:</span><span class="n">log</span><span class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s2">&quot;An error occured&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>                                         <span class="n">of</span> <span class="n">the</span> <span class="n">log</span> <span class="n">entry</span><span class="p">.</span>
 </code></pre></div>
 <hr />
 <h5 id="debug">debug()<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Emmit a debug log message on this logger.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">debug</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1182,11 +1259,11 @@ record passes the filter.</p>
 </table>
 <p><strong>Notes</strong></p>
 <p>Will forward call to <a href='/api/logging/#log'>log</a> with level set to
-LOG_LEVEL.DEBUG.</p>
+<a href='/api/logging/#log_level.debug'>LOG_LEVEL.DEBUG</a>.</p>
 <hr />
 <h5 id="info">info()<a class="headerlink" href="#info" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Emmit an info log message on this logger.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">info</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1209,11 +1286,11 @@ LOG_LEVEL.DEBUG.</p>
 </table>
 <p><strong>Notes</strong></p>
 <p>Will forward call to <a href='/api/logging/#log'>log</a> with level set to
-LOG_LEVEL.INFO.</p>
+<a href='/api/logging/#log_level.info'>LOG_LEVEL.INFO</a>.</p>
 <hr />
 <h5 id="warning">warning()<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Emmit a warning log message on this logger.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">warning</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1236,11 +1313,11 @@ LOG_LEVEL.INFO.</p>
 </table>
 <p><strong>Notes</strong></p>
 <p>Will forward call to <a href='/api/logging/#log'>log</a> with level set to
-LOG_LEVEL.WARNING.</p>
+<a href='/api/logging/#log_level.warning'>LOG_LEVEL.WARNING</a>.</p>
 <hr />
 <h5 id="error">error()<a class="headerlink" href="#error" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Emmit an error log message on this logger.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">error</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1263,11 +1340,11 @@ LOG_LEVEL.WARNING.</p>
 </table>
 <p><strong>Notes</strong></p>
 <p>Will forward call to <a href='/api/logging/#log'>log</a> with level set to
-LOG_LEVEL.ERROR.</p>
+<a href='/api/logging/#log_level.error'>LOG_LEVEL.ERROR</a>.</p>
 <hr />
 <h5 id="critical">critical()<a class="headerlink" href="#critical" title="Permanent link">&para;</a></h5>
-<p><strong>Signature</strong></p>
 <p>Emmit a critical log message on this logger.</p>
+<p><strong>Signature</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">critical</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
@@ -1290,7 +1367,7 @@ LOG_LEVEL.ERROR.</p>
 </table>
 <p><strong>Notes</strong></p>
 <p>Will forward call to <a href='/api/logging/#log'>log</a> with level set to
-<a href='/api/logging/#log_level'>LOG_LEVEL.CRITICAL</a>.</p>
+<a href='/api/logging/#log_level.critical'>LOG_LEVEL.CRITICAL</a>.</p>
 <hr />
 
 
