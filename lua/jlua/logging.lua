@@ -21,9 +21,9 @@ logging.LOG_LEVEL = {
 
 --- A logger, allowing to emit log message.
 ---
---- To create a new logger, use logging.get_logger, this class isn't meant to
---- be contsructed directly.
---- @class jlua.Logger
+--- To create a new logger, use jlua.logging.get_logger, this class isn't meant
+--- to be contsructed directly.
+--- @class Logger
 local Logger = Object:extend()
 
 --- Add a log handler to this logger.
@@ -83,7 +83,8 @@ end
 
 --- Emmit a debug log message on this logger.
 ---
---- Will forward call to Logger:log with level set to LOG_LEVEL.DEBUG.
+--- Will forward call to jlua.logging.Logger.log with level set to
+--- LOG_LEVEL.DEBUG.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -94,7 +95,8 @@ end
 
 --- Emmit an info log message on this logger.
 ---
---- Will forward call to Logger:log with level set to LOG_LEVEL.INFO.
+--- Will forward call to jlua.logging.Logger.log with level set to
+--- LOG_LEVEL.INFO.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -105,7 +107,8 @@ end
 
 --- Emmit a warning log message on this logger.
 ---
---- Will forward call to Logger:log with level set to LOG_LEVEL.WARNING.
+--- Will forward call to jlua.logging.Logger.log with level set to
+--- LOG_LEVEL.WARNING.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -116,7 +119,8 @@ end
 
 --- Emmit an error log message on this logger.
 ---
---- Will forward call to Logger:log with level set to LOG_LEVEL.ERROR.
+--- Will forward call to jlua.logging.Logger.log with level set to
+--- LOG_LEVEL.ERROR.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -127,7 +131,8 @@ end
 
 --- Emmit a critical log message on this logger.
 ---
---- Will forward call to Logger:log with level set to LOG_LEVEL.CRITICAL.
+--- Will forward call to jlua.logging.Logger.log with level set to
+--- LOG_LEVEL.CRITICAL.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -170,7 +175,7 @@ end
 
 local ROOT_LOGGER = Logger()
 
---- Get a logger instance.
+--- Get a jlua.logging.Logger instance.
 ---
 --- If a logger with the given name already exists, will return the same
 --- instance. Separate the level of hierarchy with dots. i.e if you create a
@@ -180,7 +185,7 @@ local ROOT_LOGGER = Logger()
 --- @usage
 ---
 --- @tparam string name The name of the logger.
---- @return Logger Logger instance.
+--- @return jlua.logging.Logger Logger instance.
 function logging.get_logger(name)
 	if not name then
 		return ROOT_LOGGER

@@ -45,7 +45,7 @@ local unpack = unpack or table.unpack
 --- To escape braces, simply double them.
 ---
 --- @usage
---- format("{} is an {species} called {0}", "Jean-Paul", { species = "otter"})
+--- jlua.string.format("{} is an {species} called {0}", "Jean-Paul", { species = "otter"})
 --- -- Jean-Paul is an otter called Jean-Paul
 ---
 --- format("{} is {:.2f} years old", "Jean-Paul", 24.2342)

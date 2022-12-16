@@ -1,5 +1,6 @@
 from pathlib import Path
 from luadoc.parser import DocParser, DocOptions
+from contextlib import contextmanager
 from luadoc.model import (
     LuaModule,
     LuaClass,
@@ -14,10 +15,15 @@ from luadoc.model import (
     LuaTypeBoolean,
     LuaReturn,
 )
-from snakemd import Document, InlineText, Header, Element, Table, Paragraph
-
-source_root = Path.cwd() / "lua/jlua"
-doc_root = Path.cwd() / "doc/api"
+from snakemd import (
+    Document as BaseDocument,
+    InlineText,
+    Header,
+    Element,
+    Table,
+    Paragraph,
+)
+from re import sub, escape
 
 
 class RawElement(Element):
@@ -27,162 +33,233 @@ class RawElement(Element):
     def render(self):
         return self._text
 
+class Document(BaseDocument):
+    def __init__(self, index, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._index = index
+        self._header_level = 1
 
-def get_type_string(type_: LuaType):
-    if isinstance(type_, LuaTypeAny):
-        return "any"
-    if isinstance(type_, LuaTypeCallable):
-        arg_types = ", ".join([get_type_string(it) for it in type_.arg_types])
-        return_types = list([get_type_string(it) for it in type_.return_types])
+    @contextmanager
+    def increase_header_level(self):
+        self._header_level = self._header_level + 1
+        yield
+        self._header_level = self._header_level = self._header_level - 1
 
-        if len(return_types) == 1:
-            return_type = return_types[0]
+    def add_header(self, text):
+        super().add_header(text, self._header_level)
+
+    def add_raw(self, text):
+        text = self._replace_symbol_links(text)
+        self.add_element(RawElement(text))
+
+    def add_bold_paragraph(self, text):
+        text = self._replace_symbol_links(text)
+        self.add_element(Paragraph([InlineText(text).bold()]))
+
+    def _replace_symbol_links(self, text, add_link = True):
+        for symbol, name, anchor in self._index:
+            replacement = f"<a href='{anchor}'>{name}</a>" if add_link else f"{name}"
+            text = sub(r"%s" % escape(symbol), replacement, text)
+        return text
+
+    def add_module(self, module: LuaModule):
+        if module.is_class_mod:
+            self._add_class(
+                module.classes[0],
+                name=module.name,
+                short_desc=module.short_desc,
+                desc=module.desc,
+            )
         else:
-            return_type = f"({', '.join(return_types)})"
-        return f"function({arg_types}):{return_type}"
-    if isinstance(type_, LuaTypeCustom):
-        return type_.name
-    if isinstance(type_, LuaTypeFunction):
-        return type_.id
-    if isinstance(type_, LuaTypeString):
-        return "string"
-    if isinstance(type_, LuaTypeBoolean):
-        return "string"
+            self.add_header(f"{module.name}")
+            self.add_raw(module.short_desc)
+            self.add_raw(module.desc)
+            self.add_horizontal_rule()
 
-    print(type_)
-    assert False
+            with self.increase_header_level():
+                if module.functions:
+                    self.add_header("Methods")
+                    with self.increase_header_level():
+                        for function in module.functions:
+                            self._add_function(function)
+                if module.classes:
+                    self.add_header("Classes")
+                    with self.increase_header_level():
+                        for class_ in module.classes:
+                            self._add_class(class_)
 
+    def _add_class(
+            self,
+        class_: LuaClass,
+        name: str | None = None,
+        short_desc: str | None = None,
+        desc: str | None = None,
+    ):
+        desc = desc or class_.desc
+        name = name or class_.name
+        short_desc = short_desc or class_.short_desc
+        assert name is not None
 
-def write_function(markdown: Document, method: LuaFunction, header_level: int, scope = ""):
-    if method.visibility == "private":
-        return
-    arguments = ", ".join([f"{it.name}: {get_type_string(it.type)}" for it in method.params])
+        self.add_header(f"{name}")
 
-    if method.returns:
-        returns = ", ".join([get_type_string(it.type) for it in method.returns])
-    else:
-        returns = "nil"
+        if short_desc:
+            self.add_raw(short_desc)
 
-    signature = f"function {scope}{method.name}({arguments}) -> {returns}"
-    markdown.add_header(f"{method.name}()", level = header_level)
-    markdown.add_paragraph(method.short_desc)
+        if desc:
+            self.add_raw(desc)
 
-    markdown.add_element(RawElement(f"**Signature** "))
-    markdown.add_code(signature, lang="lua")
+        with self.increase_header_level():
+            if class_.fields:
+                self.add_header("Fields")
 
-    markdown.add_table(
-        ["Parameter", "Type", "Description", "Default"],
-        [
-            [
-                f"```{param.name}```" if param.is_opt else f"```{param.name}```*",
-                f"```{get_type_string(param.type)}```",
-                param.desc,
-                param.default_value,
-            ]
-            for param in method.params
-        ],
-        align=[
-            Table.Align.LEFT,
-            Table.Align.LEFT,
-            Table.Align.LEFT,
-            Table.Align.CENTER,
-        ],
-    )
+            if class_.methods:
+                self.add_header("Methods")
 
-    if method.returns:
-        markdown.add_table(
-            ["Returns", "Description"],
+                with self.increase_header_level():
+                    for method in class_.methods:
+                        self._add_function(method, scope=f"{class_.name}:")
+
+    def _add_function(self, function: LuaFunction, scope=""):
+        if function.visibility == "private":
+            return
+
+        self.add_header(f"{function.name}()")
+        self.add_bold_paragraph(f"Signature")
+        self.add_raw(function.short_desc)
+
+        arguments = ", ".join(
+            [f"{it.name}: {self._get_type_string(it.type, False)}" for it in function.params]
+        )
+        if function.returns:
+            returns = ", ".join(
+                [self._get_type_string(it.type, False) for it in function.returns]
+            )
+        else:
+            returns = "nil"
+
+        self.add_code(
+            f"function {scope}{function.name}({arguments}) -> {returns}", lang="lua"
+        )
+
+        self.add_table(
+            ["Parameter", "Type", "Description", "Default"],
             [
                 [
-                    f"```{get_type_string(it.type)}```",
-                    it.desc,
+                    f"```{param.name}```" if param.is_opt else f"```{param.name}```*",
+                    f"<code>{self._get_type_string(param.type)}</code>",
+                    param.desc,
+                    param.default_value,
                 ]
-                for it in method.returns
+                for param in function.params
             ],
             align=[
                 Table.Align.LEFT,
                 Table.Align.LEFT,
+                Table.Align.LEFT,
+                Table.Align.CENTER,
             ],
         )
 
-    if method.desc:
-        markdown.add_element(Paragraph([InlineText("Notes").bold()]))
-        markdown.add_element(RawElement(method.desc))
+        if function.returns:
+            self.add_table(
+                ["Returns", "Description"],
+                [
+                    [
+                        f"<code>{self._get_type_string(it.type)}</code>",
+                        it.desc,
+                    ]
+                    for it in function.returns
+                ],
+                align=[
+                    Table.Align.LEFT,
+                    Table.Align.LEFT,
+                ],
+            )
 
-    if method.usage:
-        markdown.add_element(Paragraph([InlineText("Usage").bold()]))
-        markdown.add_code(method.usage, lang="lua")
+        if function.desc:
+            self.add_bold_paragraph("Notes")
+            self.add_raw(function.desc)
 
-    markdown.add_horizontal_rule()
+        if function.usage:
+            self.add_bold_paragraph("Usage")
+            self.add_code(function.usage, lang="lua")
 
+        self.add_horizontal_rule()
 
-def write_class(
-    markdown: Document,
-    name: str,
-    class_: LuaClass,
-    header_level: int,
-    short_desc: str | None = None,
-    desc: str | None = None,
-):
-    markdown.add_header(f"{name}", header_level)
-    if short_desc is None:
-        short_desc = class_.short_desc
-    if desc is None:
-        short_desc = class_.desc
+    def _get_type_string(self, type_: LuaType, link_symbols = True):
+        if isinstance(type_, LuaTypeAny):
+            return "any"
+        if isinstance(type_, LuaTypeCallable):
+            arg_types = ", ".join([self._get_type_string(it) for it in type_.arg_types])
+            return_types = list(
+                [self._get_type_string(it) for it in type_.return_types]
+            )
 
-    if short_desc:
-        markdown.add_paragraph(short_desc)
+            if len(return_types) == 1:
+                return_type = return_types[0]
+            else:
+                return_type = f"({', '.join(return_types)})"
+            return f"function({arg_types}):{return_type}"
+        if isinstance(type_, LuaTypeCustom):
+            return self._replace_symbol_links(type_.name, link_symbols)
+        if isinstance(type_, LuaTypeFunction):
+            return self._replace_symbol_links(type_.id, link_symbols)
+        if isinstance(type_, LuaTypeString):
+            return "string"
+        if isinstance(type_, LuaTypeBoolean):
+            return "string"
 
-    if desc:
-        markdown.add_element(RawElement(desc))
-
-    if class_.fields:
-        markdown.add_header("Fields", header_level + 1)
-
-    if class_.methods:
-        markdown.add_header("Methods", header_level + 1)
-
-        for method in class_.methods:
-            write_function(markdown, method, header_level + 2, scope = f"{class_.name}:")
-
-
-def write_module(markdown: Document, module: LuaModule):
-    if module.is_class_mod:
-        write_class(
-            markdown,
-            module.name,
-            module.classes[0],
-            1,
-            short_desc=module.short_desc,
-            desc=module.desc,
-        )
-    else:
-        markdown.add_header(f"{module.name}", 1)
-        markdown.add_paragraph(module.short_desc)
-        markdown.add_paragraph(module.desc)
-        markdown.add_horizontal_rule()
-        if module.functions:
-            markdown.add_header("Methods", 2)
-            for function in module.functions:
-                write_function(markdown, function, 3)
-        if module.classes:
-            markdown.add_header("Classes", 2)
-            for class_ in module.classes:
-                write_class(markdown, class_.name, class_, 3)
+        assert False
 
 
-for source_path in source_root.glob("**/*.lua"):
-    doc_path = doc_root / source_path.relative_to(source_root).with_suffix(
-        ""
-    ).with_suffix(".md")
+def get_anchor(symbol_name: str) -> str:
+    return symbol_name.lower()
 
-    doc_parser = DocParser(DocOptions())
-    with open(source_path, "r") as source:
-        module = doc_parser.build_module_doc_model(source.read(), str(source_path))
+class Generator:
+    def __init__(self):
+        self._index = []
 
-    markdown = Document(doc_path.name)
-    write_module(markdown, module)
+    def generate(self):
+        modules = []
+        source_root = Path.cwd() / "lua/jlua"
+        doc_root = Path.cwd() / "doc/api"
+        for source_path in source_root.glob("**/*.lua"):
+            doc_path = doc_root / source_path.relative_to(source_root).with_suffix(
+                ""
+            ).with_suffix(".md")
 
-    doc_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(doc_path, "w") as doc:
-        doc.write(str(markdown))
+            doc_parser = DocParser(DocOptions())
+            with open(source_path, "r") as source:
+                module = doc_parser.build_module_doc_model(
+                    source.read(), str(source_path)
+                )
+            self._index_symbols(module, doc_path)
+            modules.append((module, doc_path))
+
+        self._index = sorted(self._index, key=lambda id: len(id[0]), reverse=True)
+        for (module, doc_path) in modules:
+            markdown = Document(self._index, doc_path.name)
+            markdown.add_module(module)
+
+            doc_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(doc_path, "w") as doc:
+                doc.write(str(markdown))
+
+    def _index_symbol(self, doc_url: str, id: str, symbol: LuaClass | LuaFunction) -> None:
+        self._index.append((id, symbol.name, f"/{doc_url}/#{get_anchor(symbol.name)}"))
+
+    def _index_symbols(self, module: LuaModule, doc_path: Path) -> dict[str, str]:
+        doc_url = str(doc_path.relative_to(Path.cwd() / "doc").with_suffix(""))
+        self._index.append((module.name, module.name, f"/{doc_url}"))
+        for class_ in module.classes:
+            self._index_symbol(doc_url, f"{module.name}.{class_.name}", class_)
+            for method in class_.methods:
+                self._index_symbol(
+                    doc_url, f"{module.name}.{class_.name}.{method.name}", method
+                )
+
+        for function in module.functions:
+            self._index_symbol(doc_url, f"{module.name}.{function.name}", function)
+
+
+Generator().generate()
