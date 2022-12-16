@@ -34,6 +34,16 @@ class RawElement(Element):
         return self._text
 
 
+def get_access_string(property):
+    if property["get"] and not property["set"]:
+        return "read-only"
+    if property["get"] and property["set"]:
+        return "read/write"
+    return "write-only"
+
+def get_methods(class_: LuaClass):
+    return list([it for it in class_.methods if not it.name.startswith("properties") and it.visibility == "public"])
+
 class Document(BaseDocument):
     def __init__(self, index, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -109,7 +119,7 @@ class Document(BaseDocument):
         short_desc = short_desc or class_.short_desc
         assert name is not None
 
-        self.add_header(f"{name}")
+        self.add_header(f"{name.split('.')[-1]}")
 
         if short_desc:
             self.add_raw(short_desc)
@@ -121,18 +131,76 @@ class Document(BaseDocument):
             if class_.fields:
                 self.add_header("Fields")
 
-            if class_.methods:
+            properties = self._get_properties(class_)
+            if properties:
+                self.add_header("Properties")
+
+                self.add_table(
+                    ["Name", "Type", "Access", "Description"],
+                    [
+                        [
+                            f"```{name}```",
+                            f"<code>{property['type']}</code>",
+                            get_access_string(property),
+                            self._replace_symbol_links(property["desc"])
+                        ]
+                        for (name, property) in properties.items()
+                    ],
+                    align=[
+                        Table.Align.LEFT,
+                        Table.Align.LEFT,
+                        Table.Align.LEFT,
+                        Table.Align.CENTER,
+                    ],
+                )
+
+            methods = get_methods(class_)
+            if methods:
                 self.add_header("Methods")
 
                 with self.increase_header_level():
-                    for method in class_.methods:
-                        self._add_function(method, scope=f"{class_.name}:")
+                    for method in methods:
+                        self._add_function(method, scope=f"{class_.name.split('.')[-1]}:")
+
+    def _get_properties(self, class_: LuaClass):
+        properties: dict[str, (LuaFunction|None, LuaFunction|None)] = {}
+        for method in class_.methods:
+            name = method.name
+            if not name.startswith("properties"):
+                continue
+            splitted_name = name.split(".")
+            property_name = splitted_name[1]
+            if not property_name in properties:
+                properties[property_name] = dict(
+                        desc = "",
+                        get = False,
+                        set = False,
+                        type = None
+                )
+
+            property = properties[property_name]
+            if splitted_name[2] == "get":
+                property["get"] = True
+                property["type"] = ", ".join(
+                    [self._get_type_string(it.type) for it in method.returns]
+                )
+                property["desc"] = property["desc"] + method.short_desc + method.desc
+            else:
+                properties[property_name]["set"] = True
+                if not property["type"]:
+                    property["type"] = ", ".join(
+                    [self._get_type_string(it.type) for it in method.params]
+                )
+                property["desc"] = property["desc"] + method.short_desc + method.desc
+
+
+        return properties
 
     def _add_enum(
         self,
         enum: LuaClass,
     ):
-        self.add_header(f"{enum.name}")
+        self.add_header(f"{enum.name.split('.')[-1]}")
 
         if enum.short_desc:
             self.add_raw(enum.short_desc)
@@ -155,13 +223,14 @@ class Document(BaseDocument):
             ],
         )
 
+
     def _add_function(self, function: LuaFunction, scope=""):
         if function.visibility == "private":
             return
 
         self.add_header(f"{function.name}()")
-        self.add_bold_paragraph(f"Signature")
         self.add_raw(function.short_desc)
+        self.add_bold_paragraph(f"Signature")
 
         arguments = ", ".join(
             [
@@ -289,21 +358,21 @@ class Generator:
             self, doc_url: str, id: str, symbol: LuaClass | LuaFunction, link_text = None
     ) -> None:
         link_text = link_text or symbol.name
-        self._index.append((id, link_text, f"/{doc_url}/#{get_anchor(symbol.name)}"))
+        self._index.append((id, link_text, f"/{doc_url}/#{get_anchor(link_text)}"))
 
     def _index_symbols(self, module: LuaModule, doc_path: Path) -> dict[str, str]:
         doc_url = str(doc_path.relative_to(Path.cwd() / "doc").with_suffix(""))
         self._index.append((module.name, module.name, f"/{doc_url}"))
         for class_ in module.classes:
-            self._index_symbol(doc_url, f"{module.name}.{class_.name}", class_)
+            self._index_symbol(doc_url, class_.name, class_, class_.name.split(".")[-1])
             for method in class_.methods:
                 self._index_symbol(
-                    doc_url, f"{module.name}.{class_.name}.{method.name}", method
+                    doc_url, f"{class_.name}.{method.name}", method
                 )
             if class_.is_enum:
                 for field in class_.fields:
                     self._index_symbol(
-                        doc_url, f"{module.name}.{class_.name}.{field.name}", class_, f"{class_.name}.{field.name}"
+                        doc_url, f"{class_.name}.{field.name}", class_, f"{class_.name.split('.')[-1]}.{field.name}"
                     )
 
         for function in module.functions:
