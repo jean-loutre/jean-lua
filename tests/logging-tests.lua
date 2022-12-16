@@ -12,14 +12,11 @@ function Suite.handle()
 	logger:add_handler(handler)
 
 	logger:log(LOG_LEVEL.DEBUG, "Hello", "Jean-Jacques")
-	assert_equals(handler.call, {
-		{
-			logger = "jean",
-			level = LOG_LEVEL.DEBUG,
-			format = "Hello",
-			args = { "Jean-Jacques" },
-		},
-	})
+	local log_record = handler.call[1]
+	assert_equals(log_record.logger, "jean")
+	assert_equals(log_record.level, LOG_LEVEL.DEBUG)
+	assert_equals(log_record.format, "Hello")
+	assert_equals(log_record.args, { "Jean-Jacques" })
 
 	handler:reset()
 	logger:remove_handler(handler)
@@ -35,14 +32,11 @@ function Suite.parent_handle()
 	parent_logger:add_handler(handler)
 
 	child_logger:log(LOG_LEVEL.DEBUG, "Hello", "Jean-Jacques")
-	assert_equals(handler.call, {
-		{
-			logger = "jean.jacques",
-			level = LOG_LEVEL.DEBUG,
-			format = "Hello",
-			args = { "Jean-Jacques" },
-		},
-	})
+	local log_record = handler.call[1]
+	assert_equals(log_record.logger, "jean.jacques")
+	assert_equals(log_record.level, LOG_LEVEL.DEBUG)
+	assert_equals(log_record.format, "Hello")
+	assert_equals(log_record.args, { "Jean-Jacques" })
 end
 
 function Suite.log_methods()

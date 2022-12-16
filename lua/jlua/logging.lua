@@ -15,7 +15,7 @@ local logging = {}
 --- jlua.logging.Logger.log. Message emmited can then be filtered by using this
 --- enum.
 ---
---- @enum LOG_LEVEL
+--- @enum jlua.logging.LOG_LEVEL
 --- @field DEBUG     number Verbose diagnostics.
 --- @field INFO      number Important informations to show to the user.
 --- @field WARNING   number Handled errors.
@@ -29,11 +29,51 @@ logging.LOG_LEVEL = {
 	CRITICAL = 5,
 }
 
+--- A log record, emitted on the jlua.logging.Logger hierarchy.
+--- @class jlua.logging.LogRecord
+local LogRecord = Object:extend()
+
+--- @private
+function LogRecord:init(logger, level, format, args)
+	self._logger = logger
+	self._level = level
+	self._format = format
+	self._args = args
+end
+
+--- @function LogRecord.properties.logger:get()
+--- The name of the logger this record is originating from.
+--- @return string
+function LogRecord.properties.logger:get()
+	return self._logger
+end
+
+--- @function LogRecord.properties.level:get()
+--- The level of the record.
+--- @return jlua.logging.LOG_LEVEL
+function LogRecord.properties.level:get()
+	return self._level
+end
+
+--- @function LogRecord.properties.format:get()
+--- String format passed to the jlua.logging.Logger.log method.
+--- @return string
+function LogRecord.properties.format:get()
+	return self._format
+end
+
+--- @function LogRecord.properties.args:get()
+--- Format arguments passed to the jlua.logging.Logger.log method.
+--- @return table[any]
+function LogRecord.properties.args:get()
+	return self._args
+end
+
 --- A logger, allowing to emit log message.
 ---
 --- To create a new logger, use jlua.logging.get_logger, this class isn't meant
 --- to be contsructed directly.
---- @class Logger
+--- @class jlua.logging.Logger
 local Logger = Object:extend()
 
 --- Add a log handler to this logger.
@@ -52,7 +92,7 @@ local Logger = Object:extend()
 --- end
 --- logger:add_handler(print_log)
 ---
---- @tparam function(LogRecord) -> nil The handler to add.
+--- @tparam function(jlua.logging.LogRecord) handler The handler to add.
 function Logger:add_handler(handler)
 	self._handlers:push(handler)
 end
@@ -61,7 +101,7 @@ end
 ---
 --- If the hanlder was added multiple times, remove only the first occurence.
 ---
---- @tparam function(LogRecord) -> nil The handler to remove.
+--- @tparam function(jlua.logging.LogRecord):nil handler The handler to remove.
 function Logger:remove_handler(handler)
 	self._handlers:remove(handler)
 end
@@ -72,29 +112,23 @@ end
 --- of this logger, and call the handlers registered on this logger if the
 --- record passes the filter.
 ---
+--- @tparam jlua.logging.LOG_LEVEL log_level The log level of the log entry.
+--- @tparam string fmt The format string for the message of the log entry.
+--  @vararg any                              Format arguments.
+---
 --- @usage
 --- logger = get_logger(_REQUIRED_NAME)
 --- ...
 --- logger:log(LOG_LEVEL.ERROR, "An error occured")
----
---- @tparam jlua.logging.LOG_LEVEL log_level The log level of the log entry.
---- @tparam string                 fmt       The format string for the message
----                                          of the log entry.
---  @vararg any                              Format arguments.
 function Logger:log(log_level, fmt, ...)
-	local record = {
-		logger = self._name,
-		level = log_level,
-		format = fmt,
-		args = { ... },
-	}
+	local record = LogRecord(self._name, log_level, fmt, { ... })
 	self:handle(record)
 end
 
 --- Emmit a debug log message on this logger.
 ---
 --- Will forward call to jlua.logging.Logger.log with level set to
---- LOG_LEVEL.DEBUG.
+--- jlua.logging.LOG_LEVEL.DEBUG.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -106,7 +140,7 @@ end
 --- Emmit an info log message on this logger.
 ---
 --- Will forward call to jlua.logging.Logger.log with level set to
---- LOG_LEVEL.INFO.
+--- jlua.logging.LOG_LEVEL.INFO.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -118,7 +152,7 @@ end
 --- Emmit a warning log message on this logger.
 ---
 --- Will forward call to jlua.logging.Logger.log with level set to
---- LOG_LEVEL.WARNING.
+--- jlua.logging.LOG_LEVEL.WARNING.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -130,7 +164,7 @@ end
 --- Emmit an error log message on this logger.
 ---
 --- Will forward call to jlua.logging.Logger.log with level set to
---- LOG_LEVEL.ERROR.
+--- jlua.logging.LOG_LEVEL.ERROR.
 --
 --- @tparam fmt       string    The format string for the message of the log
 --                              entry.
@@ -191,8 +225,6 @@ local ROOT_LOGGER = Logger()
 --- instance. Separate the level of hierarchy with dots. i.e if you create a
 --- logger named "jean.jacques", all messages logged to it will be forwarded
 --- to the logger named "jean".
----
---- @usage
 ---
 --- @tparam string name The name of the logger.
 --- @return jlua.logging.Logger Logger instance.
