@@ -107,6 +107,25 @@ function Suite.any()
 	assert(false == iter({}):any())
 end
 
+function Suite.call()
+	local function jean_jacques(species, age)
+		assert_equals(species, "otter")
+		assert_equals(age, 32)
+		return "Jean-Jacques"
+	end
+
+	local function jean_michel(species, age)
+		assert_equals(species, "otter")
+		assert_equals(age, 32)
+		return "Jean-Michel"
+	end
+
+	local it = iter({ jean_jacques, jean_michel }):call("otter", 32)
+	assert_equals(it(), "Jean-Jacques")
+	assert_equals(it(), "Jean-Michel")
+	assert_is_nil(it())
+end
+
 function Suite.chain()
 	local first = iter({ "swim", "eat", "sleep" })
 	local second = iter({ "party", "kill baby seal" })

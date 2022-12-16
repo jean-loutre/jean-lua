@@ -114,6 +114,26 @@ function Iterator:any(predicate)
 	return self:first(predicate) ~= nil
 end
 
+--- Call all element in the iterator with the given arguments.
+---
+--- @usage
+--- local methods = iter({add, multiply, divide})
+--- local operations = methods:call(4, 2):to_list()
+--- -- { 6, 8, 2 }
+---
+--- @vararg any Arguments to call iterator elements with.
+---
+--- @return An iterator of the result of the calls.
+function Iterator:call(...)
+	local args = { ... }
+	return Iterator(function()
+		local callback = self()
+		if callback ~= nil then
+			return callback(unpack(args))
+		end
+	end)
+end
+
 --- Chain this iterator with elements of given iterable.
 --
 -- @param iterable An iterator, object with an __iter method or lua iterator.

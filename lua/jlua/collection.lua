@@ -35,13 +35,14 @@ function Collection.__iter()
 end
 
 for _, method in ipairs({
-	"any",
 	"all",
+	"any",
+	"call",
 	"chain",
 	"filter",
 	"first",
-	"map",
 	"flatten",
+	"map",
 	"skip",
 	"take",
 }) do
