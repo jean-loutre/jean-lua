@@ -109,6 +109,32 @@ function Logger:remove_handler(handler)
 	self._handlers:remove(handler)
 end
 
+--- Add a filter to this logger.
+---
+--- See [logging usage](/usage/logging/#filters] for detailled explanation
+--- about log filtering.
+--
+--- @usage
+--- logger = get_logger(_REQUIRED_NAME)
+--- local function warning_or_more(record)
+--- 	return record.level >= LOG_LEVEL.WARNING
+--- end
+--- logger:add_filter(warning_or_more)
+---
+--- @tparam function(jlua.logging.LogRecord):bool filter The filter to add.
+function Logger:add_filter(filter)
+	self._filters:push(filter)
+end
+
+--- Remove a previously added filter of this logger.
+---
+--- If the hanlder was added multiple times, remove only the first occurence.
+---
+--- @tparam function(jlua.logging.LogRecord):bool filter The filter to remove.
+function Logger:remove_filter(handler)
+	self._filters:remove(handler)
+end
+
 --- Emmit a log message on this handler.
 ---
 --- Create a LogRecord from the given arguments, emit the LogRecord on parents
@@ -193,6 +219,10 @@ function Logger:handle(log_record)
 	if self._parent then
 		self._parent:handle(log_record)
 	end
+
+	if not self._filters:call(log_record):all() then
+		return
+	end
 	for handler in self._handlers:iter() do
 		handler(log_record)
 	end
@@ -206,6 +236,7 @@ function Logger:init(name, parent)
 	self._parent = parent
 	self._children = Map()
 	self._handlers = List()
+	self._filters = List()
 end
 
 -- This method isn't meant to be called directly, use logging.get_logger to

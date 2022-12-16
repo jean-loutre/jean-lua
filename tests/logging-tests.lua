@@ -57,4 +57,38 @@ function Suite.log_methods()
 	test_log_level(logger.critical, LOG_LEVEL.CRITICAL)
 end
 
+function Suite.filter()
+	local logger = get_logger("jean.jacques")
+
+	local handler = Mock()
+	logger:add_handler(handler)
+	local function filter(record)
+		return record.level == LOG_LEVEL.INFO
+	end
+	logger:add_filter(filter)
+
+	logger:log(LOG_LEVEL.DEBUG, "debug")
+	logger:log(LOG_LEVEL.INFO, "info")
+	assert_equals(handler.call[1].format, "info")
+
+	handler:reset()
+
+	local parent_logger = get_logger("jean")
+	local parent_handler = Mock()
+	parent_logger:add_handler(parent_handler)
+
+	logger:log(LOG_LEVEL.DEBUG, "debug")
+	assert_equals(#handler.calls, 0)
+	assert_equals(parent_handler.call[1].format, "debug")
+
+	handler:reset()
+	parent_handler:reset()
+
+	logger:remove_filter(filter)
+
+	logger:log(LOG_LEVEL.DEBUG, "debug")
+	assert_equals(handler.call[1].format, "debug")
+	assert_equals(parent_handler.call[1].format, "debug")
+end
+
 return Suite
