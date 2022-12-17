@@ -577,6 +577,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#get_level_string" class="md-nav__link">
+    get_level_string()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -914,6 +921,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#get_level_string" class="md-nav__link">
+    get_level_string()
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1154,6 +1168,44 @@ registered handlers or filters in this logger before, they will be
 in the instance you get, too.</p>
 </div>
 <hr />
+<h3 id="get_level_string">get_level_string()<a class="headerlink" href="#get_level_string" title="Permanent link">&para;</a></h3>
+<p>Get a human readable name of a log level.</p>
+<p><strong>Signature</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nf">get_level_string</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="n">LOG_LEVEL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">string</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>level</code>*</td>
+<td align="left"><code><a href='/api/logging/#log_level'>LOG_LEVEL</a></code></td>
+<td align="left">Log level.</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">Returns</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code></td>
+<td align="left">Readable name for this level.</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
 <h3 id="logrecord">LogRecord<a class="headerlink" href="#logrecord" title="Permanent link">&para;</a></h3>
 <p>A log record, emitted on the <a href='/api/logging/#logger'>Logger</a> hierarchy.</p>
@@ -1202,7 +1254,7 @@ to be contsructed directly.</p>
 <h5 id="add_handler">add_handler()<a class="headerlink" href="#add_handler" title="Permanent link">&para;</a></h5>
 <p>Add a log handler to this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">add_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">add_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1234,17 +1286,17 @@ jean.jacques will receive message emitted on the logger jean.jacques.dupont.</p>
 a LogRecord is emitted.</p>
 </div>
 <p><strong>Usage</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">print_log</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">format</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">args</span><span class="p">))</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kr">end</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">logger</span><span class="p">:</span><span class="n">add_handler</span><span class="p">(</span><span class="n">print_log</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">print_log</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">format</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">args</span><span class="p">))</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kr">end</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">logger</span><span class="p">:</span><span class="n">add_handler</span><span class="p">(</span><span class="n">print_log</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h5 id="remove_handler">remove_handler()<a class="headerlink" href="#remove_handler" title="Permanent link">&para;</a></h5>
 <p>Remove a previously added handle of this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1270,7 +1322,7 @@ a LogRecord is emitted.</p>
 <h5 id="add_filter">add_filter()<a class="headerlink" href="#add_filter" title="Permanent link">&para;</a></h5>
 <p>Add a filter to this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">add_filter</span><span class="p">(</span><span class="n">filter</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="n">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">add_filter</span><span class="p">(</span><span class="n">filter</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="n">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1294,17 +1346,17 @@ a LogRecord is emitted.</p>
 <p>See [logging usage](/usage/logging/#filters] for detailled explanation
 about log filtering.</p>
 <p><strong>Usage</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">warning_or_more</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="kr">return</span> <span class="n">record</span><span class="p">.</span><span class="n">level</span> <span class="o">&gt;=</span> <span class="n">LOG_LEVEL</span><span class="p">.</span><span class="n">WARNING</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kr">end</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">logger</span><span class="p">:</span><span class="n">add_filter</span><span class="p">(</span><span class="n">warning_or_more</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">local</span> <span class="kr">function</span> <span class="nf">warning_or_more</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="kr">return</span> <span class="n">record</span><span class="p">.</span><span class="n">level</span> <span class="o">&gt;=</span> <span class="n">LOG_LEVEL</span><span class="p">.</span><span class="n">WARNING</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kr">end</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">logger</span><span class="p">:</span><span class="n">add_filter</span><span class="p">(</span><span class="n">warning_or_more</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h5 id="remove_filter">remove_filter()<a class="headerlink" href="#remove_filter" title="Permanent link">&para;</a></h5>
 <p>Remove a previously added filter of this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_filter</span><span class="p">(</span><span class="n">filter</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="n">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">remove_filter</span><span class="p">(</span><span class="n">filter</span><span class="p">:</span> <span class="kr">function</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">):</span><span class="n">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1330,7 +1382,7 @@ about log filtering.</p>
 <h5 id="log">log()<a class="headerlink" href="#log" title="Permanent link">&para;</a></h5>
 <p>Emmit a log message on this handler.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">log</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="n">LOG_LEVEL</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">log</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="n">LOG_LEVEL</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1361,15 +1413,15 @@ about log filtering.</p>
 of this logger, and call the handlers registered on this logger if the
 record passes the filter.</p>
 <p><strong>Usage</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">...</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">logger</span><span class="p">:</span><span class="n">log</span><span class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s2">&quot;An error occured&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">_REQUIRED_NAME</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">...</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">logger</span><span class="p">:</span><span class="n">log</span><span class="p">(</span><span class="n">LOG_LEVEL</span><span class="p">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="s2">&quot;An error occured&quot;</span><span class="p">)</span>
 </code></pre></div>
 <hr />
 <h5 id="debug">debug()<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h5>
 <p>Emmit a debug log message on this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">debug</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">debug</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1396,7 +1448,7 @@ record passes the filter.</p>
 <h5 id="info">info()<a class="headerlink" href="#info" title="Permanent link">&para;</a></h5>
 <p>Emmit an info log message on this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">info</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">info</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1423,7 +1475,7 @@ record passes the filter.</p>
 <h5 id="warning">warning()<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h5>
 <p>Emmit a warning log message on this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">warning</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">warning</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1450,7 +1502,7 @@ record passes the filter.</p>
 <h5 id="error">error()<a class="headerlink" href="#error" title="Permanent link">&para;</a></h5>
 <p>Emmit an error log message on this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">error</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">error</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -1477,7 +1529,7 @@ record passes the filter.</p>
 <h5 id="critical">critical()<a class="headerlink" href="#critical" title="Permanent link">&para;</a></h5>
 <p>Emmit a critical log message on this logger.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">critical</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kr">function</span> <span class="nc">Logger</span><span class="p">:</span><span class="nf">critical</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">fmt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
