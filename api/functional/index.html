@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://example.com/api/collection/">
+        <link rel="canonical" href="https://example.com/api/functional/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
-        <title>Api Reference - Jean-Lua Library</title>
+        <title>jlua.functional - Jean-Lua Library</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#unknown" class="md-skip">
+        <a href="#jluafunctional" class="md-skip">
           Skip to content
         </a>
       
@@ -101,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Api Reference
+              jlua.functional
             
           </span>
         </div>
@@ -232,7 +232,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="./" class="md-tabs__link md-tabs__link--active">
+    <a href="../collection/" class="md-tabs__link md-tabs__link--active">
       Api Reference
     </a>
   </li>
@@ -431,8 +431,8 @@
       
         
         
-        <div class="md-nav__link md-nav__link--index md-nav__link--active">
-          <a href="./">Api Reference</a>
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../collection/">Api Reference</a>
           
             <label for="__nav_3">
               <span class="md-nav__icon md-icon"></span>
@@ -465,11 +465,65 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../functional/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          jlua.functional
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         jlua.functional
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bind" class="md-nav__link">
+    bind()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -677,22 +731,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes" class="md-nav__link">
-    Classes
-  </a>
-  
-    <nav class="md-nav" aria-label="Classes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#collection" class="md-nav__link">
-    Collection
-  </a>
-  
-    <nav class="md-nav" aria-label="Collection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     Methods
   </a>
@@ -701,26 +739,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iter" class="md-nav__link">
-    iter()
+  <a href="#bind" class="md-nav__link">
+    bind()
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#concat" class="md-nav__link">
-    concat()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -744,15 +765,14 @@
                   
 
 
-<h1 id="unknown">unknown<a class="headerlink" href="#unknown" title="Permanent link">&para;</a></h1>
+<h1 id="jluafunctional">jlua.functional<a class="headerlink" href="#jluafunctional" title="Permanent link">&para;</a></h1>
+<p>Higher-order functions utilities</p>
 <hr />
-<h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
-<h3 id="collection">Collection<a class="headerlink" href="#collection" title="Permanent link">&para;</a></h3>
-<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
-<h5 id="iter">iter()<a class="headerlink" href="#iter" title="Permanent link">&para;</a></h5>
-<p>Get an iterator over collection items</p>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h3 id="bind">bind()<a class="headerlink" href="#bind" title="Permanent link">&para;</a></h3>
+<p>Bind the given arguments to a function.</p>
 <p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nc">Collection</span><span class="p">:</span><span class="nf">iter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">function</span> <span class="nf">bind</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">func</span><span class="p">(...):</span><span class="n">any</span><span class="p">,</span> <span class="p">...:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
 </code></pre></div>
 <table>
 <thead>
@@ -765,37 +785,23 @@
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left"><code>func</code>*</td>
+<td align="left"><code>func(...):any</code></td>
+<td align="left">The wrapped function.</td>
+<td align="center"></td>
 </tr>
-</tbody>
-</table>
-<hr />
-<h5 id="concat">concat()<a class="headerlink" href="#concat" title="Permanent link">&para;</a></h5>
-<p>Concatenate the values of this collection</p>
-<p><strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">function</span> <span class="nc">Collection</span><span class="p">:</span><span class="nf">concat</span><span class="p">(</span><span class="n">delimiter</span><span class="p">:</span> <span class="n">any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">nil</span>
-</code></pre></div>
-<table>
-<thead>
 <tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-<th align="center">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>delimiter</code>*</td>
+<td align="left"><code>...</code>*</td>
 <td align="left"><code>any</code></td>
-<td align="left"></td>
+<td align="left">Arguments to bind to the function.</td>
 <td align="center"></td>
 </tr>
 </tbody>
 </table>
+<p><strong>Notes</strong></p>
+<p>Given the function func_a(a, b, c), calling bind(func_a, 1, true) will
+return a new function func_b such as calling  func_b("weasel") will call
+func_a(1, true, "weasel")</p>
 <hr />
 
 
@@ -824,7 +830,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../../usage/logging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Logging" rel="prev">
+        <a href="../context/" class="md-footer__link md-footer__link--prev" aria-label="Previous: unknown" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -833,20 +839,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Logging
+              unknown
             </div>
           </div>
         </a>
       
       
         
-        <a href="../context/" class="md-footer__link md-footer__link--next" aria-label="Next: unknown" rel="next">
+        <a href="../iterator/" class="md-footer__link md-footer__link--next" aria-label="Next: iterator" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              unknown
+              iterator
             </div>
           </div>
           <div class="md-footer__button md-icon">
