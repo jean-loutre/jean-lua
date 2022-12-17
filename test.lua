@@ -4,6 +4,7 @@ package.path = package.path .. ";lua/?.lua;./third-party/?.lua;./tests/?.lua"
 local suites = {
 	"collection-tests",
 	"context-tests",
+	"functional-tests",
 	"iterator-tests",
 	"list-tests",
 	"logging-tests",
