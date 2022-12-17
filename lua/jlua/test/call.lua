@@ -17,8 +17,9 @@ end
 --
 -- @vararg any values the call was made with
 function Call:init(...)
-	for argument in iter({ ... }) do
-		table.insert(self, argument)
+	local nargs = select("#", ...)
+	for i = 1, nargs do
+		self[i] = select(i, ...)
 	end
 end
 
