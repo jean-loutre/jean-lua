@@ -285,4 +285,17 @@ function logging.get_logger(name)
 	return current_logger
 end
 
+local LOG_LEVEL_NAMES = {}
+for name, level in pairs(logging.LOG_LEVEL) do
+	LOG_LEVEL_NAMES[level] = name
+end
+
+--- Get a human readable name of a log level.
+---
+--- @tparam jlua.logging.LOG_LEVEL level Log level.
+--- @return string Readable name for this level.
+function logging.get_level_string(level)
+	return LOG_LEVEL_NAMES[level]
+end
+
 return logging

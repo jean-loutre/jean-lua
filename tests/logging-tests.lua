@@ -1,7 +1,8 @@
 local Mock = require("jlua.test.mock")
 
-local get_logger = require("jlua.logging").get_logger
 local LOG_LEVEL = require("jlua.logging").LOG_LEVEL
+local get_level_string = require("jlua.logging").get_level_string
+local get_logger = require("jlua.logging").get_logger
 
 local Suite = {}
 
@@ -89,6 +90,12 @@ function Suite.filter()
 	logger:log(LOG_LEVEL.DEBUG, "debug")
 	assert_equals(handler.call[1].format, "debug")
 	assert_equals(parent_handler.call[1].format, "debug")
+end
+
+function Suite.get_level_string()
+	for name, level in pairs(LOG_LEVEL) do
+		assert_equals(get_level_string(level), name)
+	end
 end
 
 return Suite
