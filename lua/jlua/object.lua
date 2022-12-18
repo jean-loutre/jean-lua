@@ -138,7 +138,10 @@ local function class_index(class_definition, instance, key)
 
 		local index_override = rawget(class_definition, "_index")
 		if index_override then
-			return index_override(instance, key)
+			local result = index_override(instance, key)
+			if result ~= nil then
+				return result
+			end
 		end
 
 		class_definition = class_definition._parent
