@@ -150,7 +150,8 @@ end
 --- ...
 --- logger:log(LOG_LEVEL.ERROR, "An error occured")
 function Logger:log(log_level, fmt, ...)
-	local record = LogRecord(self._name, log_level, fmt, { ... })
+	local arguments = { n = select("#", ...), ... }
+	local record = LogRecord(self._name, log_level, fmt, arguments)
 	self:handle(record)
 end
 
