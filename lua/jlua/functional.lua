@@ -1,5 +1,7 @@
 --- Higher-order functions utilities
 --- @module jlua.functional
+local is_callable = require("jlua.type").is_callable
+
 local functional = {}
 
 local unpack = unpack or table.unpack
@@ -14,7 +16,10 @@ local unpack = unpack or table.unpack
 --- @vararg any                Arguments to bind to the function.
 --- @returns func(...)         The bound function
 function functional.bind(func, ...)
+	assert(is_callable(func))
+
 	local bound_args = { n = select("#", ...), ... }
+
 	return function(...)
 		local args = { n = select("#", ...), ... }
 		local merged_args = {}
